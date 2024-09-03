@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93433159549daf4690dbea9cacec3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1281039042}
+  thisEnemyTransform: {fileID: 0}
   mainCamera: {fileID: 963194227}
   lockOnUI: {fileID: 1525606839}
   lockOnUIImage: {fileID: 0}
@@ -185,6 +185,7 @@ MonoBehaviour:
   maxSize: {x: 200, y: 200}
   lockedOnColor: {r: 1, g: 0, b: 0, a: 1}
   targetedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  enemyAI: {fileID: 0}
 --- !u!114 &29198628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +389,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f20c0637b7fd47c4588f90ac6203dfff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: accad4022aff36e4fb5dba89ae47efc9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1387,7 +1388,7 @@ GameObject:
   - component: {fileID: 1063079359}
   - component: {fileID: 1063079358}
   m_Layer: 0
-  m_Name: FA_N26_LE
+  m_Name: FA_N26_LE - 2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1835,7 +1836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93433159549daf4690dbea9cacec3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 543450652623662155}
+  thisEnemyTransform: {fileID: 543450652623662155}
   mainCamera: {fileID: 963194227}
   lockOnUI: {fileID: 1470209088}
   lockOnUIImage: {fileID: 110995213}
@@ -1845,6 +1846,7 @@ MonoBehaviour:
   maxSize: {x: 200, y: 200}
   lockedOnColor: {r: 1, g: 0, b: 0, a: 1}
   targetedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  enemyAI: {fileID: 0}
 --- !u!1 &1441172413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,7 +2340,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f20c0637b7fd47c4588f90ac6203dfff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: accad4022aff36e4fb5dba89ae47efc9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2408,7 +2410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93433159549daf4690dbea9cacec3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1063079357}
+  thisEnemyTransform: {fileID: 1063079357}
   mainCamera: {fileID: 963194227}
   lockOnUI: {fileID: 1910420952}
   lockOnUIImage: {fileID: 1652082042}
@@ -2418,6 +2420,7 @@ MonoBehaviour:
   maxSize: {x: 200, y: 200}
   lockedOnColor: {r: 1, g: 0, b: 0, a: 1}
   targetedColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  enemyAI: {fileID: 0}
 --- !u!114 &1692827735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2533,7 +2536,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 300
+  m_Radius: 700
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1693827035
 MonoBehaviour:
@@ -2549,8 +2552,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 1433611593651808499}
   currentTarget: {fileID: 0}
-  coneAngle: 30
-  coneRadius: 50
+  coneAngle: 100
+  coneRadius: 300
   potentialTargetTransforms: []
 --- !u!1 &1820673924
 GameObject:

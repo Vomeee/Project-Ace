@@ -5,8 +5,8 @@ public class TargettingSystem : MonoBehaviour
 {
     public Transform playerTransform;
     public Transform currentTarget;
-    public float coneAngle = 30f;
-    public float coneRadius = 50f;
+    public float coneAngle = 150f;
+    public float coneRadius = 300f;
 
     [SerializeField]
     private List<Transform> potentialTargetTransforms = new List<Transform>();
@@ -100,6 +100,10 @@ public class TargettingSystem : MonoBehaviour
 
         foreach (Transform target in potentialTargetTransforms)
         {
+            // ÇöÀç Å¸°ÙÀº ½ºÅµ
+            if (target == currentTarget)
+                continue;
+
             bool isInCone = IsInCone(target);
             float distanceToTarget = Vector3.Distance(playerTransform.position, target.position);
 
@@ -127,6 +131,7 @@ public class TargettingSystem : MonoBehaviour
             EnemyAI previousTarget = currentTarget.GetComponent<EnemyAI>();
             if (previousTarget != null)
             {
+                previousTarget.OnLockedOff();
                 previousTarget.OnUntargeted();
             }
         }
@@ -145,7 +150,6 @@ public class TargettingSystem : MonoBehaviour
 
             Debug.Log(newTarget.name);
         }
-
-        
     }
+
 }

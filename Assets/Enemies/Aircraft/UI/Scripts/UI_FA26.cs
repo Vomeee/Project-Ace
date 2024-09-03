@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LockOnUI : MonoBehaviour
 {
-    public Transform target; // 적 기체의 Transform
+    public Transform thisEnemyTransform; // 적 기체의 Transform
     public Camera mainCamera; // 메인 카메라
     public RectTransform lockOnUI; // 락온 UI의 RectTransform
     public Image lockOnUIImage; // UI의 Image 컴포넌트
@@ -17,21 +17,19 @@ public class LockOnUI : MonoBehaviour
 
     public Color lockedOnColor = Color.red; // 락온 상태일 때의 색상
     public Color targetedColor = Color.yellow; // 타게팅 상태일 때의 색상
-    private Color originalColor; // 원래 색상
+    private Color originalColor = Color.green; // 원래 색상
     private bool isFlickering = false; // 깜빡임 여부
 
+    [SerializeField]
     private EnemyAI enemyAI;
-
+     
     void Start()
     {
-        if (lockOnUIImage != null)
-        {
-            originalColor = lockOnUIImage.color;
-        }
+        
 
-        if (target != null)
+        if (thisEnemyTransform != null)
         {
-            enemyAI = target.GetComponent<EnemyAI>();
+            enemyAI = thisEnemyTransform.GetComponent<EnemyAI>(); //이 기체의 EnemyAI
         }
     }
 
@@ -40,10 +38,10 @@ public class LockOnUI : MonoBehaviour
         if (enemyAI == null || lockOnUIImage == null) return;
 
         // 적 기체의 월드 좌표를 화면 좌표로 변환
-        Vector3 screenPos = mainCamera.WorldToScreenPoint(target.position);
+        Vector3 screenPos = mainCamera.WorldToScreenPoint(thisEnemyTransform.position); 
 
         // 적과 플레이어 간의 거리 계산
-        float distanceToTarget = Vector3.Distance(mainCamera.transform.position, target.position);
+        float distanceToTarget = Vector3.Distance(mainCamera.transform.position, thisEnemyTransform.position);
 
         // 적이 카메라의 시야 안에 있는지 확인
         if (screenPos.z > 0 && screenPos.x > 0 && screenPos.x < Screen.width && screenPos.y > 0 && screenPos.y < Screen.height)
@@ -65,18 +63,19 @@ public class LockOnUI : MonoBehaviour
                 {
                     // 락온 상태
                     lockOnUIImage.color = lockedOnColor;
-                    if (isFlickering) StopCoroutine("FlickerEffect");
+                    //if (isFlickering) StopCoroutine("FlickerEffect");
                 }
                 else if (enemyAI.isTargeted)
                 {
+                    lockOnUIImage.color = originalColor;
                     // 타게팅 상태
-                    if (!isFlickering) StartCoroutine("FlickerEffect");
+                    //if (!isFlickering) StartCoroutine("FlickerEffect");                    
                 }
                 else
                 {
                     // 타겟팅되지 않은 상태
-
-                    if (isFlickering) StopCoroutine("FlickerEffect");
+                    lockOnUIImage.color = originalColor;
+                    //if (isFlickering) StopCoroutine("FlickerEffect");
                 }
             }
             else
@@ -99,7 +98,7 @@ public class LockOnUI : MonoBehaviour
         {
             lockOnUIImage.color = originalColor;
             yield return new WaitForSeconds(0.5f);
-            lockOnUIImage.color = targetedColor;
+            lockOnUIImage.color = Color.white;
             yield return new WaitForSeconds(0.5f);
         }
     }
