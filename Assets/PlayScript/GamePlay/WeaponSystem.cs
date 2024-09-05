@@ -117,6 +117,8 @@ public class WeaponSystem : MonoBehaviour
     public Transform leftMissileTransform;
     public Transform rightMissileTransform;
 
+    public TargettingSystem targettingSystem;
+
     public float speed;
     
 
@@ -145,8 +147,19 @@ public class WeaponSystem : MonoBehaviour
         }
 
         GameObject stdm = Instantiate(missilePrefab, missilePosition, playerTransform.rotation); //미사일 생성
-        STDM missileScript = stdm.GetComponent<STDM>(); 
-        missileScript.Launch(currentTargetTransform, infoGetter.getSpeed());
+        STDM missileScript = stdm.GetComponent<STDM>();
+
+       
+        currentTargetTransform = targettingSystem.currentTarget;
+        if(targettingSystem.IsInCone(currentTargetTransform))
+        {
+            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 ); ////////확인!!!!!
+        }
+        else
+        {
+            missileScript.Launch(null, infoGetter.getSpeed() / 10 + 20);
+        }
+        
         missileCnt--;
     }
 

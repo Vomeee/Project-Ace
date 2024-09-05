@@ -8,6 +8,8 @@ public class TargettingSystem : MonoBehaviour
     public float coneAngle = 150f;
     public float coneRadius = 300f;
 
+    public Transform transformBox;
+
     [SerializeField]
     private List<Transform> potentialTargetTransforms = new List<Transform>();
 
@@ -29,9 +31,13 @@ public class TargettingSystem : MonoBehaviour
                 UnlockTarget(currentTarget);
             }
         }
+        else
+        {
+            currentTarget = transformBox;
+        }
     }
 
-    private bool IsInCone(Transform target)
+    public bool IsInCone(Transform target)
     {
         Vector3 directionToTarget = target.position - playerTransform.position;
         float distanceToTarget = directionToTarget.magnitude;

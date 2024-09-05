@@ -22,11 +22,9 @@ public class LockOnUI : MonoBehaviour
 
     [SerializeField]
     private EnemyAI enemyAI;
-     
+
     void Start()
     {
-        
-
         if (thisEnemyTransform != null)
         {
             enemyAI = thisEnemyTransform.GetComponent<EnemyAI>(); //이 기체의 EnemyAI
@@ -38,7 +36,7 @@ public class LockOnUI : MonoBehaviour
         if (enemyAI == null || lockOnUIImage == null) return;
 
         // 적 기체의 월드 좌표를 화면 좌표로 변환
-        Vector3 screenPos = mainCamera.WorldToScreenPoint(thisEnemyTransform.position); 
+        Vector3 screenPos = mainCamera.WorldToScreenPoint(thisEnemyTransform.position);
 
         // 적과 플레이어 간의 거리 계산
         float distanceToTarget = Vector3.Distance(mainCamera.transform.position, thisEnemyTransform.position);
@@ -63,19 +61,29 @@ public class LockOnUI : MonoBehaviour
                 {
                     // 락온 상태
                     lockOnUIImage.color = lockedOnColor;
-                    //if (isFlickering) StopCoroutine("FlickerEffect");
+                    if (isFlickering)
+                    {
+                        StopCoroutine(FlickerEffect());
+                        isFlickering = false;
+                    }
                 }
                 else if (enemyAI.isTargeted)
                 {
-                    lockOnUIImage.color = originalColor;
                     // 타게팅 상태
-                    //if (!isFlickering) StartCoroutine("FlickerEffect");                    
+                    if (!isFlickering)
+                    {
+                        StartCoroutine(FlickerEffect());
+                    }
                 }
                 else
                 {
                     // 타겟팅되지 않은 상태
                     lockOnUIImage.color = originalColor;
-                    //if (isFlickering) StopCoroutine("FlickerEffect");
+                    if (isFlickering)
+                    {
+                        StopCoroutine(FlickerEffect());
+                        isFlickering = false;
+                    }
                 }
             }
             else
@@ -96,9 +104,9 @@ public class LockOnUI : MonoBehaviour
         isFlickering = true;
         while (true)
         {
-            lockOnUIImage.color = originalColor;
+            lockOnUIImage.color = targetedColor;
             yield return new WaitForSeconds(0.5f);
-            lockOnUIImage.color = Color.white;
+            lockOnUIImage.color = originalColor;
             yield return new WaitForSeconds(0.5f);
         }
     }
