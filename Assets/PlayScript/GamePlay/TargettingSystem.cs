@@ -5,8 +5,8 @@ public class TargettingSystem : MonoBehaviour
 {
     public Transform playerTransform;
     public Transform currentTarget;
-    public float coneAngle = 150f;
-    public float coneRadius = 300f;
+    public float coneAngle = 180f;
+    public float coneRadius = 600f;
 
     public Transform transformBox;
 
