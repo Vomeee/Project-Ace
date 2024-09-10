@@ -2,9 +2,11 @@ using MGAssets.AircraftPhysics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class WeaponSystem : MonoBehaviour
 {
@@ -73,9 +75,9 @@ public class WeaponSystem : MonoBehaviour
 
     #region weaponUI instances
     [SerializeField] RectTransform weaponPointer; // 무기 ui 포인터
-    [SerializeField] Text gunCountText; // 기총 잔량
-    [SerializeField] Text missileCountText; // 기본미사일 잔량
-    [SerializeField] Text specialWeaponCountText; // 특수무기 잔량
+    [SerializeField] TextMeshProUGUI gunCountText; // 기총 잔량
+    [SerializeField] TextMeshProUGUI missileCountText; // 기본미사일 잔량
+    [SerializeField] TextMeshProUGUI specialWeaponCountText; // 특수무기 잔량
     #endregion
 
 
@@ -253,23 +255,25 @@ public class WeaponSystem : MonoBehaviour
         {
             if(weaponSelection == 0)
             {
-                weaponPointer.anchoredPosition = new Vector3(-330, 440, 0);
+                weaponPointer.anchoredPosition = new Vector3(-308, 446, 0);
             }
             else if(weaponSelection == 1)
             {
-                weaponPointer.anchoredPosition = new Vector3(-330, 380, 0);
+                weaponPointer.anchoredPosition = new Vector3(-308, 386, 0);
             }
         }
     }
 
     void gunCountUIUpdate()
     {
-        gunCountText.text = gunCount.ToString();
+        string gunText = gunCount.ToString();
+        gunCountText.text = "<align=left>GUN<line-height=0>" + "\n" + "<align=right>" + gunText + "<line-height=1em>";
     }
 
     void stdmCountUIUpdate()
     {
-        missileCountText.text = missileCount.ToString();
+        string mslText = missileCount.ToString();
+        missileCountText.text = "<align=left>MSL<line-height=0>" + "\n" + "<align=right>" + mslText + "<line-height=1em>";
     }
 
     void specialWeaponCountUIUpdate()

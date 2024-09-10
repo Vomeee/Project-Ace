@@ -29,14 +29,14 @@ namespace MGAssets
             public bool useAltitude = true;
             public float altitudeAmplitude = 10, altitudeOffSet = 0;
             [Range(0, 1)] public float altitudeFilterFactor = 0.5f;
-            public Text altitudeTxt;
+            public TextMeshProUGUI altitudeTxt;
 
             [Space(5)]
             [Header("AirSpeed")]
             public bool useSpeed = true;
             public float speedAmplitude = 10, speedOffSet = 0;
             [Range(0, 1)] public float speedFilterFactor = 0.25f;
-            public Text speedTxt;
+            public TextMeshProUGUI speedTxt;
 
 
 
@@ -146,7 +146,7 @@ namespace MGAssets
                 int min = seconds / 60;
                 int sec = seconds % 60;
                 int millisec = (int)((remainTime - seconds) * 100);
-                string text = string.Format("TIME <mspace=48>{0:00}</mspace>:<mspace=48>{1:00}</mspace>:<mspace=48>{2:00}</mspace>", min, sec, millisec);
+                string text = string.Format("TIME <mspace=30>{0:00}</mspace>:<mspace=30>{1:00}</mspace>:<mspace=30>{2:00}</mspace>", min, sec, millisec);
                 systemTimeText.text = text;
             }
 
@@ -184,22 +184,25 @@ namespace MGAssets
             /////////////////////////////////////////////////////// Update All Instruments
             void FixedUpdate() //Update()
             {
-                // Return if not active
-                if (!isActive) return;
-
-                // Call each Instrument
-                if (useHeading) updateHeading();
-                if (useGlidePath) updateGlide();
-
                 if (useAltitude) updateAltitude();
                 if (useSpeed) updateSpeed();
 
-                if (useEngine) updateEngine();
-                if (useFuel) updateFuel();
+                // Return if not active
+                //if (!isActive) return;
 
-                if (useFlaps) updateFlaps();
-                if (useGear) updateGear();
-                if (useBrake) updateBrake();
+                //// Call each Instrument
+                //if (useHeading) updateHeading();
+                //if (useGlidePath) updateGlide();
+
+                //if (useAltitude) updateAltitude();
+                //if (useSpeed) updateSpeed();
+
+                //if (useEngine) updateEngine();
+                //if (useFuel) updateFuel();
+
+                //if (useFlaps) updateFlaps();
+                //if (useGear) updateGear();
+                //if (useBrake) updateBrake();
                 //
 
             }

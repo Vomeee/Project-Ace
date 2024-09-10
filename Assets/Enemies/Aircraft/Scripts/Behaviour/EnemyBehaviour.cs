@@ -40,6 +40,7 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] bool isFlickering = false;
 
+    [SerializeField] GameObject lockOnSquare;
     [SerializeField] Color sibal;
 
     #endregion
@@ -190,6 +191,8 @@ public class EnemyAI : MonoBehaviour
             aircraftInfoUIobject.SetActive(true);
             
         }
+
+        lockOnSquare.SetActive(true);
         //록온
     }
 
@@ -200,7 +203,7 @@ public class EnemyAI : MonoBehaviour
         distanceText.color = normalColor;
         aircraftNameText.color = normalColor;
         //록 오프
-
+        lockOnSquare.SetActive(false);
     }
 
     private IEnumerator FlickerEffect() //타겟이지만 록온되지 않았을 때, ui가 깜빡이는 효과 구현.
