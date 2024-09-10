@@ -159,7 +159,7 @@ public class WeaponSystem : MonoBehaviour
     void FireGun()
     {
         Debug.Log("gunfireTriggered");
-        if (bulletPrefab != null && gunPoint != null)
+        if (bulletPrefab != null && gunPoint != null && gunCount > 0)
         {
             GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, gunPoint.rotation);
 

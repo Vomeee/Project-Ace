@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace MGAssets
@@ -107,7 +108,9 @@ namespace MGAssets
             public bool useBrake = true;
             public Text brakeTxt;
 
-
+            [Space]
+            public TextMeshProUGUI systemTimeText; //시스템 시간 컴포넌트.
+            public TextMeshProUGUI systemScoreText; //현재 점수 컴포넌트.
 
 
 
@@ -126,11 +129,34 @@ namespace MGAssets
             public float altitude, heading, alpha, beta, engine, fuel;
             public bool brake;
             //
+            
+            
+            [SerializeField] float remainTime;
+            void setSystemTime()
+            {
+                if (remainTime <= 0)
+                {
+                    remainTime = 0;
+                    return;
+                }
+
+                remainTime -= Time.deltaTime;
+                int seconds = (int)remainTime;
+
+                int min = seconds / 60;
+                int sec = seconds % 60;
+                int millisec = (int)((remainTime - seconds) * 100);
+                string text = string.Format("TIME <mspace=48>{0:00}</mspace>:<mspace=48>{1:00}</mspace>:<mspace=48>{2:00}</mspace>", min, sec, millisec);
+                systemTimeText.text = text;
+            }
+
+            void Update()
+            {
+                setSystemTime();
+            }
 
 
-
-
-
+            #region aircraft codes
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////// Inicialization
@@ -297,7 +323,7 @@ namespace MGAssets
             //
             /////////////////////////////////////////////////////// Calculations
 
-
+#endregion
         }
     }
 }

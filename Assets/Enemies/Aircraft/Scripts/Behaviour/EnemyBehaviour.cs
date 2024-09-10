@@ -39,9 +39,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Vector2 maxSize = new Vector2(100f, 100f); // UI의 최대 크기
 
     [SerializeField] bool isFlickering = false;
-    [SerializeField] float timer = 0f;
-    [SerializeField] float flickerTime = 0.5f;
-    [SerializeField] bool isTransparent = false;
 
     [SerializeField] Color sibal;
 
@@ -49,21 +46,6 @@ public class EnemyAI : MonoBehaviour
 
     public bool isTargeted = false; // 타겟으로 지정되었는지 여부
     public bool isLockedOn = false;
-
-    //private IEnumerator FlickerEffect()
-    //{
-    //    isFlickering = true;
-    //    Debug.Log("코루틴 시작");
-
-    //    while (true) // isFlickering이 true인 동안만 반복
-    //    {
-    //        Debug.Log("1" + gameObject.name);
-    //        lockOnUIImage.color = targetedColor; // 타겟 상태의 색상
-    //        yield return new WaitForSeconds(0.5f); // 0.5초 대기
-    //        lockOnUIImage.color = normalColor; // 기본 색상
-    //        yield return new WaitForSeconds(0.5f); // 0.5초 대기
-    //    }
-    //}
 
     void Start()
     {
@@ -131,11 +113,10 @@ public class EnemyAI : MonoBehaviour
                     else
                     {
                         // 타겟팅되지 않은 상태
-                        if (isFlickering)
-                        {
+                        
                             StopCoroutine(FlickerEffect());
                             isFlickering = false;
-                        }
+                        
                     }
 
 
@@ -188,6 +169,8 @@ public class EnemyAI : MonoBehaviour
     {
         isTargeted = false;
 
+        lockOnUIImage.color = normalColor;
+
         if (aircraftInfoUIobject.activeSelf)
         {
             aircraftInfoUIobject.SetActive(false);
@@ -214,7 +197,6 @@ public class EnemyAI : MonoBehaviour
     {
         isLockedOn = false;
 
-        //lockOnUIImage.color = normalColor;
         distanceText.color = normalColor;
         aircraftNameText.color = normalColor;
         //록 오프
@@ -225,7 +207,7 @@ public class EnemyAI : MonoBehaviour
     {
         isFlickering = true;
 
-        while (true)
+        while (isFlickering)
         {
             lockOnUIImage.color = transparentColor;
             yield return new WaitForSeconds(0.5f);
