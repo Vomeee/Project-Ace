@@ -31,6 +31,7 @@ public class WeaponSystem : MonoBehaviour
     private float fireCooldown;
 
     public Transform gunPoint; // 발사 위치
+    public AudioSource gunAudioSource; // AudioSource를 참조
     #endregion
 
     #region missileVariables
@@ -120,6 +121,16 @@ public class WeaponSystem : MonoBehaviour
         if (Input.GetKey(KeyCode.H)) // H 키를 누르고 있는 동안
         {
             isGunFiring = true; // 총 발사 상태를 true로 설정
+            if (!gunAudioSource.isPlaying) // 소리가 재생 중이지 않다면
+            {
+                gunAudioSource.Play(); // 소리 재생
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.H))
+        {
+            isGunFiring = false; // 총 발사 상태를 false로 설정
+            gunAudioSource.Stop(); // 소리 정지
         }
 
         // 총기 연속 발사 처리
@@ -135,10 +146,7 @@ public class WeaponSystem : MonoBehaviour
             fireCooldown -= Time.deltaTime;
         }
 
-        if (Input.GetKeyUp(KeyCode.H))
-        {
-            isGunFiring = false;
-        }
+        
 
         #endregion
 
