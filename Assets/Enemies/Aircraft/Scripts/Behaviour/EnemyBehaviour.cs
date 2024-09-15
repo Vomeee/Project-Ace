@@ -49,6 +49,7 @@ public class EnemyAI : MonoBehaviour
 
     public bool isTargeted = false; // 타겟으로 지정되었는지 여부
     public bool isLockedOn = false;
+    [SerializeField] TargettingSystem targetingSystem;
 
     void Start()
     {
@@ -231,8 +232,8 @@ public class EnemyAI : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("bullet"))
         {
-            //AircraftDamage(15);
-            //
+            AircraftDamage(15);
+            
             Debug.Log("111");
 
         }
@@ -240,12 +241,15 @@ public class EnemyAI : MonoBehaviour
 
     void AircraftDamage(int damage)
     {
-        //aircraftHP - damage;
+        aircraftHP -= damage;
     }
 
+    [SerializeField] GameObject explodeEffect;
     void AircraftDestroyed()
     {
-        //Destroy()...
+        if (explodeEffect) Instantiate(explodeEffect, transform.position, Quaternion.identity, null);
+        targetingSystem.RemoveTarget(gameObject.transform);
+        Destroy(gameObject, 0.5f);
     }
 
 
