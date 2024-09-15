@@ -759,7 +759,7 @@ namespace MGAssets
             // 직접수정, triggered collider == 적 감지 범위.
             void OnTriggerEnter(Collider other)
             {
-                if (other.gameObject != this.gameObject && other.transform.parent != this.transform && other.CompareTag("Enemy"))
+                if (other.gameObject != this.gameObject && other.transform.parent != this.transform && other.gameObject.CompareTag("Enemy"))
                 {
                     targettingSystem.AddTarget(other.transform);
 

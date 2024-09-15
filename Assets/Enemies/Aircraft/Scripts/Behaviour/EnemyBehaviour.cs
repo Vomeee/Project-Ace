@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour
     
     [SerializeField] Transform player; // 플레이어의 Transform
 
+    [SerializeField] int aircraftHP;
+
     #region aircraft moving logic's variables and referecnces
 
     [SerializeField] float speed = 10f; // 적 비행기의 속도
@@ -52,6 +54,8 @@ public class EnemyAI : MonoBehaviour
     {
         distanceText.color = lockedOnColor;
         aircraftNameText.color = lockedOnColor;
+
+        aircraftHP = 100; //초기값.
     }
 
     void Update() //자체 비행 로직.
@@ -142,6 +146,10 @@ public class EnemyAI : MonoBehaviour
 
         #endregion
 
+        if(aircraftHP <= 0)
+        {
+            AircraftDestroyed();
+        }
         sibal = lockOnUIImage.color;
     }
 
@@ -219,7 +227,26 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("bullet"))
+        {
+            //AircraftDamage(15);
+            //
+            Debug.Log("111");
 
+        }
+    }
+
+    void AircraftDamage(int damage)
+    {
+        //aircraftHP - damage;
+    }
+
+    void AircraftDestroyed()
+    {
+        //Destroy()...
+    }
 
 
 

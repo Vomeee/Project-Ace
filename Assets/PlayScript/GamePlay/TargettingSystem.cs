@@ -103,7 +103,7 @@ public class TargettingSystem : MonoBehaviour
         Transform bestTarget = null;
         float bestDistance = Mathf.Infinity;
         bool isInConePriority = false;
-
+        
         foreach (Transform target in potentialTargetTransforms)
         {
             // ÇöÀç Å¸°ÙÀº ½ºÅµ
@@ -153,6 +153,7 @@ public class TargettingSystem : MonoBehaviour
             {
                 newTarget.OnTargeted();
             }
+            
 
             Debug.Log(newTarget.name);
         }
