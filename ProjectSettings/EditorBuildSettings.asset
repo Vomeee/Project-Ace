@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/HomeScene.unity
+    guid: 33fa6385271e34b47ad278d302b4d42a
+  - enabled: 1
     path: Assets/Scenes/MissionZero.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
