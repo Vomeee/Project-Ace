@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - bullet
   - trash
+  - stdm
   layers:
   - Default
   - TransparentFX

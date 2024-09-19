@@ -12,6 +12,10 @@ public class STDM : MonoBehaviour
     public float lifetime; // 미사일의 수명
     public float speed; // 현재 속도
 
+    public GameObject enemyHitEffect; //적기 명중시 폭파효과
+    [SerializeField] Rigidbody rb;
+    [SerializeField] CapsuleCollider mslCollider;
+
     public void Launch(Transform target, float launchSpeed)
     {
         // 타겟이 존재할 때만 할당
@@ -38,6 +42,8 @@ public class STDM : MonoBehaviour
     {
         // 수명이 끝나면 미사일을 제거
         Destroy(gameObject, lifetime);
+        rb = GetComponent<Rigidbody>();
+        mslCollider = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -60,5 +66,26 @@ public class STDM : MonoBehaviour
             LookAtTarget();
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
+    }
+
+    void OnCollisionEnter(Collision collision) //땅이든, 적이든... 파괴.
+    {
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // 적기에 부딪혔을 때 효과 생성
+            Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+
+            Debug.Log("missilehittoenemy");
+        }
+        // 충돌한 오브젝트의 태그가 "Ground"일 경우
+        //else if (collision.gameObject.CompareTag("Ground"))
+        {
+            // 땅에 닿았을 때 효과 생성
+            //Instantiate(groundHitEffect, transform.position, Quaternion.identity);
+        }
+
+        // 총알 파괴
+        Destroy(gameObject);
     }
 }

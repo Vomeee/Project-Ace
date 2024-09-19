@@ -234,7 +234,14 @@ public class EnemyAI : MonoBehaviour
         {
             AircraftDamage(15);
             
-            Debug.Log("111");
+            Debug.Log("gun hit(aircraft detect)");
+
+        }
+        if (collision.gameObject.CompareTag("stdm"))
+        {
+            AircraftDamage(70);
+
+            Debug.Log("msl hit(aircraft detect)");
 
         }
     }
