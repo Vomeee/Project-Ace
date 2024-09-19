@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 namespace MGAssets
@@ -132,6 +133,8 @@ namespace MGAssets
             
             
             [SerializeField] float remainTime;
+            [SerializeField] int score;
+
             void setSystemTime()
             {
                 if (remainTime <= 0)
@@ -153,6 +156,13 @@ namespace MGAssets
             void Update()
             {
                 setSystemTime();
+            }
+
+            void UpdateScore(int aircraftScore)
+            {
+                int newScore = score + aircraftScore;
+                string text = string.Format("{0:D6}", newScore);
+                systemScoreText.text = text;
             }
 
 

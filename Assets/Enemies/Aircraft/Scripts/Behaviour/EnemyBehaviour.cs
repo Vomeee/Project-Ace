@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
-    
     [SerializeField] Transform player; // 플레이어의 Transform
 
     [SerializeField] int aircraftHP;
@@ -49,11 +48,14 @@ public class EnemyAI : MonoBehaviour
 
     public bool isTargeted = false; // 타겟으로 지정되었는지 여부
     public bool isLockedOn = false;
+
     [SerializeField] TargettingSystem targetingSystem;
 
     void Start()
-    {
-        distanceText.color = lockedOnColor;
+    { 
+        mainCamera = Camera.main;   
+
+         distanceText.color = lockedOnColor;
         aircraftNameText.color = lockedOnColor;
 
         aircraftHP = 100; //초기값.
@@ -154,7 +156,12 @@ public class EnemyAI : MonoBehaviour
         sibal = lockOnUIImage.color;
     }
 
-
+    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem)
+    {
+            player = playerTransform;
+            this.targetingSystem = targettingSystem;
+        
+    }
 
 
 
@@ -256,7 +263,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (explodeEffect) Instantiate(explodeEffect, transform.position, Quaternion.identity, null);
         targetingSystem.RemoveTarget(gameObject.transform);
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject);
     }
 
 
