@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TargettingSystem : MonoBehaviour
@@ -11,7 +12,12 @@ public class TargettingSystem : MonoBehaviour
     public Transform transformBox;
 
     [SerializeField]
+    TextMeshProUGUI currentTargetText;
+
+    [SerializeField]
     private List<Transform> potentialTargetTransforms = new List<Transform>();
+
+  
 
     private void Update()
     {
@@ -69,13 +75,17 @@ public class TargettingSystem : MonoBehaviour
         {
             enemy.OnLockedOff();
         }
+
     }
 
     public void AddTarget(Transform target)
     {
+        
+
         if (!potentialTargetTransforms.Contains(target))
-        {
+        {          
             potentialTargetTransforms.Add(target);
+            if (potentialTargetTransforms.Count == 1) SwitchTarget();
             Debug.Log("Target added: " + target.name);
         }
     }
@@ -98,8 +108,11 @@ public class TargettingSystem : MonoBehaviour
 
     public void SwitchTarget()
     {
-        if (potentialTargetTransforms.Count == 0) return;
-
+        if (potentialTargetTransforms.Count == 0)
+        {
+            currentTargetText.text = "";
+            return;
+        }
         Transform bestTarget = null;
         float bestDistance = Mathf.Infinity;
         bool isInConePriority = false;
@@ -156,6 +169,9 @@ public class TargettingSystem : MonoBehaviour
             
 
             Debug.Log(newTarget.name);
+
+            currentTargetText.text = "TARGET <mspace=30>" + newTarget.aircraftName + "</mspace> <mspace=30> +" + newTarget.aircraftScore + "</mspace>";
+
         }
     }
 

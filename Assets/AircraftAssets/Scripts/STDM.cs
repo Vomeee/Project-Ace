@@ -12,7 +12,9 @@ public class STDM : MonoBehaviour
     public float lifetime; // 미사일의 수명
     public float speed; // 현재 속도
 
-    public GameObject enemyHitEffect; //적기 명중시 폭파효과
+    [SerializeField] private GameObject enemyHitEffect; //적기 명중시 폭파효과
+    [SerializeField] private GameObject groundHitEffect;
+
     [SerializeField] Rigidbody rb;
     [SerializeField] CapsuleCollider mslCollider;
 
@@ -78,11 +80,12 @@ public class STDM : MonoBehaviour
 
             Debug.Log("missilehittoenemy");
         }
+        
         // 충돌한 오브젝트의 태그가 "Ground"일 경우
-        //else if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             // 땅에 닿았을 때 효과 생성
-            //Instantiate(groundHitEffect, transform.position, Quaternion.identity);
+            Instantiate(groundHitEffect, transform.position, Quaternion.identity);
         }
 
         // 총알 파괴

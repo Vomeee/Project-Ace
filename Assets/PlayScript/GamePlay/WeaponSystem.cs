@@ -42,7 +42,10 @@ public class WeaponSystem : MonoBehaviour
     #endregion
 
     public int weaponSelection = 0; // 0 : stdm, 1 : sp
-
+    [SerializeField] AudioSource weaponChangeToSpecialWeaponSound;
+    [SerializeField] AudioSource weaponChangeToSTDMSound;
+    
+    
     public Transform playerTransform;
 
     public Transform currentTargetTransform;
@@ -107,10 +110,13 @@ public class WeaponSystem : MonoBehaviour
             if (weaponSelection == 0)
             {
                 weaponSelection = 1;
+                weaponChangeToSpecialWeaponSound.Play(); // 소리 재생
+                
             }
             else if(weaponSelection == 1)
             {
                 weaponSelection = 0;
+                weaponChangeToSTDMSound.Play();
             }
             weaponPointerUpdate(); //무기 포인터 업데이트
             //Beep(); //무기 전환 소리

@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
 {
+    
     [SerializeField] Transform player; // 플레이어의 Transform
 
-    [SerializeField] int aircraftHP;
+    [Header("EnemyInfo")]
+    #region EnemyInfo
+    public string aircraftName;
+    [SerializeField] int aircraftHP = 100;
+    [SerializeField] public int aircraftScore = 240;
+    #endregion
 
+    [Header("Moving logic instances")]
     #region aircraft moving logic's variables and referecnces
 
     [SerializeField] float speed = 10f; // 적 비행기의 속도
@@ -20,6 +28,7 @@ public class EnemyAI : MonoBehaviour
     
     [Space]
 
+    [Header("UI References")]
     #region reactive UI references and variables
     [SerializeField] Camera mainCamera;
     [SerializeField] RectTransform lockOnUIRectTransform;
@@ -44,21 +53,28 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] GameObject lockOnSquare;
     [SerializeField] Color sibal;
 
+    [SerializeField] TagController tagController;
+    [SerializeField] GameManagement gameManagement;
+
     #endregion
 
+    [Header("enemyState")]
     public bool isTargeted = false; // 타겟으로 지정되었는지 여부
     public bool isLockedOn = false;
 
     [SerializeField] TargettingSystem targetingSystem;
 
+    [Header("Sound Sources")]
+    [SerializeField] AudioSource lockOnSound;
+
+
     void Start()
     { 
         mainCamera = Camera.main;   
 
-         distanceText.color = lockedOnColor;
-        aircraftNameText.color = lockedOnColor;
-
-        aircraftHP = 100; //초기값.
+        distanceText.color = normalColor;
+        aircraftNameText.text = aircraftName;
+        aircraftNameText.color = normalColor;
     }
 
     void Update() //자체 비행 로직.
@@ -149,18 +165,16 @@ public class EnemyAI : MonoBehaviour
 
         #endregion
 
-        if(aircraftHP <= 0)
-        {
-            AircraftDestroyed();
-        }
+        
         sibal = lockOnUIImage.color;
     }
 
-    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem)
+    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, TagController tagController, GameManagement gm)
     {
-            player = playerTransform;
-            this.targetingSystem = targettingSystem;
-        
+        player = playerTransform;
+        this.targetingSystem = targettingSystem;
+        this.tagController = tagController;
+        this.gameManagement = gm;
     }
 
 
@@ -196,6 +210,11 @@ public class EnemyAI : MonoBehaviour
 
     public void OnLockedOn()
     {
+        lockOnUIImage.color = lockedOnColor; // 적기 UI 붉은색으로.
+        if (isLockedOn) return;
+        StopCoroutine(FlickerEffect());
+        isFlickering = false;
+
         isLockedOn = true;
 
         lockOnUIImage.color = lockedOnColor; // 적기 UI 붉은색으로.
@@ -205,21 +224,31 @@ public class EnemyAI : MonoBehaviour
         if (!aircraftInfoUIobject.activeSelf) // 적기 정보 UI 활성화.
         {
             aircraftInfoUIobject.SetActive(true);
-            
         }
 
+        lockOnSound.Play();
         lockOnSquare.SetActive(true);
         //록온
     }
 
     public void OnLockedOff()
     {
+        if (!isLockedOn) return;
         isLockedOn = false;
 
+        lockOnUIImage.color = normalColor;
         distanceText.color = normalColor;
         aircraftNameText.color = normalColor;
+
+
+        if (lockOnSound.isPlaying)
+        {
+            lockOnSound.Stop();
+        }
         //록 오프
         lockOnSquare.SetActive(false);
+
+        
     }
 
     private IEnumerator FlickerEffect() //타겟이지만 록온되지 않았을 때, ui가 깜빡이는 효과 구현.
@@ -229,9 +258,9 @@ public class EnemyAI : MonoBehaviour
         while (isFlickering)
         {
             lockOnUIImage.color = transparentColor;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
             lockOnUIImage.color = normalColor;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
         }
     }
 
@@ -240,6 +269,10 @@ public class EnemyAI : MonoBehaviour
         if(collision.gameObject.CompareTag("bullet"))
         {
             AircraftDamage(15);
+            if(aircraftHP > 0)
+            {
+                tagController.ShowHitTag();
+            }
             
             Debug.Log("gun hit(aircraft detect)");
 
@@ -247,7 +280,10 @@ public class EnemyAI : MonoBehaviour
         if (collision.gameObject.CompareTag("stdm"))
         {
             AircraftDamage(70);
-
+            if (aircraftHP > 0)
+            {
+                tagController.ShowHitTag();
+            }
             Debug.Log("msl hit(aircraft detect)");
 
         }
@@ -256,13 +292,20 @@ public class EnemyAI : MonoBehaviour
     void AircraftDamage(int damage)
     {
         aircraftHP -= damage;
+
+        if (aircraftHP <= 0)
+        {
+            AircraftDestroyed();
+        }
     }
 
     [SerializeField] GameObject explodeEffect;
     void AircraftDestroyed()
     {
         if (explodeEffect) Instantiate(explodeEffect, transform.position, Quaternion.identity, null);
-        targetingSystem.RemoveTarget(gameObject.transform);
+        targetingSystem.RemoveTarget(gameObject.transform); //현재 타겟 리스트에서 제거
+        tagController.ShowDestroyedTag(); //destroyed 태그 표출
+        gameManagement.UpdateScore(aircraftScore);
         Destroy(gameObject);
     }
 

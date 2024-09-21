@@ -110,6 +110,7 @@ MonoBehaviour:
   lifetime: 20
   speed: 0
   enemyHitEffect: {fileID: 159918, guid: 2a197c3bd8020c34184208f836fd5c55, type: 3}
+  groundHitEffect: {fileID: 159918, guid: 2a197c3bd8020c34184208f836fd5c55, type: 3}
   rb: {fileID: -845763629072080048}
   mslCollider: {fileID: -6781264608765902719}
 --- !u!54 &-845763629072080048
