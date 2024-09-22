@@ -49,12 +49,15 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Vector2 maxSize = new Vector2(100f, 100f); // UI의 최대 크기
 
     [SerializeField] bool isFlickering = false;
+    [SerializeField] bool isMinimapFlickering = false;
 
     [SerializeField] GameObject lockOnSquare;
     [SerializeField] Color sibal;
 
     [SerializeField] TagController tagController;
     [SerializeField] GameManagement gameManagement;
+
+    [SerializeField] SpriteRenderer minimapSprite;
 
     #endregion
 
@@ -193,6 +196,9 @@ public class EnemyAI : MonoBehaviour
             aircraftInfoUIobject.SetActive(true);
         }
 
+        StartCoroutine(MinimapEffect());
+        
+
     }
 
     // 타겟에서 벗어날 때 호출
@@ -206,6 +212,9 @@ public class EnemyAI : MonoBehaviour
         {
             aircraftInfoUIobject.SetActive(false);
         }
+
+        StopCoroutine(MinimapEffect());
+        isMinimapFlickering = false;
     }
 
     public void OnLockedOn()
@@ -260,6 +269,19 @@ public class EnemyAI : MonoBehaviour
             lockOnUIImage.color = transparentColor;
             yield return new WaitForSeconds(0.25f);
             lockOnUIImage.color = normalColor;
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
+
+    private IEnumerator MinimapEffect() //타겟이지만 록온되지 않았을 때, ui가 깜빡이는 효과 구현.
+    {
+        isMinimapFlickering = true;
+
+        while (isMinimapFlickering)
+        {
+            minimapSprite.color = transparentColor;
+            yield return new WaitForSeconds(0.25f);
+            minimapSprite.color = Color.white;
             yield return new WaitForSeconds(0.25f);
         }
     }
