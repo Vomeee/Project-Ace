@@ -32,7 +32,8 @@ public class WeaponSystem : MonoBehaviour
     public bool isGunFiring = false;
     private float fireCooldown;
 
-    public Transform gunPoint; // 발사 위치
+    public Transform gunPointL; // 발사 위치
+    public Transform gunPointR;
     public AudioSource gunAudioSource; // AudioSource를 참조
     #endregion
 
@@ -172,12 +173,22 @@ public class WeaponSystem : MonoBehaviour
 
     }
 
+    [SerializeField] Transform currentGunPoint;
+
     void FireGun()
     {
         Debug.Log("gunfireTriggered");
-        if (bulletPrefab != null && gunPoint != null && gunCount > 0)
+        if (bulletPrefab != null && gunPointL != null && gunCount > 0)
         {
-            GameObject bullet = Instantiate(bulletPrefab, gunPoint.position, gunPoint.rotation);
+            if(gunCount % 2 == 0)
+            {
+                 currentGunPoint = gunPointL;
+            }
+            else
+            {
+                 currentGunPoint = gunPointR;
+            }
+            GameObject bullet = Instantiate(bulletPrefab, currentGunPoint.position, currentGunPoint.rotation);
 
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             if (bulletScript != null)
