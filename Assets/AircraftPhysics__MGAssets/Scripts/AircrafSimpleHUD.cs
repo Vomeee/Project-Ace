@@ -113,7 +113,9 @@ namespace MGAssets
             public TextMeshProUGUI systemTimeText; //시스템 시간 컴포넌트.
             public TextMeshProUGUI systemScoreText; //현재 점수 컴포넌트.
 
-
+            [Space]
+            public UVController speedUV;
+            public UVController altitudeUV;
 
 
 
@@ -253,6 +255,8 @@ namespace MGAssets
 
                 //Send values to Gui and Instruments
                 if (altitudeTxt != null) altitudeTxt.text = altitude.ToString("0").PadLeft(5);
+
+                altitudeUV.SetUV(altitude);
             }
             //
             void updateSpeed()
@@ -261,6 +265,8 @@ namespace MGAssets
 
                 //Send values to Gui and Instruments
                 if (speedTxt != null) speedTxt.text = speed.ToString("0").PadLeft(5);//.ToString("##0");
+
+                speedUV.SetUV(speed);
             }
             public float getSpeed()
             {

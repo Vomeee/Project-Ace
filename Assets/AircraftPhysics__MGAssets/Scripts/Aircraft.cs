@@ -307,7 +307,8 @@ namespace MGAssets
             public bool showGizmo = true;
             public float trailDuration = 25f;
 
-
+            [Space]
+            [SerializeField] GameObject firstPersonHUDObj;
 
             bool firstTime = true;
 
@@ -819,6 +820,9 @@ namespace MGAssets
 
                 if (index < cameras.Length) cameraIndex = index; else cameraIndex = cameras.Length - 1;
                 if (cameraIndex >= 0) cameras[cameraIndex].SetActive(true);
+
+                
+
             }
             public override void changeCamera()
             {
