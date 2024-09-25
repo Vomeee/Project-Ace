@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UVController : MonoBehaviour
 {
-    private RawImage image;
+    public RawImage image;
     public float unitValue;
     public float imageUnitCnt;
 

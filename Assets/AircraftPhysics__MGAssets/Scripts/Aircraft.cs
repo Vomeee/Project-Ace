@@ -835,6 +835,12 @@ namespace MGAssets
                     if (camNull >= cameras.Length) { camNull = 0; return; } else { camNull++; changeCamera(); return; }
                 }
 
+                if (cameraIndex == 0) firstPersonHUDObj.SetActive(true);
+                else
+                {
+                    firstPersonHUDObj.SetActive(false);
+                }
+
                 for (int i = 0; i <= cameras.Length - 1; i++)
                 {
                     if (cameras[i] != null)
