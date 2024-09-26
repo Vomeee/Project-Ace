@@ -28,14 +28,14 @@ namespace MGAssets
             [Space(5)]
             [Header("Altitude")]
             public bool useAltitude = true;
-            public float altitudeAmplitude = 10, altitudeOffSet = 0;
+            public float altitudeAmplitude = 5, altitudeOffSet = 0;
             [Range(0, 1)] public float altitudeFilterFactor = 0.5f;
             public TextMeshProUGUI altitudeTxt;
 
             [Space(5)]
             [Header("AirSpeed")]
             public bool useSpeed = true;
-            public float speedAmplitude = 10, speedOffSet = 0;
+            public float speedAmplitude = 5, speedOffSet = 0;
             [Range(0, 1)] public float speedFilterFactor = 0.25f;
             public TextMeshProUGUI speedTxt;
 

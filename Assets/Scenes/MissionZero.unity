@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.21111888, g: 0.058149647, b: 0.036026325, a: 1}
+  m_IndirectSpecularColor: {r: 0.21108171, g: 0.05813721, b: 0.036018983, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21978,7 +21978,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 700
+  m_Radius: 2500
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1693827035
 MonoBehaviour:
@@ -21995,7 +21995,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1433611593651808499}
   currentTarget: {fileID: 1969470906}
   coneAngle: 20
-  coneRadius: 300
+  coneRadius: 400
   transformBox: {fileID: 1969470906}
   currentTargetText: {fileID: 1637283460}
   potentialTargetTransforms: []
@@ -30797,17 +30797,17 @@ MonoBehaviour:
   isStall: 0
   isBraking: 0
   isGearDown: 1
-  pitchFactor: 5
-  rollFactor: 5
-  yawFactor: 3
-  thrustFactor: 1
+  pitchFactor: 6
+  rollFactor: 6
+  yawFactor: 4
+  thrustFactor: 2
   throttleResponseFactor: 0.01
   wingLiftFactor: 0.35
-  maxG: 9
+  maxG: 10
   minG: -2
-  maxSpeed: 200
-  stallSpeed: 35
-  maxAltitude: 1300
+  maxSpeed: 270
+  stallSpeed: 30
+  maxAltitude: 2500
   zeroAltitude: 0
   groundHeight: 1.44
   useAOA: 1
@@ -30815,7 +30815,7 @@ MonoBehaviour:
   wingAlpha: 3
   pitchAOAFactor: 0.01
   useStall: 1
-  maxAOAStall: 20
+  maxAOAStall: 10
   stallFactor: 0.01
   stallLiftFactor: 0.35
   stallDamp: 0.5
@@ -49559,6 +49559,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 2000743146341111153, guid: 504e44d1d3428df47b96d5c7b4df2aa8, type: 3}
+      propertyPath: maxDistance
+      value: 4000
+      objectReference: {fileID: 0}
     - target: {fileID: 2000743146341111153, guid: 504e44d1d3428df47b96d5c7b4df2aa8, type: 3}
       propertyPath: defaultSpeed
       value: 150

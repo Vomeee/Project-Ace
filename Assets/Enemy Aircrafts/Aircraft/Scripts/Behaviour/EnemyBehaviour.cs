@@ -9,9 +9,10 @@ public class EnemyAI : MonoBehaviour
     
     [SerializeField] Transform player; // 플레이어의 Transform
     [SerializeField] TargettingSystem targetingSystem;
+    float distanceToTarget;
 
     [Header("movingAI instances")]
-    #region
+    #region enemy moves
     [SerializeField] float maxSpeed;
     [SerializeField] float minSpeed;
     [SerializeField] float defaultSpeed;
@@ -245,7 +246,7 @@ public class EnemyAI : MonoBehaviour
             Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position);
 
             // 적과 플레이어 간의 거리 계산
-            float distanceToTarget = Vector3.Distance(mainCamera.transform.position, transform.position);
+            distanceToTarget = Vector3.Distance(mainCamera.transform.position, transform.position);
 
             if (screenPos.z > 0 && screenPos.x > 0 && screenPos.x < Screen.width && screenPos.y > 0 && screenPos.y < Screen.height)
             {
@@ -289,7 +290,7 @@ public class EnemyAI : MonoBehaviour
 
 
 
-                        distanceText.text = ((int)(distanceToTarget * 10)).ToString();
+                        distanceText.text = ((int)(distanceToTarget * 5)).ToString();
                 }
                 else
                 {
