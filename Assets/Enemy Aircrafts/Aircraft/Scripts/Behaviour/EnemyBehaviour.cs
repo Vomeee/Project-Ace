@@ -8,22 +8,163 @@ public class EnemyAI : MonoBehaviour
 {
     
     [SerializeField] Transform player; // 플레이어의 Transform
+    [SerializeField] TargettingSystem targetingSystem;
+
+    [Header("movingAI instances")]
+    #region
+    [SerializeField] float maxSpeed;
+    [SerializeField] float minSpeed;
+    [SerializeField] float defaultSpeed;
+
+    float speed;
+
+    [SerializeField] float speedLerpAmount;
+    [SerializeField] float turningForce;
+    [SerializeField] float turningTime;
+
+    [SerializeField] List<Transform> initialWaypoints;
+    Queue<Transform> waypointQueue;
+
+    Vector3 currentWaypoint;
+
+    float prevWaypointDistance;
+    float waypointDistance;
+    bool isComingClose;
+
+    float prevRotY;
+    float currRotY;
+    float rotateAmount;
+    float zRotateValue;
+
+    // Z Rotate Values
+    [SerializeField]
+    float zRotateMaxThreshold = 0.5f;
+    [SerializeField]
+    float zRotateAmount = 90;
+
+    [SerializeField]
+    float newWaypointDistance;
+    [SerializeField]
+    float waypointMinHeight;
+    [SerializeField]
+    float waypointMaxHeight;
+
+    [SerializeField]
+    GameObject waypointObject;
+
+    void ChangeWaypoint()
+    {
+        if (waypointQueue.Count == 0)
+        {
+            CreateWaypoint();
+        }
+        else
+        {
+            currentWaypoint = waypointQueue.Dequeue().position;
+        }
+
+        waypointDistance = Vector3.Distance(transform.position, currentWaypoint);
+        prevWaypointDistance = waypointDistance;
+        isComingClose = false;
+    }
+
+    void CreateWaypoint()
+    {
+        float distance = Random.Range(newWaypointDistance * 0.7f, newWaypointDistance);
+        float height = Random.Range(waypointMinHeight, waypointMaxHeight);
+        float angle = Random.Range(0, 360);
+        Vector3 directionVector = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
+        Vector3 waypointPosition = transform.position + directionVector * distance;
+
+        RaycastHit hit;
+        Physics.Raycast(waypointPosition, Vector3.down, out hit);
+
+        if (hit.distance != 0)
+        {
+            waypointPosition.y += height - hit.distance;
+        }
+        // New waypoint is below ground
+        else
+        {
+            Physics.Raycast(waypointPosition, Vector3.up, out hit);
+            waypointPosition.y += height + hit.distance;
+        }
+
+        Instantiate(waypointObject, waypointPosition, Quaternion.identity);
+
+        currentWaypoint = waypointPosition;
+    }
+
+    void CheckWaypoint()
+    {
+        if (currentWaypoint == null) return;
+        waypointDistance = Vector3.Distance(transform.position, currentWaypoint);
+
+        if (waypointDistance >= prevWaypointDistance) // Aircraft is going farther from the waypoint
+        {
+            if (isComingClose == true)
+            {
+                ChangeWaypoint();
+            }
+        }
+        else
+        {
+            isComingClose = true;
+        }
+
+        prevWaypointDistance = waypointDistance;
+    }
+
+    void Rotate()
+    {
+        if (currentWaypoint == null)
+            return;
+
+        Vector3 targetDir = currentWaypoint - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(targetDir);
+
+        float delta = Quaternion.Angle(transform.rotation, lookRotation);
+        if (delta > 0f)
+        {
+            float lerpAmount = Mathf.SmoothDampAngle(delta, 0.0f, ref rotateAmount, turningTime);
+            lerpAmount = 1.0f - (lerpAmount / delta);
+
+            Vector3 eulerAngle = lookRotation.eulerAngles;
+            eulerAngle.z += zRotateValue * zRotateAmount;
+            lookRotation = Quaternion.Euler(eulerAngle);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, lerpAmount);
+        }
+    }
+
+    void ZAxisRotate()
+    {
+        currRotY = transform.eulerAngles.y;
+        float diff = prevRotY - currRotY;
+
+        if (diff > 180) diff -= 360;
+        if (diff < -180) diff += 360;
+
+        prevRotY = transform.eulerAngles.y;
+        zRotateValue = Mathf.Lerp(zRotateValue, Mathf.Clamp(diff / zRotateMaxThreshold, -1, 1), turningForce * Time.deltaTime);
+    }
+
+    void Move()
+    {
+        transform.Translate(new Vector3(0, 0, speed) * Time.deltaTime);
+    }
+
+
+
+
+    #endregion
+
 
     [Header("EnemyInfo")]
     #region EnemyInfo
     public string aircraftName;
     [SerializeField] int aircraftHP = 100;
     [SerializeField] public int aircraftScore = 240;
-    #endregion
-
-    [Header("Moving logic instances")]
-    #region aircraft moving logic's variables and referecnces
-
-    [SerializeField] float speed = 10f; // 적 비행기의 속도
-    [SerializeField] float rotationSpeed = 2f; // 회전 속도
-
-    [SerializeField] float distanceBehindPlayer = 10f; // 플레이어의 뒤를 설정
-
     #endregion
     
     [Space]
@@ -62,14 +203,16 @@ public class EnemyAI : MonoBehaviour
     #endregion
 
     [Header("enemyState")]
+    #region states
     public bool isTargeted = false; // 타겟으로 지정되었는지 여부
     public bool isLockedOn = false;
+    #endregion
 
-    [SerializeField] TargettingSystem targetingSystem;
 
     [Header("Sound Sources")]
+    #region Audio Sources
     [SerializeField] AudioSource lockOnSound;
-
+    #endregion
 
     void Start()
     { 
@@ -78,23 +221,21 @@ public class EnemyAI : MonoBehaviour
         distanceText.color = normalColor;
         aircraftNameText.text = aircraftName;
         aircraftNameText.color = normalColor;
+
+        speed = defaultSpeed;
+        turningTime = 1 / turningForce;
+
+        waypointQueue = new Queue<Transform>();
+        foreach (Transform t in initialWaypoints)
+        {
+            waypointQueue.Enqueue(t);
+        }
+        ChangeWaypoint();
+
     }
 
     void Update() //자체 비행 로직.
     {
-        #region Move Logics
-
-        Vector3 targetPosition = player.position - player.forward * distanceBehindPlayer; // 플레이어를 타겟으로 하지않고, 그 뒤를 타겟으로.
-        // 플레이어를 향한 방향 계산
-        Vector3 direction = targetPosition - transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-        // 부드럽게 회전
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
-        #endregion
 
         #region UI updates
 
@@ -168,23 +309,22 @@ public class EnemyAI : MonoBehaviour
 
         #endregion
 
-        
-        sibal = lockOnUIImage.color;
+        CheckWaypoint();
+        Rotate();
+        ZAxisRotate();
+        Move();
     }
 
-    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, TagController tagController, GameManagement gm)
+    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, TagController tagController, GameManagement gm, GameObject waypointObj)
     {
         player = playerTransform;
         this.targetingSystem = targettingSystem;
         this.tagController = tagController;
         this.gameManagement = gm;
+        waypointObject = waypointObj;
     }
 
-
-
-
-
-
+    #region target, lock controls
 
     // 타겟으로 지정될 때 호출
     public void OnTargeted()
@@ -260,6 +400,10 @@ public class EnemyAI : MonoBehaviour
         
     }
 
+    #endregion
+
+    #region coroutines(minimap, targetBox)
+
     private IEnumerator FlickerEffect() //타겟이지만 록온되지 않았을 때, ui가 깜빡이는 효과 구현.
     {
         isFlickering = true;
@@ -285,6 +429,10 @@ public class EnemyAI : MonoBehaviour
             yield return new WaitForSeconds(0.25f);
         }
     }
+
+    #endregion
+
+    #region info controllers
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -331,6 +479,6 @@ public class EnemyAI : MonoBehaviour
         Destroy(gameObject);
     }
 
-
+    #endregion
 
 }

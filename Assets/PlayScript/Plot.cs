@@ -12,6 +12,7 @@ public class Plot : MonoBehaviour
     [SerializeField] TargettingSystem targettingSystem;
     [SerializeField] TagController tagController;
     [SerializeField] GameManagement gameManagement;
+    [SerializeField] GameObject waypointObject;
 
     #endregion
 
@@ -53,7 +54,7 @@ public class Plot : MonoBehaviour
 
             if (enemyAI1 != null ) 
             {
-                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement);
+                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject);
             }
             else
             {
