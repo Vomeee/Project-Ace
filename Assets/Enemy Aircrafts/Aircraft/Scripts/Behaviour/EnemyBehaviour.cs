@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -53,11 +54,30 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     GameObject waypointObject;
 
+    [SerializeField]
+    float attackRate;
+    [SerializeField]
+    float attackStartDistance;
+    [SerializeField]
+    int enemyState; // 0 : free flying, 1 : tracking player, 2 : evading
+
     void ChangeWaypoint()
     {
         if (waypointQueue.Count == 0)
         {
-            CreateWaypoint();
+            float attackValue = UnityEngine.Random.Range(0f, 1f);
+            if (attackValue > attackRate && attackStartDistance > distanceToTarget)
+            {
+                Debug.Log("now Attacking");
+                enemyState = 1;
+            }
+            else
+            {
+                enemyState = 0;
+            }
+
+            
+            CreateWaypoint();            
         }
         else
         {
@@ -71,29 +91,39 @@ public class EnemyAI : MonoBehaviour
 
     void CreateWaypoint()
     {
-        float distance = Random.Range(newWaypointDistance * 0.7f, newWaypointDistance);
-        float height = Random.Range(waypointMinHeight, waypointMaxHeight);
-        float angle = Random.Range(0, 360);
-        Vector3 directionVector = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
-        Vector3 waypointPosition = transform.position + directionVector * distance;
-
-        RaycastHit hit;
-        Physics.Raycast(waypointPosition, Vector3.down, out hit);
-
-        if (hit.distance != 0)
+        if (enemyState == 0) //free fly state make waypoint
         {
-            waypointPosition.y += height - hit.distance;
+            float distance = UnityEngine.Random.Range(newWaypointDistance * 0.7f, newWaypointDistance);
+            float height = UnityEngine.Random.Range(waypointMinHeight, waypointMaxHeight);
+            float angle = UnityEngine.Random.Range(0, 360);
+            Vector3 directionVector = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
+            Vector3 waypointPosition = transform.position + directionVector * distance;
+
+            RaycastHit hit;
+            Physics.Raycast(waypointPosition, Vector3.down, out hit);
+
+            if (hit.distance != 0)
+            {
+                waypointPosition.y += height - hit.distance;
+            }
+            // New waypoint is below ground
+            else
+            {
+                Physics.Raycast(waypointPosition, Vector3.up, out hit);
+                waypointPosition.y += height + hit.distance;
+            }
+
+            Instantiate(waypointObject, waypointPosition, Quaternion.identity);
+
+            currentWaypoint = waypointPosition;
         }
-        // New waypoint is below ground
-        else
+        else if (enemyState == 1) // enemy tracking player.
         {
-            Physics.Raycast(waypointPosition, Vector3.up, out hit);
-            waypointPosition.y += height + hit.distance;
+            Vector3 playerPosition = player.position;
+            Instantiate(waypointObject, playerPosition, Quaternion.identity);
+
+            currentWaypoint = playerPosition;
         }
-
-        Instantiate(waypointObject, waypointPosition, Quaternion.identity);
-
-        currentWaypoint = waypointPosition;
     }
 
     void CheckWaypoint()

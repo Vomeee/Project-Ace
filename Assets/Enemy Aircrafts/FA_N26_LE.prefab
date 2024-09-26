@@ -1263,11 +1263,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   targetingSystem: {fileID: 0}
-  maxSpeed: 350
+  maxSpeed: 150
   minSpeed: 100
-  defaultSpeed: 150
+  defaultSpeed: 125
   speedLerpAmount: 1
-  turningForce: 1
+  turningForce: 0.7
   turningTime: 0
   initialWaypoints: []
   zRotateMaxThreshold: 0.5
@@ -1276,6 +1276,9 @@ MonoBehaviour:
   waypointMinHeight: 100
   waypointMaxHeight: 300
   waypointObject: {fileID: 0}
+  attackRate: 0.5
+  attackStartDistance: 800
+  enemyState: 0
   aircraftName: F/A-26
   aircraftHP: 100
   aircraftScore: 800
@@ -1290,7 +1293,7 @@ MonoBehaviour:
   aircraftNameText: {fileID: 1752255555210336166}
   minDistance: 10
   maxDistance: 4000
-  minSize: {x: 10, y: 10}
+  minSize: {x: 100, y: 100}
   maxSize: {x: 100, y: 100}
   isFlickering: 0
   isMinimapFlickering: 0
@@ -1393,7 +1396,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1d11412570f90ba4caf1b0b6dea27152, type: 2}
+  - {fileID: 2100000, guid: 93c97da0a9a11174ab89575db81f7917, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

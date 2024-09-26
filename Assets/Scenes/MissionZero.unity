@@ -21995,7 +21995,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1433611593651808499}
   currentTarget: {fileID: 1969470906}
   coneAngle: 20
-  coneRadius: 400
+  coneRadius: 500
   transformBox: {fileID: 1969470906}
   currentTargetText: {fileID: 1637283460}
   potentialTargetTransforms: []
@@ -30802,29 +30802,29 @@ MonoBehaviour:
   yawFactor: 4
   thrustFactor: 2
   throttleResponseFactor: 0.01
-  wingLiftFactor: 0.35
+  wingLiftFactor: 3
   maxG: 10
   minG: -2
   maxSpeed: 270
-  stallSpeed: 30
+  stallSpeed: 20
   maxAltitude: 2500
   zeroAltitude: 0
   groundHeight: 1.44
   useAOA: 1
-  maxAOA: 40
+  maxAOA: 25
   wingAlpha: 3
   pitchAOAFactor: 0.01
   useStall: 1
-  maxAOAStall: 10
+  maxAOAStall: 30
   stallFactor: 0.01
   stallLiftFactor: 0.35
   stallDamp: 0.5
-  stallAlert: 5
+  stallAlert: 2
   useFin: 1
   finFactor: 0.65
   finDamp: 0.7
   finMinVel: 5
-  dragFactorAOA: 50
+  dragFactorAOA: 40
   altitudeDragFactor: 0.25
   damageDrag: 0.25
   minDrag: 0.01
@@ -49556,6 +49556,10 @@ PrefabInstance:
       value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 2000743146341111153, guid: 504e44d1d3428df47b96d5c7b4df2aa8, type: 3}
+      propertyPath: attackRate
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000743146341111153, guid: 504e44d1d3428df47b96d5c7b4df2aa8, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 963194227}
@@ -49587,6 +49591,10 @@ PrefabInstance:
       propertyPath: targetingSystem
       value: 
       objectReference: {fileID: 1693827035}
+    - target: {fileID: 2000743146341111153, guid: 504e44d1d3428df47b96d5c7b4df2aa8, type: 3}
+      propertyPath: attackStartDistance
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 4216472155410813693, guid: 504e44d1d3428df47b96d5c7b4df2aa8, type: 3}
       propertyPath: m_Camera
       value: 

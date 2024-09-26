@@ -104,9 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  turningForce: 3
-  maxSpeed: 300
-  accelAmount: 100
+  turningForce: 5
+  maxSpeed: 200
+  accelAmount: 35
   lifetime: 10
   speed: 0
   enemyHitEffect: {fileID: 159918, guid: 2a197c3bd8020c34184208f836fd5c55, type: 3}
