@@ -9,6 +9,7 @@ TagManager:
   - trash
   - stdm
   - Ground
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX

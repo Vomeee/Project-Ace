@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,18 +53,25 @@ public class EnemyAI : MonoBehaviour
     GameObject waypointObject;
 
     [SerializeField]
+    float playerTrackingRate;
+    [SerializeField]
+    float trackingStartDistance;
+    [SerializeField]
     float attackRate;
     [SerializeField]
-    float attackStartDistance;
-    [SerializeField]
     int enemyState; // 0 : free flying, 1 : tracking player, 2 : evading
+
+    [SerializeField]
+    GameObject enemyMissilePrefab;
+    [SerializeField]
+    BoxCollider attackRangeBox;
 
     void ChangeWaypoint()
     {
         if (waypointQueue.Count == 0)
         {
-            float attackValue = UnityEngine.Random.Range(0f, 1f);
-            if (attackValue > attackRate && attackStartDistance > distanceToTarget)
+            float trackingValue = UnityEngine.Random.Range(0f, 1f);
+            if (trackingValue > playerTrackingRate && trackingStartDistance > distanceToTarget)
             {
                 Debug.Log("now Attacking");
                 enemyState = 1;
@@ -183,6 +188,19 @@ public class EnemyAI : MonoBehaviour
     void Move()
     {
         transform.Translate(new Vector3(0, 0, speed) * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log("Triggered");
+        if(other.CompareTag("Player"))
+        {
+            GameObject enemyMsl = Instantiate(enemyMissilePrefab, transform.position, transform.rotation); //미사일 생성
+            EnemySTDM missileScript = enemyMsl.GetComponent<EnemySTDM>(); //나중에 미사일 이름 바꿔서 따로 만들기.
+
+            Debug.Log("missile launch");
+            missileScript.Launch(player, 30);
+        }
     }
 
 
@@ -346,13 +364,14 @@ public class EnemyAI : MonoBehaviour
         Move();
     }
 
-    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, TagController tagController, GameManagement gm, GameObject waypointObj)
+    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, TagController tagController, GameManagement gm, GameObject waypointObj, GameObject enemyMissile)
     {
         player = playerTransform;
         this.targetingSystem = targettingSystem;
         this.tagController = tagController;
         this.gameManagement = gm;
         waypointObject = waypointObj;
+        enemyMissilePrefab = enemyMissile;
     }
 
     #region target, lock controls
