@@ -32,8 +32,9 @@ public class WeaponSystem : MonoBehaviour
     public bool isGunFiring = false;
     private float fireCooldown;
 
-    public Transform gunPointL; // 발사 위치
-    public Transform gunPointR;
+    public Transform gunPointL; // 발사 위치 L
+    public Transform gunPointR; // 발사 위치 R
+    [SerializeField] Transform currentGunPoint; // 현재 발사 위치
     public AudioSource gunAudioSource; // AudioSource를 참조
     #endregion
 
@@ -47,11 +48,11 @@ public class WeaponSystem : MonoBehaviour
     [SerializeField] AudioSource weaponChangeToSTDMSound;
     
     
-    public Transform playerTransform;
+    public Transform playerTransform; //무기 생성시 활용
+    public Transform currentTargetTransform; //firemissile 시 활용
 
-    public Transform currentTargetTransform;
-
-    public TargettingSystem targettingSystem;
+    public TagController tagController;
+    public TargettingSystem targettingSystem; //현재 타겟 받아오는데 필요함.
 
     public float aircraftSpeed; //기체 현재 속도
 
@@ -167,13 +168,9 @@ public class WeaponSystem : MonoBehaviour
         aircraftSpeed = infoGetter.getSpeed();
 
         #endregion
-
-        
-
-
     }
 
-    [SerializeField] Transform currentGunPoint;
+    
 
     void FireGun()
     {
@@ -234,14 +231,14 @@ public class WeaponSystem : MonoBehaviour
         STDM missileScript = stdm.GetComponent<STDM>();
 
        
-        currentTargetTransform = targettingSystem.currentTarget;
+        currentTargetTransform = targettingSystem.currentTargetTransform;
         if(targettingSystem.IsInCone(currentTargetTransform))
         {
-            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 ); ////////확인!!!!!
+            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController); ////////확인!!!!!
         }
         else
         {
-            missileScript.Launch(null, infoGetter.getSpeed() / 10 + 20);
+            missileScript.Launch(null, infoGetter.getSpeed() / 10 + 20, tagController);
         }
         
         missileCount--;

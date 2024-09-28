@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class STDM : MonoBehaviour
 {
+
+    [Header("missile attributes")]
     public Transform target; // 추적할 타겟
     public float turningForce; // 회전 속도
-
     public float maxSpeed; // 최대 속도
     public float accelAmount; // 가속량
     public float lifetime; // 미사일의 수명
     public float speed; // 현재 속도
+
+    public float boresightAngle;// 미사일의 추적한계 각도.
+
+    [Space]
+    [Header("References")]
+
+    public TagController tagController;
 
     [SerializeField] private GameObject enemyHitEffect; //적기 명중시 폭파효과
     [SerializeField] private GameObject groundHitEffect;
@@ -18,8 +26,10 @@ public class STDM : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] CapsuleCollider mslCollider;
 
-    public void Launch(Transform target, float launchSpeed)
+    public void Launch(Transform target, float launchSpeed, TagController tagController)
     {
+        this.tagController = tagController;
+
         // 타겟이 존재할 때만 할당
         if (target != null)
         {
@@ -33,11 +43,22 @@ public class STDM : MonoBehaviour
     void LookAtTarget()
     {
         // 타겟이 존재할 때만 추적
-        if (target != null)
+        if (target == null)
+            return;
+
+        Vector3 targetDir = target.position - transform.position;
+        float angle = Vector3.Angle(targetDir, transform.forward);
+
+        if (angle > boresightAngle)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(target.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turningForce * Time.deltaTime);
+            target = null;
+            tagController.ShowMissedTag();
+
+            return;
         }
+
+        Quaternion lookRotation = Quaternion.LookRotation(targetDir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turningForce * Time.deltaTime);
     }
 
     void Start()

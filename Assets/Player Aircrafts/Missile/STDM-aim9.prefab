@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4556894659233695607}
+  - {fileID: 221320926142150276}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5333391382566999229
@@ -104,12 +105,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  turningForce: 5
+  turningForce: 3
   maxSpeed: 200
-  accelAmount: 35
+  accelAmount: 70
   lifetime: 10
   speed: 0
-  enemyHitEffect: {fileID: 159918, guid: 2a197c3bd8020c34184208f836fd5c55, type: 3}
+  boresightAngle: 90
+  tagController: {fileID: 0}
+  enemyHitEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   groundHitEffect: {fileID: 159918, guid: 2a197c3bd8020c34184208f836fd5c55, type: 3}
   rb: {fileID: -845763629072080048}
   mslCollider: {fileID: -6781264608765902719}
@@ -163,6 +166,37 @@ CapsuleCollider:
   m_Height: 0.899633
   m_Direction: 1
   m_Center: {x: 0.021017492, y: 1.2973465, z: 3.3907518}
+--- !u!1 &5775656626799418289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221320926142150276}
+  m_Layer: 8
+  m_Name: TrackingLimit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &221320926142150276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5775656626799418289}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5077902484446550810}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7517119601517427934
 GameObject:
   m_ObjectHideFlags: 0

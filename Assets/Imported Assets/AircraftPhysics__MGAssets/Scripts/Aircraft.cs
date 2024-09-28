@@ -9,7 +9,9 @@ namespace MGAssets
 
         public class Aircraft : FlightScript
         {
-            //public static Aircraft current;
+            [Header("player combat info")]
+            public int playerHP = 100;
+
 
             [Header("Status")]
             [Space]
@@ -780,20 +782,31 @@ namespace MGAssets
             // Collision Sounds and Msgs
             void OnCollisionEnter(Collision collision)
             {
-                if (collision.relativeVelocity.magnitude < 0.1f) return;
-                else if (collision.relativeVelocity.magnitude <= touchVel)
+                if (collision.gameObject.CompareTag("Ground"))
                 {
-                    if (touchMSG != string.Empty && !isDamaged) HudMsg.Show(touchMSG, 0.75f);
-                    if (touchSND != null) AircraftSnd.Play(touchSND);
+                    if (collision.relativeVelocity.magnitude < 0.1f) return;
+                    else if (collision.relativeVelocity.magnitude <= touchVel)
+                    {
+                        if (touchMSG != string.Empty && !isDamaged) HudMsg.Show(touchMSG, 0.75f);
+                        if (touchSND != null) AircraftSnd.Play(touchSND);
+                    }
+                    else if (collision.relativeVelocity.magnitude < damageVel || (!allowDamage && collision.relativeVelocity.magnitude < explodeVel))
+                    {
+                        if (hitMSG != string.Empty && !isDamaged) HudMsg.Show(hitMSG, 0.75f);
+                        if (hitSND != null) AircraftSnd.Play(hitSND);
+                    }
+                    //else if (allowDamage && !isDamaged && collision.relativeVelocity.magnitude > damageVel) damage();
+                    else if (allowDamage && !isDamaged && collision.relativeVelocity.magnitude < explodeVel) damage();
+                    else if (!isDamaged && collision.relativeVelocity.magnitude >= explodeVel) explode();
                 }
-                else if (collision.relativeVelocity.magnitude < damageVel || (!allowDamage && collision.relativeVelocity.magnitude < explodeVel))
+                else
                 {
-                    if (hitMSG != string.Empty && !isDamaged) HudMsg.Show(hitMSG, 0.75f);
-                    if (hitSND != null) AircraftSnd.Play(hitSND);
+                    if (playerHP < 0) explode();
+                    return;
                 }
-                //else if (allowDamage && !isDamaged && collision.relativeVelocity.magnitude > damageVel) damage();
-                else if (allowDamage && !isDamaged && collision.relativeVelocity.magnitude < explodeVel) damage();
-                else if (!isDamaged && collision.relativeVelocity.magnitude >= explodeVel) explode();
+
+                
+                
 
             }
             //////////////////////////////////////// Collision Sounds, Msgs, Damage and Recovery-StartState

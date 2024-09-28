@@ -915,11 +915,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   targetingSystem: {fileID: 0}
-  maxSpeed: 250
-  minSpeed: 100
-  defaultSpeed: 150
-  speedLerpAmount: 1
-  turningForce: 0.7
+  maxSpeed: 200
+  minSpeed: 80
+  defaultSpeed: 100
+  speedLerpAmount: 0.8
+  turningForce: 0.5
   turningTime: 0
   initialWaypoints: []
   zRotateMaxThreshold: 0.5
@@ -930,9 +930,12 @@ MonoBehaviour:
   waypointObject: {fileID: 6206487450123874273, guid: 82d9c450415cd0849a601e9a3a956998, type: 3}
   playerTrackingRate: 0.6
   trackingStartDistance: 700
-  attackRate: 0.8
+  shootRate: 0.8
+  canShoot: 0
+  currentMissileCoolDown: 0
+  missileCoolDown: 3
   enemyState: 0
-  enemyMissilePrefab: {fileID: 1765958663548051430, guid: 7ed9e1cb9fe7d914289cbfa93628aa96, type: 3}
+  enemyMissilePrefab: {fileID: 1765958663548051430, guid: 7cf8732bbef4a504b9e424390bf57538, type: 3}
   attackRangeBox: {fileID: 63161978700544517}
   aircraftName: F/A-26
   aircraftHP: 100
@@ -960,7 +963,7 @@ MonoBehaviour:
   isTargeted: 0
   isLockedOn: 0
   lockOnSound: {fileID: 2880194212463469048}
-  explodeEffect: {fileID: 159918, guid: 2a197c3bd8020c34184208f836fd5c55, type: 3}
+  explodeEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!54 &632983217856541080
 Rigidbody:
   m_ObjectHideFlags: 0

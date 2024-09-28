@@ -57,7 +57,13 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     float trackingStartDistance;
     [SerializeField]
-    float attackRate;
+    float shootRate; //범위안에 들어오면 쏠 확률
+    [SerializeField]
+    bool canShoot; // 미사일 발사 가능 여부
+    [SerializeField]
+    float currentMissileCoolDown; //현재 쿨다운 저장변수
+    [SerializeField]
+    float missileCoolDown; // 미사일 활성화 시간
     [SerializeField]
     int enemyState; // 0 : free flying, 1 : tracking player, 2 : evading
 
@@ -65,6 +71,8 @@ public class EnemyAI : MonoBehaviour
     GameObject enemyMissilePrefab;
     [SerializeField]
     BoxCollider attackRangeBox;
+    [SerializeField]
+    
 
     void ChangeWaypoint()
     {
@@ -195,11 +203,17 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("Triggered");
         if(other.CompareTag("Player"))
         {
-            GameObject enemyMsl = Instantiate(enemyMissilePrefab, transform.position, transform.rotation); //미사일 생성
-            EnemySTDM missileScript = enemyMsl.GetComponent<EnemySTDM>(); //나중에 미사일 이름 바꿔서 따로 만들기.
+            if(canShoot && Random.Range(0,1) < shootRate)
+            {
+                GameObject enemyMsl = Instantiate(enemyMissilePrefab, transform.position, transform.rotation); //미사일 생성
+                EnemySTDM missileScript = enemyMsl.GetComponent<EnemySTDM>(); //나중에 미사일 이름 바꿔서 따로 만들기.
 
-            Debug.Log("missile launch");
-            missileScript.Launch(player, 30);
+                Debug.Log("missile launch");
+                missileScript.Launch(player, 30);
+
+                canShoot = false;
+            }
+            
         }
     }
 
@@ -281,6 +295,8 @@ public class EnemyAI : MonoBehaviour
         }
         ChangeWaypoint();
 
+        currentMissileCoolDown = 0;
+
     }
 
     void Update() //자체 비행 로직.
@@ -358,6 +374,17 @@ public class EnemyAI : MonoBehaviour
 
         #endregion
 
+        //Missile cooldown update.
+        if (!canShoot)
+        {
+            currentMissileCoolDown += Time.deltaTime;
+            
+            if(currentMissileCoolDown > missileCoolDown)
+            {
+                canShoot = true;
+            }
+        }
+
         CheckWaypoint();
         Rotate();
         ZAxisRotate();
@@ -366,8 +393,8 @@ public class EnemyAI : MonoBehaviour
 
     public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, TagController tagController, GameManagement gm, GameObject waypointObj, GameObject enemyMissile)
     {
-        player = playerTransform;
-        this.targetingSystem = targettingSystem;
+        player = playerTransform; //필수, 만약 동료 추가시 initalize 다원화 필요,
+        this.targetingSystem = targettingSystem; //반드시 필요함.
         this.tagController = tagController;
         this.gameManagement = gm;
         waypointObject = waypointObj;

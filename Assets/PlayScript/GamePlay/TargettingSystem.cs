@@ -4,42 +4,46 @@ using UnityEngine;
 
 public class TargettingSystem : MonoBehaviour
 {
+    [Header("player-enemy References")]
     public Transform playerTransform;
-    public Transform currentTarget;
-    public float coneAngle = 20f;
+    public Transform currentTargetTransform; //현재 타겟의 Transform.
+    public EnemyAI currentEnemy; //현재 타겟의 script.
+
+
+    public float coneAngle = 25f;
     public float coneRadius = 400f;
 
     public Transform transformBox;
 
     [SerializeField]
-    TextMeshProUGUI currentTargetText;
+    TextMeshProUGUI currentTargetText; //현재 타겟의 이름과 점수를 담는 좌상단 UI 컴포넌트.
 
     [SerializeField]
-    private List<Transform> potentialTargetTransforms = new List<Transform>();
+    private List<Transform> potentialTargetTransforms = new List<Transform>(); //일정 거리 안의 적들의 Transform을 담는 list.
 
   
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) // 예를 들어 Tab 키를 타겟 전환 키로 사용
+        if (Input.GetKeyDown(KeyCode.Tab)) //Tab 키를 타겟 전환 키로 사용
         {
             SwitchTarget();
         }
 
-        if (currentTarget != null)
+        if (currentTargetTransform != null)
         {
-            if (IsInCone(currentTarget))
+            if (IsInCone(currentTargetTransform))
             {
-                LockOnTarget(currentTarget);
+                LockOnTarget(currentTargetTransform);
             }
             else
             {
-                UnlockTarget(currentTarget);
+                UnlockTarget(currentTargetTransform);
             }
         }
         else
         {
-            currentTarget = transformBox;
+            currentTargetTransform = transformBox;
         }
     }
 
@@ -61,27 +65,23 @@ public class TargettingSystem : MonoBehaviour
 
     private void LockOnTarget(Transform target)
     {
-        EnemyAI enemy = target.GetComponent<EnemyAI>();
-        if (enemy != null)
+        if (currentEnemy != null)
         {
-            enemy.OnLockedOn();
+            currentEnemy.OnLockedOn();
         }
     }
 
     private void UnlockTarget(Transform target)
     {
-        EnemyAI enemy = target.GetComponent<EnemyAI>();
-        if (enemy != null)
+        if (currentEnemy != null)
         {
-            enemy.OnLockedOff();
+            currentEnemy.OnLockedOff();
         }
 
     }
 
     public void AddTarget(Transform target)
     {
-        
-
         if (!potentialTargetTransforms.Contains(target))
         {          
             potentialTargetTransforms.Add(target);
@@ -98,7 +98,7 @@ public class TargettingSystem : MonoBehaviour
             Debug.Log("Target removed: " + target.name);
 
             // 타겟이 제거되었을 때 현재 타겟인 경우 처리
-            if (currentTarget == target)
+            if (currentTargetTransform == target)
             {
                 UnlockTarget(target);
                 SwitchTarget(); // 다른 타겟으로 전환
@@ -120,7 +120,7 @@ public class TargettingSystem : MonoBehaviour
         foreach (Transform target in potentialTargetTransforms)
         {
             // 현재 타겟은 스킵
-            if (target == currentTarget)
+            if (target == currentTargetTransform)
                 continue;
 
             bool isInCone = IsInCone(target);
@@ -145,9 +145,9 @@ public class TargettingSystem : MonoBehaviour
         }
 
         // 이전 타겟의 상태 업데이트
-        if (currentTarget != null)
+        if (currentTargetTransform != null)
         {
-            EnemyAI previousTarget = currentTarget.GetComponent<EnemyAI>();
+            EnemyAI previousTarget = currentTargetTransform.GetComponent<EnemyAI>();
             if (previousTarget != null)
             {
                 previousTarget.OnLockedOff();
@@ -156,21 +156,22 @@ public class TargettingSystem : MonoBehaviour
         }
 
         // 가장 적합한 타겟으로 전환
-        currentTarget = bestTarget;
+        currentTargetTransform = bestTarget;
 
         // 새로운 타겟의 상태 업데이트
-        if (currentTarget != null)
+        if (currentTargetTransform != null)
         {
-            EnemyAI newTarget = currentTarget.GetComponent<EnemyAI>();
+            EnemyAI newTarget = currentTargetTransform.GetComponent<EnemyAI>();
             if (newTarget != null)
             {
                 newTarget.OnTargeted();
+                currentEnemy = newTarget;
             }
             
 
             Debug.Log(newTarget.name);
 
-            currentTargetText.text = "TARGET <mspace=30>" + newTarget.aircraftName + "</mspace> <mspace=30> +" + newTarget.aircraftScore + "</mspace>";
+            currentTargetText.text = "TARGET <mspace=30>" + newTarget.aircraftName + "</mspace><mspace=30> +" + newTarget.aircraftScore + "</mspace>";
 
         }
     }

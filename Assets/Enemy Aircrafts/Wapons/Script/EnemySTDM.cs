@@ -1,22 +1,34 @@
+using MGAssets.AircraftPhysics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySTDM : MonoBehaviour
 {
-    public Transform target; // 추적할 타겟
-    public float turningForce; // 회전 속도
 
+    public TagController tagController;
+    public Transform target; // 추적할 타겟
+
+    [Header("Attributes")]
+    public float turningForce; // 회전 속도
     public float maxSpeed; // 최대 속도
     public float accelAmount; // 가속량
     public float lifetime; // 미사일의 수명
     public float speed; // 현재 속도
+    public int damage; //미사일의 대미지
 
+    public float boresightAngle; //한계 추적 각도. 90도 base
+
+
+    [Space]
+    [Header("Effect and sounds")]
     [SerializeField] private GameObject enemyHitEffect; //적기 명중시 폭파효과
     [SerializeField] private GameObject groundHitEffect;
 
     [SerializeField] Rigidbody rb;
     [SerializeField] CapsuleCollider mslCollider;
+
+
 
     public void Launch(Transform target, float launchSpeed)
     {
@@ -34,11 +46,23 @@ public class EnemySTDM : MonoBehaviour
     void LookAtTarget()
     {
         // 타겟이 존재할 때만 추적
-        if (target != null)
+        if (target == null)
+            return;
+
+        Vector3 targetDir = target.position - transform.position;
+        float angle = Vector3.Angle(targetDir, transform.forward);
+
+        if (angle > boresightAngle)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(target.position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turningForce * Time.deltaTime);
+            Debug.Log("evaded");
+            target = null;
+            return;
+
+            
         }
+
+        Quaternion lookRotation = Quaternion.LookRotation(targetDir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, turningForce * Time.deltaTime);
     }
 
     void Start()
@@ -73,13 +97,23 @@ public class EnemySTDM : MonoBehaviour
 
     void OnCollisionEnter(Collision collision) //땅이든, 적이든... 파괴.
     {
-
+        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
+            
             // 적기에 부딪혔을 때 효과 생성
             Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+            
+            Aircraft playerAircraft = collision.gameObject.GetComponent<Aircraft>();
+            if (playerAircraft != null)
+            {
+                playerAircraft.playerHP -= damage;
+            }
+
 
             Debug.Log("missilehittoplayer");
+
+            Destroy(gameObject);
         }
 
         // 충돌한 오브젝트의 태그가 "Ground"일 경우
@@ -87,9 +121,17 @@ public class EnemySTDM : MonoBehaviour
         {
             // 땅에 닿았을 때 효과 생성
             Instantiate(groundHitEffect, transform.position, Quaternion.identity);
+
+            
         }
 
         // 총알 파괴
-        //Destroy(gameObject);
+        
     }
+
+    //private void OnTriggerExit(Collider other) //플레이어가 감지범위에서 탈출 -> Target lost. 지금 상황에서 가장 적합한 해법 같음.
+    //{
+    //    Debug.Log("Target (player) escaped!");  
+    //    target = null;
+    //}
 }
