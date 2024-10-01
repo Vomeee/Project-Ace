@@ -249,14 +249,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float minDistance = 10f;
     [SerializeField] float maxDistance = 650f;
 
-    [SerializeField] Vector2 minSize = new Vector2(10f, 10f); // UI의 최소 크기
-    [SerializeField] Vector2 maxSize = new Vector2(100f, 100f); // UI의 최대 크기
-
     [SerializeField] bool isFlickering = false;
     [SerializeField] bool isMinimapFlickering = false;
 
     [SerializeField] GameObject lockOnSquare;
-    [SerializeField] Color sibal;
 
     [SerializeField] TagController tagController;
     [SerializeField] GameManagement gameManagement;
@@ -318,12 +314,8 @@ public class EnemyAI : MonoBehaviour
                 {
                     lockOnUIRectTransform.gameObject.SetActive(true);
 
-                    // 거리 기반으로 크기 조정
-                    float t = Mathf.InverseLerp(minDistance, maxDistance, distanceToTarget);
-                    lockOnUIRectTransform.sizeDelta = Vector2.Lerp(minSize, maxSize, t);
-
                     // 화면 좌표를 UI 캔버스 좌표로 변환
-                    lockOnUIRectTransform.position = screenPos;
+                    lockOnUIRectTransform.position = new Vector3(screenPos.x, screenPos.y, 0);
 
                     if (isLockedOn)
                     {

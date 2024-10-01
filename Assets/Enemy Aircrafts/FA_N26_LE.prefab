@@ -915,11 +915,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   targetingSystem: {fileID: 0}
-  maxSpeed: 200
-  minSpeed: 80
-  defaultSpeed: 100
+  maxSpeed: 300
+  minSpeed: 150
+  defaultSpeed: 150
   speedLerpAmount: 0.8
-  turningForce: 0.5
+  turningForce: 0.7
   turningTime: 0
   initialWaypoints: []
   zRotateMaxThreshold: 0.5
@@ -950,13 +950,10 @@ MonoBehaviour:
   distanceText: {fileID: 4563761655280617725}
   aircraftNameText: {fileID: 8562796627557307585}
   minDistance: 10
-  maxDistance: 4000
-  minSize: {x: 100, y: 100}
-  maxSize: {x: 100, y: 100}
+  maxDistance: 20000
   isFlickering: 0
   isMinimapFlickering: 0
   lockOnSquare: {fileID: 4515811502881128648}
-  sibal: {r: 0, g: 0, b: 0, a: 0}
   tagController: {fileID: 0}
   gameManagement: {fileID: 0}
   minimapSprite: {fileID: 2099489297337692333}

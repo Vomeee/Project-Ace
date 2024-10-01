@@ -137,9 +137,9 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.1839838
-  m_Height: 0.899633
-  m_Direction: 1
+  m_Radius: 1
+  m_Height: 4
+  m_Direction: 2
   m_Center: {x: 0.021017492, y: 1.2973465, z: 3.3907518}
 --- !u!114 &7157974430311801725
 MonoBehaviour:
@@ -160,10 +160,10 @@ MonoBehaviour:
   accelAmount: 60
   lifetime: 10
   speed: 10
-  damage: 5
+  damage: 3
   boresightAngle: 90
-  enemyHitEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
-  groundHitEffect: {fileID: 159918, guid: 2a197c3bd8020c34184208f836fd5c55, type: 3}
+  enemyHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}
+  groundHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}
   rb: {fileID: -845763629072080048}
   mslCollider: {fileID: -6781264608765902719}
 --- !u!1 &7517119601517427934
@@ -281,7 +281,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
+      key0: {r: 0.9716981, g: 0.8257741, b: 0.28875935, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -313,7 +313,7 @@ TrailRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
-    textureScale: {x: 10, y: 10}
+    textureScale: {x: 50, y: 50}
     shadowBias: 0
     generateLightingData: 0
   m_MinVertexDistance: 0.1

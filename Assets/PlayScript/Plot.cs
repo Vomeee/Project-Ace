@@ -41,7 +41,7 @@ public class Plot : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         // 3초 이상 경과한 경우
-        if (elapsedTime > 10.0f)
+        if (elapsedTime > 5.0f)
         {
 
             Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;

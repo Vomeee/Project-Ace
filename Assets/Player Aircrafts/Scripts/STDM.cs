@@ -13,6 +13,7 @@ public class STDM : MonoBehaviour
     public float lifetime; // 미사일의 수명
     public float speed; // 현재 속도
 
+    public float startSpeed = 50;
     public float boresightAngle;// 미사일의 추적한계 각도.
 
     [Space]
@@ -26,6 +27,8 @@ public class STDM : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] CapsuleCollider mslCollider;
 
+    [SerializeField] float currentTime;
+
     public void Launch(Transform target, float launchSpeed, TagController tagController)
     {
         this.tagController = tagController;
@@ -35,9 +38,10 @@ public class STDM : MonoBehaviour
         {
             this.target = target;
         }
+        
 
         // 발사 속도를 설정
-        speed = launchSpeed;
+        speed = launchSpeed + startSpeed;
     }
 
     void LookAtTarget()
@@ -64,7 +68,7 @@ public class STDM : MonoBehaviour
     void Start()
     {
         // 수명이 끝나면 미사일을 제거
-        Destroy(gameObject, lifetime);
+        //Destroy(gameObject, lifetime);
         rb = GetComponent<Rigidbody>();
         mslCollider = GetComponent<CapsuleCollider>();
     }
@@ -72,6 +76,9 @@ public class STDM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 누적 시간을 더해줌
+        currentTime += Time.deltaTime;
+
         // 속도가 maxSpeed를 넘지 않도록 가속
         if (speed < maxSpeed)
         {
@@ -89,7 +96,15 @@ public class STDM : MonoBehaviour
             LookAtTarget();
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
+
+        // 누적 시간이 lifetime을 넘으면 소멸
+        if (currentTime >= lifetime - 1)
+        {
+            tagController.ShowMissedTag();
+            Destroy(gameObject);
+        }
     }
+
 
     void OnCollisionEnter(Collision collision) //땅이든, 적이든... 파괴.
     {
@@ -99,13 +114,14 @@ public class STDM : MonoBehaviour
             // 적기에 부딪혔을 때 효과 생성
             Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
 
-            Debug.Log("missilehittoenemy");
+            //Debug.Log("missilehittoenemy");
         }
         
         // 충돌한 오브젝트의 태그가 "Ground"일 경우
         if (collision.gameObject.CompareTag("Ground"))
         {
             // 땅에 닿았을 때 효과 생성
+            tagController.ShowMissedTag();
             Instantiate(groundHitEffect, transform.position, Quaternion.identity);
         }
 

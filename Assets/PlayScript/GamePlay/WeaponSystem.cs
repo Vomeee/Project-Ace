@@ -238,7 +238,7 @@ public class WeaponSystem : MonoBehaviour
         }
         else
         {
-            missileScript.Launch(null, infoGetter.getSpeed() / 10 + 20, tagController);
+            missileScript.Launch(null, infoGetter.getSpeed() / 5, tagController);
         }
         
         missileCount--;
