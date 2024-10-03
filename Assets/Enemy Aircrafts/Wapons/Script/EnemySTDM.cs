@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemySTDM : MonoBehaviour
 {
-
+    public WarningController wc;
     public TagController tagController;
     public Transform target; // 추적할 타겟
 
@@ -29,13 +29,16 @@ public class EnemySTDM : MonoBehaviour
     [SerializeField] CapsuleCollider mslCollider;
 
 
-
-    public void Launch(Transform target, float launchSpeed)
+    public void Launch(Transform target, float launchSpeed, WarningController warningController)
     {
+        wc = warningController;
+
         // 타겟이 존재할 때만 할당
         if (target != null)
         {
             this.target = target;
+
+            wc.TrackingMissileCount(1);
         }
 
         Debug.Log("Missile instantiated");
@@ -56,9 +59,10 @@ public class EnemySTDM : MonoBehaviour
         {
             Debug.Log("evaded");
             target = null;
-            return;
 
-            
+            //경보 해제
+            wc.TrackingMissileCount(-1);
+            return;
         }
 
         Quaternion lookRotation = Quaternion.LookRotation(targetDir);
@@ -100,7 +104,7 @@ public class EnemySTDM : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
-            
+            wc.TrackingMissileCount(-1);
             // 적기에 부딪혔을 때 효과 생성
             Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
             
@@ -128,10 +132,4 @@ public class EnemySTDM : MonoBehaviour
         // 총알 파괴
         
     }
-
-    //private void OnTriggerExit(Collider other) //플레이어가 감지범위에서 탈출 -> Target lost. 지금 상황에서 가장 적합한 해법 같음.
-    //{
-    //    Debug.Log("Target (player) escaped!");  
-    //    target = null;
-    //}
 }

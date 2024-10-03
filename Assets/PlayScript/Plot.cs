@@ -14,7 +14,7 @@ public class Plot : MonoBehaviour
     [SerializeField] GameManagement gameManagement;
     [SerializeField] GameObject waypointObject;
     [SerializeField] GameObject enemyMissilePrefab;
-
+    [SerializeField] WarningController warningController;
     #endregion
 
 
@@ -55,7 +55,7 @@ public class Plot : MonoBehaviour
 
             if (enemyAI1 != null ) 
             {
-                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab);
+                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
             }
             else
             {

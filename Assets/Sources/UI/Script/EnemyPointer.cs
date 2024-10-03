@@ -14,6 +14,7 @@ public class EnemyPointer : MonoBehaviour
     [SerializeField] Color originalColor; // 화살표가 보일 때의 색상
 
     [SerializeField] bool isBeingShown; // 화살표가 활성화 상태인지
+    [SerializeField] float radius = 150f; // 화살표가 움직일 반지름
 
     void Start()
     {
@@ -38,10 +39,21 @@ public class EnemyPointer : MonoBehaviour
                 arrowImage.color = originalColor;
             }
 
-            // 타겟이 카메라로부터 어느 방향에 있는지 계산
-            Vector3 targetDirFromCamera = targettingSystem.currentTargetTransform.position - targettingSystem.playerTransform.position;
+            // 타겟 방향을 카메라의 로컬 좌표계로 변환하여 계산
+            Vector3 targetDirFromCamera = (targettingSystem.currentTargetTransform.position - Camera.main.transform.position).normalized;
 
-            arrowRectTransform.up = targetDirFromCamera;
+            // 카메라의 로컬 좌표에서 타겟 방향을 계산 (카메라의 로컬 방향을 고려)
+            Vector3 arrowDirection = Camera.main.transform.InverseTransformDirection(targetDirFromCamera);
+
+            // 화살표의 transform.rotation을 카메라 회전을 반영하여 설정
+            float angle = Mathf.Atan2(arrowDirection.x, arrowDirection.y) * Mathf.Rad2Deg;
+            arrowImage.transform.rotation = Quaternion.Euler(0, 0, -angle);
+
+            // 화면 중앙을 기준으로 화살표 위치 계산
+            Vector2 arrowPosition = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad)) * radius;
+
+            // 화살표의 RectTransform 위치 설정
+            arrowRectTransform.anchoredPosition = arrowPosition;
         }
         else
         {

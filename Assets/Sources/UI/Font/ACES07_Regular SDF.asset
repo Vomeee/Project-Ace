@@ -1700,7 +1700,7 @@ Material:
     - _GlowInner: 0.539
     - _GlowOffset: 0
     - _GlowOuter: 0.333
-    - _GlowPower: 0.211
+    - _GlowPower: 2.2
     - _GradientScale: 10
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
@@ -1737,8 +1737,8 @@ Material:
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
-    - _FaceColor: {r: 0.39150947, g: 1.0000001, b: 0.72551787, a: 1}
-    - _GlowColor: {r: 0, g: 1.8880861, b: 0, a: 1}
+    - _FaceColor: {r: 0, g: 0, b: 0, a: 0.6745098}
+    - _GlowColor: {r: 1, g: 0, b: 0, a: 1}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}

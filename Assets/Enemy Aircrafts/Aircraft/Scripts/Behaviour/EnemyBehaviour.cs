@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
     
     [SerializeField] Transform player; // 플레이어의 Transform
     [SerializeField] TargettingSystem targetingSystem;
+    [SerializeField] WarningController warningController;
     float distanceToTarget;
 
     [Header("movingAI instances")]
@@ -209,7 +210,7 @@ public class EnemyAI : MonoBehaviour
                 EnemySTDM missileScript = enemyMsl.GetComponent<EnemySTDM>(); //나중에 미사일 이름 바꿔서 따로 만들기.
 
                 Debug.Log("missile launch");
-                missileScript.Launch(player, 30);
+                missileScript.Launch(player, 30, warningController);
 
                 canShoot = false;
             }
@@ -383,7 +384,8 @@ public class EnemyAI : MonoBehaviour
         Move();
     }
 
-    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, TagController tagController, GameManagement gm, GameObject waypointObj, GameObject enemyMissile)
+    public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, 
+        TagController tagController, GameManagement gm, GameObject waypointObj, GameObject enemyMissile, WarningController warningController)
     {
         player = playerTransform; //필수, 만약 동료 추가시 initalize 다원화 필요,
         this.targetingSystem = targettingSystem; //반드시 필요함.
@@ -391,6 +393,7 @@ public class EnemyAI : MonoBehaviour
         this.gameManagement = gm;
         waypointObject = waypointObj;
         enemyMissilePrefab = enemyMissile;
+        this.warningController = warningController;
     }
 
     #region target, lock controls
