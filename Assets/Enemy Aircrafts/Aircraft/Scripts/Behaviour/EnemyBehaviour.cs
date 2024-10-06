@@ -66,6 +66,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     float missileCoolDown; // 미사일 활성화 시간
     [SerializeField]
+    float timeUntilShoot; //미사일 발사전 유지해야하는 록온시간
+    [SerializeField]
     int enemyState; // 0 : free flying, 1 : tracking player, 2 : evading
 
     [SerializeField]
@@ -199,18 +201,28 @@ public class EnemyAI : MonoBehaviour
         transform.Translate(new Vector3(0, 0, speed) * Time.deltaTime);
     }
 
+    private bool isLockingOn = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Triggered");
         if(other.CompareTag("Player"))
         {
-            if(canShoot && Random.Range(0,1) < shootRate)
+            if(!isLockingOn)
+            {
+                warningController.currentEnemyBehind += 1;
+            }
+
+            isLockingOn = true;
+
+            StartCoroutine(LockOnWaiting());
+            
+            if(isLockingOn && canShoot && Random.Range(0,1) < shootRate)
             {
                 GameObject enemyMsl = Instantiate(enemyMissilePrefab, transform.position, transform.rotation); //미사일 생성
                 EnemySTDM missileScript = enemyMsl.GetComponent<EnemySTDM>(); //나중에 미사일 이름 바꿔서 따로 만들기.
 
                 Debug.Log("missile launch");
-                missileScript.Launch(player, 30, warningController);
+                missileScript.Launch(player, maxSpeed, warningController);
 
                 canShoot = false;
             }
@@ -218,6 +230,23 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Player"))
+        {
+            if(isLockingOn)
+            {
+                warningController.currentEnemyBehind -= 1;
+            }
+            
+            isLockingOn = false;
+        }
+    }
+
+    IEnumerator LockOnWaiting()
+    {
+        yield return new WaitForSeconds(timeUntilShoot);
+    }
 
 
 

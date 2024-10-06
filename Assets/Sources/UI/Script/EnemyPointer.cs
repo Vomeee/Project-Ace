@@ -47,10 +47,10 @@ public class EnemyPointer : MonoBehaviour
 
             // 화살표의 transform.rotation을 카메라 회전을 반영하여 설정
             float angle = Mathf.Atan2(arrowDirection.x, arrowDirection.y) * Mathf.Rad2Deg;
-            arrowImage.transform.rotation = Quaternion.Euler(0, 0, -angle);
+            arrowImage.transform.rotation = Quaternion.Euler(0, -angle, -angle);
 
             // 화면 중앙을 기준으로 화살표 위치 계산
-            Vector2 arrowPosition = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad)) * radius;
+            Vector2 arrowPosition = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad) - 10) * radius;
 
             // 화살표의 RectTransform 위치 설정
             arrowRectTransform.anchoredPosition = arrowPosition;

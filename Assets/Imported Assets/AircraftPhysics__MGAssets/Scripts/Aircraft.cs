@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace MGAssets
@@ -10,7 +11,10 @@ namespace MGAssets
         public class Aircraft : FlightScript
         {
             [Header("player combat info")]
-            public int playerHP = 100;
+            public int playerHP = 0;
+
+            [Header("Info Reference")]
+            [SerializeField]TextMeshProUGUI aircraftDamageText;
 
 
             [Header("Status")]
@@ -801,6 +805,7 @@ namespace MGAssets
                 }
                 else
                 {
+                    UpdateHP();
                     if (playerHP < 0) explode();
                     return;
                 }
@@ -808,6 +813,12 @@ namespace MGAssets
                 
                 
 
+            }
+
+            void UpdateHP()
+            {
+                int shownHP = 100 - playerHP;
+                aircraftDamageText.text = "<align=left>DMG<line-height=0>\n<align=right>" + shownHP.ToString() + "%<line-height=1em>";
             }
             //////////////////////////////////////// Collision Sounds, Msgs, Damage and Recovery-StartState
 

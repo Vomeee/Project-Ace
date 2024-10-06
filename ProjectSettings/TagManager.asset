@@ -10,6 +10,7 @@ TagManager:
   - stdm
   - Ground
   - EnemyAttack
+  - color fix
   layers:
   - Default
   - TransparentFX

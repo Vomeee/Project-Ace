@@ -28,6 +28,10 @@ public class EnemySTDM : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] CapsuleCollider mslCollider;
 
+    //[SerializeField] GameObject MissileIndicatorPrefab;
+    //[SerializeField] GameObject mslIndicator = null;
+    //[SerializeField] GameObject parent;
+
 
     public void Launch(Transform target, float launchSpeed, WarningController warningController)
     {
@@ -39,6 +43,18 @@ public class EnemySTDM : MonoBehaviour
             this.target = target;
 
             wc.TrackingMissileCount(1);
+
+            MissileIndicatorController indicatorController = warningController.GetComponentInChildren<MissileIndicatorController>();
+            if(indicatorController != null) //target is player
+            {
+                indicatorController.AddMissileIndicator(this);
+            }
+
+            //mslIndicator = Instantiate(MissileIndicatorPrefab); //ui....
+            //MissileIndicator newMissileIndicator = mslIndicator.GetComponent<MissileIndicator>();
+
+            //newMissileIndicator.transform.SetParent(target.transform);
+            //newMissileIndicator.InitalizeReference(this);
         }
 
         Debug.Log("Missile instantiated");
@@ -61,6 +77,9 @@ public class EnemySTDM : MonoBehaviour
             target = null;
 
             //°æº¸ ÇØÁ¦
+            //Destroy(mslIndicator.gameObject);
+            //mslIndicator = null;
+            
             wc.TrackingMissileCount(-1);
             return;
         }
@@ -114,8 +133,9 @@ public class EnemySTDM : MonoBehaviour
                 playerAircraft.playerHP -= damage;
             }
 
+            target = null;
 
-            Debug.Log("missilehittoplayer");
+            StartCoroutine(WaitForIndicator());
 
             Destroy(gameObject);
         }
@@ -131,5 +151,10 @@ public class EnemySTDM : MonoBehaviour
 
         // ÃÑ¾Ë ÆÄ±«
         
+    }
+
+    private IEnumerator WaitForIndicator()
+    {
+        yield return new WaitForSeconds(0.3f);
     }
 }
