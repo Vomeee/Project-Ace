@@ -157,19 +157,17 @@ MonoBehaviour:
   wc: {fileID: 0}
   tagController: {fileID: 0}
   target: {fileID: 0}
-  turningForce: 5
-  maxSpeed: 200
-  accelAmount: 60
-  lifetime: 8
-  speed: 10
+  turningForce: 10
+  maxSpeed: 300
+  accelAmount: 50
+  lifetime: 10
+  speed: 50
   damage: 3
   boresightAngle: 100
   enemyHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}
   groundHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}
   rb: {fileID: -845763629072080048}
   mslCollider: {fileID: -6781264608765902719}
-  MissileIndicatorPrefab: {fileID: 4122012812124057284, guid: 36d03c627215b224cb81c04042cdc6dd, type: 3}
-  mslIndicator: {fileID: 0}
 --- !u!1 &6768743111436725626
 GameObject:
   m_ObjectHideFlags: 0

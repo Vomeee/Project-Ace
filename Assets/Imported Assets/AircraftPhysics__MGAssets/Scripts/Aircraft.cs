@@ -10,12 +10,16 @@ namespace MGAssets
 
         public class Aircraft : FlightScript
         {
+            [Header("another references")]
+            public WarningController WarningController;
+
             [Header("player combat info")]
             public int playerHP = 0;
 
             [Header("Info Reference")]
             [SerializeField]TextMeshProUGUI aircraftDamageText;
 
+            #region Aircraft Movements
 
             [Header("Status")]
             [Space]
@@ -318,6 +322,7 @@ namespace MGAssets
 
             bool firstTime = true;
 
+            #endregion
 
             ////////////////// Inicialization
             void Awake()
@@ -360,7 +365,7 @@ namespace MGAssets
 
 
                 setCamera(cameraIndex);
-                if (!isDamaged) HudMsg.ShowQuick(activeMSG); else HudMsg.ShowQuick(damageMSG);
+                //if (!isDamaged) HudMsg.ShowQuick(activeMSG); else HudMsg.ShowQuick(damageMSG);
             }
             //
             void OnDisable()
@@ -629,6 +634,7 @@ namespace MGAssets
                 if (explosionPreFab) Instantiate(explosionPreFab, transform.position, Quaternion.identity, null);
 
                 rigidBody.gameObject.SetActive(false);
+                gameObject.SetActive(false);
             }
             //
             public override void recoverAttitude()
@@ -806,14 +812,11 @@ namespace MGAssets
                 else
                 {
                     UpdateHP();
+                    WarningController.DamageUIReact();
                     if (playerHP < 0) explode();
                     return;
                 }
-
-                
-                
-
-            }
+           }
 
             void UpdateHP()
             {

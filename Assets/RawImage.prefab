@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.34117648}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.68235296}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -87,3 +87,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMissile: {fileID: 0}
   indicatorImage: {fileID: 8489960955884993283}
+  minimumScaleFactor: 5
+  maximumScaleFactor: 10
+  emergencyDistance: 500
+  superEmergencyDistance: 300
+  missileAlertNormal: {fileID: 0}
+  missileAlertEmergency: {fileID: 0}
+  missileAlertSuperEmergency: {fileID: 0}
+  isEmergency: 0
+  isSuperEmergency: 0
+  normalInterval: 0.4
+  emergencyInterval: 0.2
+  superEmergencyInterval: 0.1

@@ -8,9 +8,11 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] GameObject mainMenuScreen; //초기 메뉴화면
-    [SerializeField] GameObject missionSelectScreen; // 미션 선택화면
+    [SerializeField] GameObject missionSelectScreen; // 미션
+    [SerializeField] GameObject aircraftSelectScreen;
 
     public GameObject currentActiveScreen = null; //현재 활성화된 메뉴화면
+    [SerializeField] GameManager gameManager;
     [SerializeField] MenuScreen currentMenuScreen;
 
     [SerializeField] private int currentIndex; //현재 선택 인덱스
@@ -39,11 +41,11 @@ public class MainMenuController : MonoBehaviour
     {
         SetCurrentActiveScreen(missionSelectScreen);
     }
-
-    public void ToMissionSelectMenu()
+    public void ShowAircraftSelectMenu()
     {
-
+        SetCurrentActiveScreen(aircraftSelectScreen);
     }
+
     public void StartMission1() //추가 가능
     {
         SceneManager.LoadScene("MissionZero");
@@ -52,6 +54,11 @@ public class MainMenuController : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void SetPlayerAircraft(AircraftBase currentAircraftSelection)
+    {
+        gameManager.playerAircraftObject = currentAircraftSelection;
     }
 
     #endregion

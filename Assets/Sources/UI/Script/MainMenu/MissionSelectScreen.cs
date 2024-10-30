@@ -26,7 +26,7 @@ public class MissionSelectScreen : MonoBehaviour, MenuScreen
     {
         if (index == 0)
         {
-            controller.StartMission1();
+            controller.ShowAircraftSelectMenu();
         }
         else if (index == 1)
         {

@@ -21,6 +21,8 @@ public class WarningController : MonoBehaviour
     [SerializeField] bool isMissileAlert;
     [SerializeField] public int currentEnemyBehind;
     [SerializeField] public int currentEnemyMissile;
+    [SerializeField] float damagedTagShowingTime;
+    [SerializeField] float damagedBlinkingInterval = 0.05f;
 
     [Space]
     [Header("References")]
@@ -32,7 +34,9 @@ public class WarningController : MonoBehaviour
     [SerializeField] Mask firstPersonMask;
     [SerializeField] GameObject firstPersonUIs;
     [SerializeField] Material textMaterial;
-    [SerializeField] AudioSource warningAudioSource;
+    [SerializeField] MissileIndicatorController missileIndicatorController;
+    AudioSource[] missileAlertSounds;
+    //[SerializeField] AudioSource warningAudioSource;
  
     // Start is called before the first frame update
     void Start()
@@ -56,13 +60,15 @@ public class WarningController : MonoBehaviour
         rawImages = tempList.ToArray();
 
         ChangeTextColor(textNormalColor);
+
+        missileAlertSounds = GetComponentsInChildren<AudioSource>(); //미사일 경고음 받기.
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        SetSmallTag();
+        SetUpperSmallTag();
 
         isWarningState = currentEnemyBehind >= 1;
         bool currentMissileState = currentEnemyMissile >= 1; // 현재 missile 상태 계산
@@ -75,17 +81,12 @@ public class WarningController : MonoBehaviour
             ChangeTextColor(isMissileAlert ? textWarningColor : textNormalColor);
         }
 
-        if(isMissileAlert && !warningAudioSource.isPlaying)
+        if(!isMissileAlert)
         {
-            warningAudioSource.Play();
-        }
-        if(!isMissileAlert && warningAudioSource.isPlaying)
-        {
-            warningAudioSource.Stop();
-        }
-        else
-        {
-            //
+            foreach(AudioSource alert in missileAlertSounds)
+            {
+                alert.Stop();
+            }
         }
     }
 
@@ -137,43 +138,76 @@ public class WarningController : MonoBehaviour
     [Header("small tag references")]
     [SerializeField] GameObject warningTag;
     [SerializeField] GameObject missileAlertTag;
+    [SerializeField] GameObject damagedTag;
+    
 
-    public void SetSmallTag()
+    public void SetUpperSmallTag()
     {
-        if (isWarningState && !isMissileAlert) //only warning
+            if (isWarningState && !isMissileAlert) //only warning
+            {
+                missileAlertTag.SetActive(false);
+                warningTag.SetActive(true);
+            }
+            else if (isMissileAlert) //missile alert
+            {
+                warningTag.SetActive(false);
+                missileAlertTag.SetActive(true);
+
+            }
+            else
+            {
+                missileAlertTag.SetActive(false);
+                warningTag.SetActive(false);
+            }
+    }
+
+    public void DamageUIReact() //snall tag but ignore another tags.
+    {
+        //color update(blinking for damage state)
+        StartCoroutine(UIReactForDamagedState());
+        //tag update
+        StartCoroutine(DamagedTagCoroutine());
+    }
+
+    private IEnumerator DamagedTagCoroutine()
+    {
+        damagedTag.SetActive(true);
+
+        yield return new WaitForSeconds(damagedTagShowingTime);
+
+        damagedTag.SetActive(false);
+    }
+    
+    private IEnumerator UIReactForDamagedState()
+    {
+        ChangeUIColor(imageWarningColor); // 색상 변경
+        ChangeTextColor(textWarningColor);
+
+        yield return new WaitForSeconds(damagedBlinkingInterval);
+
+        ChangeUIColor(imageNormalColor); // 색상 변경
+        ChangeTextColor(textNormalColor);
+
+        yield return new WaitForSeconds(damagedBlinkingInterval);
+
+        ChangeUIColor(imageWarningColor); // 색상 변경
+        ChangeTextColor(textWarningColor);
+
+        yield return new WaitForSeconds(damagedBlinkingInterval);
+
+        if (isMissileAlert)
         {
-            missileAlertTag.SetActive(false);
-            warningTag.SetActive(true);
-        }
-        else if (isMissileAlert) //missile alert
-        {
-            warningTag.SetActive(false);
-            missileAlertTag.SetActive(true);
-            
+            ChangeUIColor(imageWarningColor); // 색상 변경
+            ChangeTextColor(textWarningColor);
         }
         else
         {
-            missileAlertTag.SetActive(false);
-            warningTag.SetActive(false);
+            ChangeUIColor(imageNormalColor); // 색상 변경
+            ChangeTextColor(textNormalColor);
         }
+
+
     }
-
-    ////////////////////////////setting missile indicator parts
-    //[SerializeField] EnemySTDM[] trackingMissiles; //missiles that tracking player aircraft.
-    //[SerializeField] GameObject missileIndicatorPrefab; //missile indicator prefab.
-
-    //public void AddTrackingMissile(EnemySTDM newMissile)
-    //{
-    //    trackingMissiles.Append(newMissile);
-    //    GameObject newMissileIndicator = Instantiate(missileIndicatorPrefab);
-
-    //    //newMissileIndicator.enemyMissile = newMissile
-    //}
-
-    //public void RemoveTrackingMissile(EnemySTDM missile)
-    //{
-
-    //}
 
 
 

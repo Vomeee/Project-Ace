@@ -13,7 +13,7 @@ public class WeaponSystem : MonoBehaviour
     public AircrafSimpleHUD infoGetter; //속도 높이 가져오는 instance
     
     #region weaponCounts variables
-    [SerializeField]private int gunCount;
+    [SerializeField] private int gunCount;
     [SerializeField] private int missileCount;
     //[SerializeField] private int specialWeaponCount;
     #endregion
@@ -54,6 +54,9 @@ public class WeaponSystem : MonoBehaviour
     public TagController tagController;
     public TargettingSystem targettingSystem; //현재 타겟 받아오는데 필요함.
 
+    //[SerializeField] Image rightMissileCooldownFilling;
+    //[SerializeField]
+
     public float aircraftSpeed; //기체 현재 속도
 
     void Start()
@@ -90,7 +93,7 @@ public class WeaponSystem : MonoBehaviour
     {
         #region Weapon Change and Fire
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             switch (weaponSelection)
             {
@@ -105,7 +108,7 @@ public class WeaponSystem : MonoBehaviour
         }
 
         // 무기 전환 (우클릭)
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(2))
         {
             
             
@@ -128,7 +131,7 @@ public class WeaponSystem : MonoBehaviour
 
         #region gunfire updates
 
-        if (Input.GetKey(KeyCode.H)) // H 키를 누르고 있는 동안
+        if (Input.GetMouseButton(0)) // H 키를 누르고 있는 동안
         {
             isGunFiring = true; // 총 발사 상태를 true로 설정
             if (!gunAudioSource.isPlaying) // 소리가 재생 중이지 않다면
@@ -137,7 +140,7 @@ public class WeaponSystem : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.H))
+        if (Input.GetMouseButtonUp(0))
         {
             isGunFiring = false; // 총 발사 상태를 false로 설정
             gunAudioSource.Stop(); // 소리 정지
@@ -291,6 +294,11 @@ public class WeaponSystem : MonoBehaviour
     }
 
     void specialWeaponCountUIUpdate()
+    {
+
+    }
+
+    void STDMFrameUpdate()
     {
 
     }

@@ -6,6 +6,11 @@ public class MissileIndicatorController : MonoBehaviour
 {
     [SerializeField] GameObject missileIndicatorPrefab;
     [SerializeField] GameObject newMissileIndicator;
+
+    [SerializeField] AudioSource missileAlertNormal;
+    [SerializeField] AudioSource missileAlertEmergency;
+    [SerializeField] AudioSource missileAlertSuperEmergency;
+
     void Start()
     {
         
@@ -23,6 +28,6 @@ public class MissileIndicatorController : MonoBehaviour
 
         MissileIndicator indicator = newMissileIndicator.GetComponent<MissileIndicator>();
 
-        indicator.InitalizeReference(missile);
+        indicator.InitalizeReference(missile, missileAlertNormal, missileAlertEmergency, missileAlertSuperEmergency);
     }
 }
