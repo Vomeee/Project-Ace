@@ -110,10 +110,6 @@ namespace MGAssets
             public Text brakeTxt;
 
             [Space]
-            public TextMeshProUGUI systemTimeText; //시스템 시간 컴포넌트.
-            public TextMeshProUGUI systemScoreText; //현재 점수 컴포넌트.
-
-            [Space]
             public UVController speedUV;
             public UVController altitudeUV;
 
@@ -132,40 +128,6 @@ namespace MGAssets
             public float altitude, heading, alpha, beta, engine, fuel;
             public bool brake;
             //
-            
-            
-            [SerializeField] float remainTime;
-            [SerializeField] int score;
-
-            void setSystemTime()
-            {
-                if (remainTime <= 0)
-                {
-                    remainTime = 0;
-                    return;
-                }
-
-                remainTime -= Time.deltaTime;
-                int seconds = (int)remainTime;
-
-                int min = seconds / 60;
-                int sec = seconds % 60;
-                int millisec = (int)((remainTime - seconds) * 100);
-                string text = string.Format("TIME <mspace=30>{0:00}</mspace>:<mspace=30>{1:00}</mspace>:<mspace=30>{2:00}</mspace>", min, sec, millisec);
-                systemTimeText.text = text;
-            }
-
-            void Update()
-            {
-                setSystemTime();
-            }
-
-            void UpdateScore(int aircraftScore)
-            {
-                int newScore = score + aircraftScore;
-                string text = string.Format("{0:D6}", newScore);
-                systemScoreText.text = text;
-            }
 
 
             #region aircraft codes

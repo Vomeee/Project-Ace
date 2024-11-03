@@ -12,6 +12,8 @@ public class TagController : MonoBehaviour
     [SerializeField] GameObject MissionFailedTag;
     [SerializeField] GameObject MissionAccomplishedTag;
 
+
+
     // 모든 태그들을 리스트로 관리
     private List<GameObject> allTags = new List<GameObject>();
 

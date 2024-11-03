@@ -7,8 +7,10 @@ public class EnemyAI : MonoBehaviour
 {
     
     [SerializeField] Transform player; // 플레이어의 Transform
+    [SerializeField] Transform friendTransform; //동료의 transform.
     [SerializeField] TargettingSystem targetingSystem;
     [SerializeField] WarningController warningController;
+    [SerializeField] GameManagement gm;
     float distanceToTarget;
 
     [Header("movingAI instances")]
@@ -232,7 +234,7 @@ public class EnemyAI : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag("Player")) //플레이어
         {
             if(isLockingOn)
             {
@@ -240,6 +242,10 @@ public class EnemyAI : MonoBehaviour
             }
             
             isLockingOn = false;
+        }
+        if(other.CompareTag("Friend"))
+        {
+            player = other.GetComponent<Transform>();
         }
     }
 

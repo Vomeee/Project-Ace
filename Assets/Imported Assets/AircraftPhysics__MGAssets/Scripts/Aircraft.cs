@@ -821,6 +821,14 @@ namespace MGAssets
             void UpdateHP()
             {
                 int shownHP = 100 - playerHP;
+                if(playerHP < 30)
+                {
+                    WarningController.ChangeAircraftWireframeUI(Color.red);
+                }
+                else if(playerHP < 70)
+                {
+                    WarningController.ChangeAircraftWireframeUI(Color.yellow);
+                }
                 aircraftDamageText.text = "<align=left>DMG<line-height=0>\n<align=right>" + shownHP.ToString() + "%<line-height=1em>";
             }
             //////////////////////////////////////// Collision Sounds, Msgs, Damage and Recovery-StartState

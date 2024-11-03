@@ -17,43 +17,50 @@ public class Plot : MonoBehaviour
     [SerializeField] WarningController warningController;
     #endregion
 
+    [SerializeField]
+    ScriptManager scriptManager;
 
+    [SerializeField]
+    int phase1EnemyCount;
+    [SerializeField]
+    int phase2EnemyCount;
+    [SerializeField]
+    int currentEnemyCount;
 
-    [SerializeField] GameObject fa26Prefab;
-    private float elapsedTime = 0.0f;
+    [Header("enemy spawn lists")]
+    [SerializeField] GameObject[] enemyAircraftPrefabsPhase1;
+    [SerializeField] GameObject[] enemyAircraftPrefabsPhase2;
+    [SerializeField] Transform[] phase1SpawnTransforms;
+    [SerializeField] Transform[] phase2SpawnTransforms;
 
+    [Header("Subtitles")]
+    [SerializeField] List<string> onPhase1StartScripts;
+    [SerializeField] List<string> onPhase1EndScripts;
+
+    [SerializeField] List<string> onPhase2StartScripts;
+    [SerializeField] List<string> onPhase2EndScripts;
+
+    [SerializeField] int phase;
 
     // Start is called before the first frame update
     void Start()
     {
         tagController.ShowStartMissionTag();
+        phase = 1;
+        currentEnemyCount = 35;
+
+        Invoke("Phase1Start", 2.0f);
     }
 
-
-    Vector3 centerPosition = new Vector3(0, 200, 0); // 기준 위치
-    float spawnRadius = 1000f; // 구의 반경
-
-    //Vector3 examplePostition = new Vector3(400f, 300f, 400f);
-    Vector3 exampleRotation = new Vector3(0, 0, 0);
-    // Update is called once per frame
-    void Update()
+    void Phase1Start()
     {
-        elapsedTime += Time.deltaTime;
-
-        // 3초 이상 경과한 경우
-        if (elapsedTime > 5.0f)
+        currentEnemyCount = phase1EnemyCount;
+        for (int i = 0; i < phase1EnemyCount; i++)
         {
-
-            Vector3 randomOffset = Random.insideUnitSphere * spawnRadius;
-            randomOffset.y = Mathf.Abs(randomOffset.y); // Y축은 양수로 유지 (바닥 아래로 생기지 않도록)
-
-            Vector3 examplePosition = centerPosition + randomOffset; // 기준 위치에 랜덤 오프셋 추가
-            Vector3 exampleRotation = new Vector3(0, 0, 0);
-
-            GameObject enemy1 = Instantiate(fa26Prefab, examplePosition, Quaternion.Euler(exampleRotation));
+            GameObject enemy1 = Instantiate(enemyAircraftPrefabsPhase1[i], phase1SpawnTransforms[i]);
             EnemyAI enemyAI1 = enemy1.GetComponent<EnemyAI>();
 
-            if (enemyAI1 != null ) 
+            if (enemyAI1 != null)
             {
                 enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
             }
@@ -61,13 +68,90 @@ public class Plot : MonoBehaviour
             {
                 Debug.Log("enemyAi null!");
             }
-            
+        }
+
+        scriptManager.AddScript(onPhase1StartScripts);
+    }
+
+    void Phase2Start()
+    {
+        currentEnemyCount = phase2EnemyCount;
+        for (int i = 0; i < phase2EnemyCount; i++)
+        {
+            GameObject enemy1 = Instantiate(enemyAircraftPrefabsPhase2[i], phase2SpawnTransforms[i]);
+            EnemyAI enemyAI1 = enemy1.GetComponent<EnemyAI>();
+
+            if (enemyAI1 != null)
+            {
+                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
+            }
+            else
+            {
+                Debug.Log("enemyAi null!");
+            }
+        }
+    }
+
+    [Header("optional bool")]
+    bool p1_1 = false;
+    bool p1_2 = false;
+    bool p1_3 = false;
+    bool p1_4 = false;
+    bool p1_5 = false;
+    bool phase1End = false;
+
+    void Update()
+    {
+        
+    }
 
 
 
+    void PhaseSpawn()
+    {
 
+    }
 
-            elapsedTime = 0.0f; // 다시 초기화하여 반복 가능하게
+    public void EnemyReduced()
+    {
+        currentEnemyCount--;
+    }
+
+    public void EventControl(int score)
+    {
+        if ((phase == 1))
+        {
+            if (score > 2000 && !p1_1)
+            {
+                scriptManager.AddScript("VO_1");
+                p1_1 = true;
+            }
+            else if (score > 5000 && !p1_2)
+            {
+                scriptManager.AddScript("AO_1");
+                p1_2 = true;
+            }
+            else if (score > 8000 && !p1_3)
+            {
+                scriptManager.AddScript("VO_2");
+                p1_3 = true;
+            }
+            else if (score > 12000 && !p1_4)
+            {
+                scriptManager.AddScript("PO_1");
+                p1_4 = true;
+            }
+            else if (score > 15000 && !p1_5)
+            {
+                scriptManager.AddScript("VO_3");
+                p1_5 = true;
+            }
+            else if (score > 18000 && !phase1End)
+            {
+                scriptManager.AddScript("VO_2");
+                phase1End = true;
+                Invoke("Phase2Start", 12f);
+            }
         }
     }
 }

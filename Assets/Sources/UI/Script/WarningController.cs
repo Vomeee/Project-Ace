@@ -14,6 +14,8 @@ public class WarningController : MonoBehaviour
     [SerializeField] Color imageNormalColor; //기본 색깔 -> 이미지 한정
     [SerializeField] Color textWarningColor;
     [SerializeField] Color textNormalColor;
+    [SerializeField] Color aircraftWireframeColor; //이전 와이어프레임 상태 저장.
+
 
     [Space]
     [Header("variables")]
@@ -30,15 +32,22 @@ public class WarningController : MonoBehaviour
     RawImage[] rawImages;
     Image[] firstPersonUIImages;
     RawImage[] firstPersonUIRawImages;
+    [SerializeField] ScriptManager scriptManager;
+    [SerializeField] RawImage[] aircraftWireframeImage;
 
     [SerializeField] Mask firstPersonMask;
     [SerializeField] GameObject firstPersonUIs;
     [SerializeField] Material textMaterial;
     [SerializeField] MissileIndicatorController missileIndicatorController;
     AudioSource[] missileAlertSounds;
-    //[SerializeField] AudioSource warningAudioSource;
- 
-    // Start is called before the first frame update
+
+    [Space]
+    [Header("Warning Subtitles")]
+    [SerializeField] List<string> warningSubtitles;
+    [SerializeField] List<string> missileAlertSubtitles;
+    [SerializeField] float playWarningSoundProbability;
+    [SerializeField] float playMissileAlertSoundProbability;
+
     void Start()
     {
         currentEnemyBehind = 0;
@@ -70,15 +79,33 @@ public class WarningController : MonoBehaviour
 
         SetUpperSmallTag();
 
-        isWarningState = currentEnemyBehind >= 1;
+        bool currentWarningState = currentEnemyBehind >= 1;
         bool currentMissileState = currentEnemyMissile >= 1; // 현재 missile 상태 계산
+        // 추적 경고가 변경되었을 경우
+        if (currentWarningState != isWarningState)
+        {
+            isWarningState = currentWarningState;
+            if(isWarningState)// 0 -> 1
+            {
+                PlayWarningSound();
+            }
+        }
 
-        // 상태가 변경된 경우에만 색상 변경
+        // 미사일 경고가 변경되었을 경우
         if (currentMissileState != isMissileAlert)
         {
             isMissileAlert = currentMissileState; // 상태 업데이트
             ChangeUIColor(isMissileAlert ? imageWarningColor : imageNormalColor); // 색상 변경
             ChangeTextColor(isMissileAlert ? textWarningColor : textNormalColor);
+
+            if(isMissileAlert) //미사일 경고로 변경 
+            {
+                PlayMissileWarningSound();
+            }
+            else //아님.
+            {
+                ChangeAircraftWireframeUI(aircraftWireframeColor);
+            }
         }
 
         if(!isMissileAlert)
@@ -87,6 +114,27 @@ public class WarningController : MonoBehaviour
             {
                 alert.Stop();
             }
+        }
+    }
+
+    void PlayWarningSound()
+    {
+        if (Random.Range(0f, 1f) < playWarningSoundProbability)
+        {
+            string nowPlayingSound = warningSubtitles[Random.Range(0, warningSubtitles.Count)];
+            Debug.Log("play warning");
+            scriptManager.AddScript(nowPlayingSound);
+            
+        }
+    }
+
+    void PlayMissileWarningSound()
+    {
+        if (Random.Range(0f, 1f) < playMissileAlertSoundProbability)
+        {
+            string nowPlayingSound = missileAlertSubtitles[Random.Range(0, missileAlertSubtitles.Count)];
+            Debug.Log("playing alert");
+            scriptManager.AddScript(nowPlayingSound);
         }
     }
 
@@ -187,6 +235,7 @@ public class WarningController : MonoBehaviour
 
         ChangeUIColor(imageNormalColor); // 색상 변경
         ChangeTextColor(textNormalColor);
+        ChangeAircraftWireframeUI(aircraftWireframeColor);
 
         yield return new WaitForSeconds(damagedBlinkingInterval);
 
@@ -206,10 +255,18 @@ public class WarningController : MonoBehaviour
             ChangeTextColor(textNormalColor);
         }
 
-
+        ChangeAircraftWireframeUI(aircraftWireframeColor);
     }
 
+    public void ChangeAircraftWireframeUI(Color color)
+    {
+        aircraftWireframeColor = color;
 
+        foreach (RawImage image in aircraftWireframeImage)
+        {
+            image.color = aircraftWireframeColor;
+        }
+    }
 
 
 

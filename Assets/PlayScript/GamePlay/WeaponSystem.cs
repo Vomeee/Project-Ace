@@ -198,7 +198,7 @@ public class WeaponSystem : MonoBehaviour
 
             gunCount--;
             gunCountUIUpdate(); //¿‹≈∫ æ˜µ•¿Ã∆Æ
-            Debug.Log("Gun fired");
+            //Debug.Log("Gun fired");
         }
     }
 

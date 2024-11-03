@@ -86,7 +86,7 @@ public class TargettingSystem : MonoBehaviour
         {          
             potentialTargetTransforms.Add(target);
             if (potentialTargetTransforms.Count == 1) SwitchTarget();
-            Debug.Log("Target added: " + target.name);
+            //Debug.Log("Target added: " + target.name);
         }
     }
 
@@ -95,7 +95,7 @@ public class TargettingSystem : MonoBehaviour
         if (potentialTargetTransforms.Contains(target))
         {
             potentialTargetTransforms.Remove(target);
-            Debug.Log("Target removed: " + target.name);
+            //Debug.Log("Target removed: " + target.name);
 
             // 타겟이 제거되었을 때 현재 타겟인 경우 처리
             if (currentTargetTransform == target)

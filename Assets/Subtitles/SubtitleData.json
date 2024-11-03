@@ -1,0 +1,445 @@
+{
+    "subtitles": [
+        {
+            "subtitleKey": "A1_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 2,
+            "isImportant": true,
+            "subTitle" : "AWACS 이글 아이가 가름편대에게 알린다."
+        },
+        {
+            "subtitleKey": "A1_2",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "임무는 적 전투기의 격추."
+        },
+        {
+            "subtitleKey": "A1_3",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "너희들이 마지막 희망이다."
+        },
+        {
+            "subtitleKey": "A1_4",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "모두 격추해야 한다!"
+        },
+        {
+            "subtitleKey": "A1_5",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "교전 준비, 5마일 남았다."
+        },
+        {
+            "subtitleKey": "V1_1",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 3,
+            "isImportant": true,
+            "subTitle" : "IFF에 적기 확인, 두 대 뿐인걸."
+        },
+        {
+            "subtitleKey": "V1_2",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "얼마나 오든 다 떨어뜨릴 뿐이야."
+        },
+        {
+            "subtitleKey": "A1_6",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 2,
+            "isImportant": true,
+            "subTitle" : "가름 편대, 교전 개시."
+        },
+        {
+            "subtitleKey": "P1_1",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "가름 2, 라져."
+        },
+        {
+            "subtitleKey": "P1_2",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 3,
+            "isImportant": true,
+            "subTitle" : "우리는 살아남을 거다, 가름 1!"
+        },
+
+        
+
+        {
+            "subtitleKey": "VO_1",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "이 녀석들 따라가는게 쉽지가 않아!"
+        },
+        {
+            "subtitleKey": "AO_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "벨카 병력을 절반으로 줄였다. 할 수 있다!"
+        },
+        {
+            "subtitleKey": "VO_2",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "고작 몇 분동안 얼마나 많은 전투기를 잃은거야!"
+        },
+        {
+            "subtitleKey": "PO_1",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "지쳤나? 나를 떨어뜨려 보라고!"
+        },
+        {
+            "subtitleKey": "VO_3",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "압도 당하고 있어, 어떻게 하나의 편대가 저럴 수가 있지!"
+        },
+        {
+            "subtitleKey": "AO_2",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 3,
+            "isImportant": true,
+            "subTitle" :"작전 공역의 모든 적을 격추했다. 임무 완료."
+        },
+
+
+
+
+
+        {
+            "subtitleKey": "A2_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 2,
+            "isImportant": true,
+            "subTitle" : "...미확인 물체가 레이더에 잡혔다."
+        },
+        {
+            "subtitleKey": "A2_2",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 2,
+            "isImportant": true,
+            "subTitle" : "주의해라! 적의 추가 증원이다!"
+        },
+        {
+            "subtitleKey": "P2_1",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "뭐, 지금?"
+        },
+        {
+            "subtitleKey": "A2_3",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+
+            "subTitle" : "계속 교전한다. 공중 우세를 확보해!"
+        },
+        {
+            "subtitleKey": "P2_2",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 2,
+            "isImportant": true,
+            "subTitle" : "알겠다."
+        },
+        {
+            "subtitleKey": "S2_1",
+            "name": "Schwarze Leader",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "여기 있구만, 용병 드림 팀."
+        },
+        {
+            "subtitleKey": "S2_2",
+            "name": "Schwarze Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "저 두 용병인가, 재미있겠는걸."
+        },
+
+
+
+
+
+        {
+            "subtitleKey": "A2_4",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 2,
+            "isImportant": true,
+            "subTitle" : "모든 목표를 제거했다. 임무 완료. 훌륭했다, 사이퍼."
+        },
+        {
+            "subtitleKey": "P2_3",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 3,
+            "isImportant": true,
+            "subTitle" : "...친구, 아직 살아있어?"
+        },
+
+
+        {
+            "subtitleKey": "ALN_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "가름1, 폭스 2."
+        },
+        {
+            "subtitleKey": "ALN_2",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "폭스 2."
+        },
+        {
+            "subtitleKey": "ALN_3",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "발사. 발사!"
+        },
+        {
+            "subtitleKey": "AH_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "미사일이 명중."
+        },
+        {
+            "subtitleKey": "AH_2",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "미사일 명중."
+        },
+        {
+            "subtitleKey": "AWM_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "브레이크, 미사일이다!"
+        },
+        {
+            "subtitleKey": "AWM_2",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "미사일 경고!"
+        },
+        {
+            "subtitleKey": "AWM_3",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "미사일, 브레이크!"
+        },
+        {
+            "subtitleKey": "AM_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "목표를 놓쳤다."
+        },
+        {
+            "subtitleKey": "AM_2",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "미사일 명중하지 않음."
+        },
+        {
+            "subtitleKey": "AM_3",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "빗나갔다."
+        },
+        {
+            "subtitleKey": "AW_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "주의해라, 적이 너를 조준했다!"
+        },
+        {
+            "subtitleKey": "AG_1",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "기총의 사거리 내."
+        },
+        {
+            "subtitleKey": "PD_1",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "나이스 샷, 가름 1!"
+        },
+        {
+            "subtitleKey": "PD_2",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "나이스 킬, 사이퍼."
+        },
+        {
+            "subtitleKey": "PD_3",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "멋진 킬이다. 대단한데."
+        },
+        {
+            "subtitleKey": "PD_4",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "적기 격추. 잘 쐈다."
+        },
+        {
+            "subtitleKey": "PW_1",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "조심해, 적이 너를 조준했다."
+        },
+        {
+            "subtitleKey": "PW_2",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "주의해, 적이 너를 조준했다."
+        },
+        {
+            "subtitleKey": "PW_3",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "조심해. 적이 너를 추적한다."
+        },
+        {
+            "subtitleKey": "PWM_1",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "미사일, 브레이크!"
+        },
+        {
+            "subtitleKey": "PWM_2",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "미사일이다! 브레이크, 브레이크!"
+        }, 
+        {
+            "subtitleKey": "PWM_3",
+            "name": "Pixy",
+            "side": "A",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "미사일이다, 떨쳐내!"
+        },
+
+        {
+            "subtitleKey": "EW1_1",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "적을 조준했다."
+        },
+        {
+            "subtitleKey": "EW1_2",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "내 앞의 놈을 떨구겠다."
+        },
+        {
+            "subtitleKey": "ED1_1",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "맞았어, 떨어진다!"
+        },
+        {
+            "subtitleKey": "ED1_2",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "메이데이, 기체가 먹통이다. 탈출한다!"
+        },
+        {
+            "subtitleKey": "ED1_3",
+            "name": "Velkan Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": false,
+            "subTitle" : "고도가 떨어진다!"
+        }
+    ]
+}
