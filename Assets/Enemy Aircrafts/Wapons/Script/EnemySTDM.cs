@@ -37,26 +37,29 @@ public class EnemySTDM : MonoBehaviour
     {
         wc = warningController;
 
-        // 타겟이 존재할 때만 할당
-        if (target != null)
+        this.target = target;
+        if (wc != null)
         {
-            this.target = target;
-
-            wc.TrackingMissileCount(1);
-
-            MissileIndicatorController indicatorController = warningController.GetComponentInChildren<MissileIndicatorController>();
-            if(indicatorController != null) //target is player
+            // 타겟이 존재할 때만 할당
+            if (target != null)
             {
-                indicatorController.AddMissileIndicator(this);
+                
+
+                wc.TrackingMissileCount(1);
+
+                MissileIndicatorController indicatorController = warningController.GetComponentInChildren<MissileIndicatorController>();
+                if (indicatorController != null) //target is player
+                {
+                    indicatorController.AddMissileIndicator(this);
+                }
+
+                //mslIndicator = Instantiate(MissileIndicatorPrefab); //ui....
+                //MissileIndicator newMissileIndicator = mslIndicator.GetComponent<MissileIndicator>();
+
+                //newMissileIndicator.transform.SetParent(target.transform);
+                //newMissileIndicator.InitalizeReference(this);
             }
-
-            //mslIndicator = Instantiate(MissileIndicatorPrefab); //ui....
-            //MissileIndicator newMissileIndicator = mslIndicator.GetComponent<MissileIndicator>();
-
-            //newMissileIndicator.transform.SetParent(target.transform);
-            //newMissileIndicator.InitalizeReference(this);
         }
-
         Debug.Log("Missile instantiated");
         // 발사 속도를 설정
         speed = launchSpeed;
@@ -79,8 +82,11 @@ public class EnemySTDM : MonoBehaviour
             //경보 해제
             //Destroy(mslIndicator.gameObject);
             //mslIndicator = null;
+            if(wc != null)
+            {
+                wc.TrackingMissileCount(-1);
+            }
             
-            wc.TrackingMissileCount(-1);
             return;
         }
 
@@ -123,19 +129,23 @@ public class EnemySTDM : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
-            wc.TrackingMissileCount(-1);
-            // 적기에 부딪혔을 때 효과 생성
-            Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
-            
-            Aircraft playerAircraft = collision.gameObject.GetComponent<Aircraft>();
-            if (playerAircraft != null)
+            if(wc != null)
             {
-                playerAircraft.playerHP -= damage;
+                wc.TrackingMissileCount(-1);
+                // 적기에 부딪혔을 때 효과 생성
+                Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
+
+                Aircraft playerAircraft = collision.gameObject.GetComponent<Aircraft>();
+                if (playerAircraft != null)
+                {
+                    playerAircraft.playerHP -= damage;
+                }
+
+                target = null;
+
+                StartCoroutine(WaitForIndicator());
             }
-
-            target = null;
-
-            StartCoroutine(WaitForIndicator());
+            
 
             Destroy(gameObject);
         }

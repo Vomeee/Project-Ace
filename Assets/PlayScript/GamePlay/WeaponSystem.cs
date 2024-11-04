@@ -65,7 +65,10 @@ public class WeaponSystem : MonoBehaviour
         missileCount = 125;
         specialWeaponCount = 16;
 
-        for(int i = 0; i < specialWeaponCount; i++)
+        specialWeaponCooldowns = new List<float>();
+        specialWeaponFirePoints = new List<Transform>();
+
+        for (int i = 0; i < specialWeaponCount; i++)
         {
             specialWeaponCooldowns.Add(specialWeaponCooldown);
             if(i % 2 == 0)

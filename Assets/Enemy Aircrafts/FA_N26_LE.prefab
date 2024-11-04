@@ -850,6 +850,7 @@ GameObject:
   - component: {fileID: 1388948328577535422}
   - component: {fileID: 1643224001313294197}
   - component: {fileID: 4829113777098674631}
+  - component: {fileID: -7906054747624176083}
   m_Layer: 0
   m_Name: FA_N26_LE
   m_TagString: Enemy
@@ -913,9 +914,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc241383bc4d44f479716288bff8ec6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTarget: {fileID: 0}
   player: {fileID: 0}
+  friendTransform: {fileID: 0}
   targetingSystem: {fileID: 0}
   warningController: {fileID: 0}
+  gm: {fileID: 0}
   maxSpeed: 300
   minSpeed: 150
   defaultSpeed: 150
@@ -931,10 +935,11 @@ MonoBehaviour:
   waypointObject: {fileID: 6206487450123874273, guid: 82d9c450415cd0849a601e9a3a956998, type: 3}
   playerTrackingRate: 0.6
   trackingStartDistance: 700
-  shootRate: 0.8
+  shootRate: 0.6
+  friendShootRate: 0.01
   canShoot: 0
   currentMissileCoolDown: 0
-  missileCoolDown: 10
+  missileCoolDown: 20
   timeUntilShoot: 5
   enemyState: 0
   enemyMissilePrefab: {fileID: 1765958663548051430, guid: 7cf8732bbef4a504b9e424390bf57538, type: 3}
@@ -952,7 +957,7 @@ MonoBehaviour:
   distanceText: {fileID: 4563761655280617725}
   aircraftNameText: {fileID: 8562796627557307585}
   minDistance: 10
-  maxDistance: 20000
+  maxDistance: 3000
   isFlickering: 0
   isMinimapFlickering: 0
   lockOnSquare: {fileID: 4515811502881128648}
@@ -1053,7 +1058,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93c97da0a9a11174ab89575db81f7917, type: 2}
+  - {fileID: 2100000, guid: 1f1128c5338b80d4ebae2c3471203103, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1083,7 +1088,7 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
+        time: 1
         value: 1
         inSlope: 0
         outSlope: 0
@@ -1096,7 +1101,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9716981, g: 0.8257741, b: 0.28875935, a: 1}
+      key0: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1104,7 +1109,7 @@ TrailRenderer:
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 65535
       ctime1: 65535
       ctime2: 0
       ctime3: 0
@@ -1112,7 +1117,7 @@ TrailRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 0
+      atime0: 18890
       atime1: 65535
       atime2: 0
       atime3: 0
@@ -1121,14 +1126,14 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
     textureMode: 0
-    textureScale: {x: 3, y: 3}
+    textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
@@ -1136,6 +1141,20 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-7906054747624176083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749074832340177947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fbc7e989912e464caf2d12ddc9905ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailRenderer: {fileID: 4829113777098674631}
+  newWidth: 10
 --- !u!1 &6926376766307440893
 GameObject:
   m_ObjectHideFlags: 0

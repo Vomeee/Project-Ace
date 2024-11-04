@@ -68,7 +68,14 @@ public class EnemyPointer : MonoBehaviour
                 }
             }
         }
-        else return;
+        else
+        {
+            if (isBeingShown)
+            {
+                isBeingShown = false;
+                arrowImage.color = transparentColor;
+            }
+        }
         
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyAI : MonoBehaviour
 {
     
+    [SerializeField] Transform currentTarget; 
     [SerializeField] Transform player; // 플레이어의 Transform
     [SerializeField] Transform friendTransform; //동료의 transform.
     [SerializeField] TargettingSystem targetingSystem;
@@ -62,6 +63,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     float shootRate; //범위안에 들어오면 쏠 확률
     [SerializeField]
+    float friendShootRate; //동료를 쏠 확률, 매우 낮게.
+    [SerializeField]
     bool canShoot; // 미사일 발사 가능 여부
     [SerializeField]
     float currentMissileCoolDown; //현재 쿨다운 저장변수
@@ -86,7 +89,7 @@ public class EnemyAI : MonoBehaviour
             float trackingValue = UnityEngine.Random.Range(0f, 1f);
             if (trackingValue > playerTrackingRate && trackingStartDistance > distanceToTarget)
             {
-                Debug.Log("now Attacking");
+                //Debug.Log("now Attacking");
                 enemyState = 1;
             }
             else
@@ -137,10 +140,13 @@ public class EnemyAI : MonoBehaviour
         }
         else if (enemyState == 1) // enemy tracking player.
         {
-            Vector3 playerPosition = player.position;
-            Instantiate(waypointObject, playerPosition, Quaternion.identity);
+            if (currentTarget != null)
+            {
+                Vector3 targetPosition = currentTarget.position;
+                Instantiate(waypointObject, targetPosition, Quaternion.identity);
 
-            currentWaypoint = playerPosition;
+                currentWaypoint = targetPosition;
+            }
         }
     }
 
@@ -209,6 +215,7 @@ public class EnemyAI : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+            currentTarget = player;
             if(!isLockingOn)
             {
                 warningController.currentEnemyBehind += 1;
@@ -223,12 +230,32 @@ public class EnemyAI : MonoBehaviour
                 GameObject enemyMsl = Instantiate(enemyMissilePrefab, transform.position, transform.rotation); //미사일 생성
                 EnemySTDM missileScript = enemyMsl.GetComponent<EnemySTDM>(); //나중에 미사일 이름 바꿔서 따로 만들기.
 
-                Debug.Log("missile launch");
-                missileScript.Launch(player, maxSpeed, warningController);
+                //Debug.Log("missile launch");
+                missileScript.Launch(currentTarget, maxSpeed, warningController);
 
+                
                 canShoot = false;
+                currentMissileCoolDown = 0;
             }
             
+        }
+        if (other.CompareTag("Friend"))
+        {
+            currentTarget = other.GetComponent<Transform>();
+            //StartCoroutine(LockOnWaiting());
+
+            // 동료에게 미사일 발사.
+            //if (currentTarget == currentFriendTarget && canShoot && Random.Range(0, 1) < shootRate)
+            //{
+            //GameObject enemyMsl = Instantiate(enemyMissilePrefab, transform.position, transform.rotation); //미사일 생성
+            //EnemySTDM missileScript = enemyMsl.GetComponent<EnemySTDM>(); //나중에 미사일 이름 바꿔서 따로 만들기.
+
+            Debug.Log("missile launch");
+                //missileScript.Launch(currentTarget, maxSpeed, null);
+
+                //canShoot = false;
+                //currentMissileCoolDown = 0;
+            //}
         }
     }
 
@@ -243,10 +270,11 @@ public class EnemyAI : MonoBehaviour
             
             isLockingOn = false;
         }
-        if(other.CompareTag("Friend"))
+        else if(other.CompareTag("Friend"))
         {
-            player = other.GetComponent<Transform>();
+            currentTarget = player;
         }
+        
     }
 
     IEnumerator LockOnWaiting()

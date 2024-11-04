@@ -157,12 +157,12 @@ MonoBehaviour:
   wc: {fileID: 0}
   tagController: {fileID: 0}
   target: {fileID: 0}
-  turningForce: 10
-  maxSpeed: 300
-  accelAmount: 50
+  turningForce: 3
+  maxSpeed: 250
+  accelAmount: 80
   lifetime: 10
   speed: 50
-  damage: 3
+  damage: 13
   boresightAngle: 100
   enemyHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}
   groundHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}

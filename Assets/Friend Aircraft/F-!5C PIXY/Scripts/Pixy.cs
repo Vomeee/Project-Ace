@@ -119,7 +119,7 @@ public class Pixy : MonoBehaviour
     {
         if (friendState == 0) //following player.
         {
-            if(waypointQueue.Count == 0)
+            if (waypointQueue.Count == 0)
             {
                 currentWaypoint = followTransformPoint.transform.position;
             }
@@ -129,16 +129,15 @@ public class Pixy : MonoBehaviour
             }
 
         }
-        else if (friendState == 1) // tracking enemy.
+        else if (friendState == 1)
         {
-            if (waypointQueue.Count == 0)
+            if (currentTargetTransform != null)
             {
-                currentWaypoint = currentTargetTransform.transform.position;
+                waypointQueue.Enqueue(currentTargetTransform);
+                currentTargetTransform = null;
             }
-            else
-            {
-                currentWaypoint = waypointQueue.Dequeue().position;
-            }
+            friendState = 0;
+            return;
         }
 
         waypointDistance = Vector3.Distance(transform.position, currentWaypoint);
@@ -212,26 +211,17 @@ public class Pixy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
+        //Debug.Log(other.tag);
         if (other.CompareTag("Enemy") && friendState == 0) //딱 하나만 받을 수 있음
         {
             Debug.Log("friendState is now 1.");
-            friendState = 1;
+            
             currentTargetTransform = other.gameObject.GetComponent<Transform>();
-
+            friendState = 1;
             if (currentTargetTransform == null)
             {
                 Debug.Log("적 정보를 못받아요");
             }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            currentTargetTransform = null;
-            friendState = 0;
         }
     }
 
