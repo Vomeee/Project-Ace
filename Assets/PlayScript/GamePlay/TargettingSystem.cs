@@ -19,13 +19,16 @@ public class TargettingSystem : MonoBehaviour
     TextMeshProUGUI currentTargetText; //현재 타겟의 이름과 점수를 담는 좌상단 UI 컴포넌트.
 
     [SerializeField]
-    private List<Transform> potentialTargetTransforms = new List<Transform>(); //일정 거리 안의 적들의 Transform을 담는 list.
+    public List<Transform> potentialTargetTransforms = new List<Transform>(); //일정 거리 안의 적들의 Transform을 담는 list.
 
-  
+    private void Start()
+    {
+        currentTargetTransform = null;
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) //Tab 키를 타겟 전환 키로 사용
+        if (Input.GetKeyDown(KeyCode.LeftShift)) //shift 키를 타겟 전환 키로 사용
         {
             SwitchTarget();
         }

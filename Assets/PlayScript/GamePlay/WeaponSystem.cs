@@ -63,7 +63,20 @@ public class WeaponSystem : MonoBehaviour
     {
         gunCount = 1600;
         missileCount = 125;
-        //specialWeaponCount = 16;
+        specialWeaponCount = 16;
+
+        for(int i = 0; i < specialWeaponCount; i++)
+        {
+            specialWeaponCooldowns.Add(specialWeaponCooldown);
+            if(i % 2 == 0)
+            {
+                specialWeaponFirePoints.Add(leftMissileTransform);
+            }
+            else
+            {
+                specialWeaponFirePoints.Add(rightMissileTransform);
+            }
+        }
 
         gunCountUIUpdate();
         stdmCountUIUpdate();
@@ -79,6 +92,16 @@ public class WeaponSystem : MonoBehaviour
     public float rightMissileCoolDown;
     public float leftMissileCoolDown;
 
+    #endregion
+
+    [Space]
+    #region Special weapon references.
+    [SerializeField] int specialWeaponSize;
+    [SerializeField] int specialWeaponCount;
+    [SerializeField] float specialWeaponCooldown;
+    List<float> specialWeaponCooldowns;
+    List<Transform> specialWeaponFirePoints; 
+ 
     #endregion
 
     #region weaponUI instances
@@ -262,7 +285,11 @@ public class WeaponSystem : MonoBehaviour
 
     void FireSpecialWeapon()
     {
-        
+        if(specialWeaponCount <= 0)
+        {
+            return;
+        }
+        //targettingSystem.potentialTargetTransforms
     }
 
     #region weaponUI update funcs

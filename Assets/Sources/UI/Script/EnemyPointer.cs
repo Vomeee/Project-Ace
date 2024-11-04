@@ -25,43 +25,50 @@ public class EnemyPointer : MonoBehaviour
 
     void Update()
     {
-        // 타겟의 월드 좌표를 뷰포트 좌표로 변환
-        Vector3 targetViewportPos = Camera.main.WorldToViewportPoint(targettingSystem.currentTargetTransform.position);
+        Vector3 currentTargetPos = targettingSystem.currentTargetTransform.position;
 
-        // 화면을 벗어났는지 확인 (x와 y 값이 0~1 범위를 벗어났는지 확인)
-        bool isOutOfBounds = targetViewportPos.x < 0 || targetViewportPos.x > 1 || targetViewportPos.y < 0 || targetViewportPos.y > 1;
-
-        if (isOutOfBounds)
+        if (currentTargetPos != null)
         {
-            if (!isBeingShown)
+            // 타겟의 월드 좌표를 뷰포트 좌표로 변환
+            Vector3 targetViewportPos = Camera.main.WorldToViewportPoint(currentTargetPos);
+
+            // 화면을 벗어났는지 확인 (x와 y 값이 0~1 범위를 벗어났는지 확인)
+            bool isOutOfBounds = targetViewportPos.x < 0 || targetViewportPos.x > 1 || targetViewportPos.y < 0 || targetViewportPos.y > 1;
+
+            if (isOutOfBounds)
             {
-                isBeingShown = true;
-                arrowImage.color = originalColor;
+                if (!isBeingShown)
+                {
+                    isBeingShown = true;
+                    arrowImage.color = originalColor;
+                }
+
+                // 타겟 방향을 카메라의 로컬 좌표계로 변환하여 계산
+                Vector3 targetDirFromCamera = (currentTargetPos - Camera.main.transform.position).normalized;
+
+                // 카메라의 로컬 좌표에서 타겟 방향을 계산 (카메라의 로컬 방향을 고려)
+                Vector3 arrowDirection = Camera.main.transform.InverseTransformDirection(targetDirFromCamera);
+
+                // 화살표의 transform.rotation을 카메라 회전을 반영하여 설정
+                float angle = Mathf.Atan2(arrowDirection.x, arrowDirection.y) * Mathf.Rad2Deg;
+                arrowImage.transform.rotation = Quaternion.Euler(0, -angle, -angle);
+
+                // 화면 중앙을 기준으로 화살표 위치 계산
+                Vector2 arrowPosition = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad) - 10) * radius;
+
+                // 화살표의 RectTransform 위치 설정
+                arrowRectTransform.anchoredPosition = arrowPosition;
             }
-
-            // 타겟 방향을 카메라의 로컬 좌표계로 변환하여 계산
-            Vector3 targetDirFromCamera = (targettingSystem.currentTargetTransform.position - Camera.main.transform.position).normalized;
-
-            // 카메라의 로컬 좌표에서 타겟 방향을 계산 (카메라의 로컬 방향을 고려)
-            Vector3 arrowDirection = Camera.main.transform.InverseTransformDirection(targetDirFromCamera);
-
-            // 화살표의 transform.rotation을 카메라 회전을 반영하여 설정
-            float angle = Mathf.Atan2(arrowDirection.x, arrowDirection.y) * Mathf.Rad2Deg;
-            arrowImage.transform.rotation = Quaternion.Euler(0, -angle, -angle);
-
-            // 화면 중앙을 기준으로 화살표 위치 계산
-            Vector2 arrowPosition = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad) - 10) * radius;
-
-            // 화살표의 RectTransform 위치 설정
-            arrowRectTransform.anchoredPosition = arrowPosition;
-        }
-        else
-        {
-            if (isBeingShown)
+            else
             {
-                isBeingShown = false;
-                arrowImage.color = transparentColor;
+                if (isBeingShown)
+                {
+                    isBeingShown = false;
+                    arrowImage.color = transparentColor;
+                }
             }
         }
+        else return;
+        
     }
 }
