@@ -628,6 +628,16 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("msl hit(aircraft detect)");
 
         }
+        if (collision.gameObject.CompareTag("HPMM"))
+        {
+            AircraftDamage(102);
+            if (aircraftHP > 0)
+            {
+                tagController.ShowHitTag();
+            }
+            Debug.Log("msl hit(aircraft detect)");
+
+        }
     }
 
     void AircraftDamage(int damage)

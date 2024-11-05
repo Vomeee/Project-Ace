@@ -12,6 +12,7 @@ TagManager:
   - EnemyAttack
   - color fix
   - Friend
+  - HPMM
   layers:
   - Default
   - TransparentFX

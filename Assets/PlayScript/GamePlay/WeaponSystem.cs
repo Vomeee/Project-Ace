@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -15,10 +16,8 @@ public class WeaponSystem : MonoBehaviour
     #region weaponCounts variables
     [SerializeField] private int gunCount;
     [SerializeField] private int missileCount;
-    //[SerializeField] private int specialWeaponCount;
+    [SerializeField] private int specialWeaponCount;
     #endregion
-
-    
 
     #region weapon prefabs
     public GameObject bulletPrefab; // ÃÑ¾Ë ÇÁ¸®ÆÕ
@@ -65,21 +64,21 @@ public class WeaponSystem : MonoBehaviour
         missileCount = 125;
         specialWeaponCount = 16;
 
-        specialWeaponCooldowns = new List<float>();
-        specialWeaponFirePoints = new List<Transform>();
+        //specialWeaponCooldowns = new List<float>();
+        //specialWeaponFirePoints = new List<Transform>();
 
-        for (int i = 0; i < specialWeaponCount; i++)
-        {
-            specialWeaponCooldowns.Add(specialWeaponCooldown);
-            if(i % 2 == 0)
-            {
-                specialWeaponFirePoints.Add(leftMissileTransform);
-            }
-            else
-            {
-                specialWeaponFirePoints.Add(rightMissileTransform);
-            }
-        }
+        //for (int i = 0; i < specialWeaponCount; i++)
+        //{
+        //    specialWeaponCooldowns.Add(specialWeaponCooldown);
+        //    if(i % 2 == 0)
+        //    {
+        //        specialWeaponFirePoints.Add(leftMissileTransform);
+        //    }
+        //    else
+        //    {
+        //        specialWeaponFirePoints.Add(rightMissileTransform);
+        //    }
+        //}
 
         gunCountUIUpdate();
         stdmCountUIUpdate();
@@ -100,11 +99,14 @@ public class WeaponSystem : MonoBehaviour
     [Space]
     #region Special weapon references.
     [SerializeField] int specialWeaponSize;
-    [SerializeField] int specialWeaponCount;
-    [SerializeField] float specialWeaponCooldown;
-    List<float> specialWeaponCooldowns;
-    List<Transform> specialWeaponFirePoints; 
- 
+    [SerializeField]
+    public float spCoolDownTime;
+
+    public float spRightCoolDown;
+    public float spLeftCoolDown;
+    //List<Transform> specialWeaponFirePoints;
+    //List<Transform> currentSPTargets;
+
     #endregion
 
     #region weaponUI instances
@@ -193,13 +195,35 @@ public class WeaponSystem : MonoBehaviour
 
         STDMCoolDown(ref rightMissileCoolDown);
         STDMCoolDown(ref leftMissileCoolDown);
+        STDMCoolDown(ref spRightCoolDown);
+        STDMCoolDown(ref spLeftCoolDown);
 
         aircraftSpeed = infoGetter.getSpeed();
 
         #endregion
+
+        #region MXAA updates
+        //if(weaponSelection == 1)
+        //{
+        //    int ind = 0;
+        //    foreach(Transform tgt in targettingSystem.potentialTargetTransforms)
+        //    {
+        //        currentSPTargets.Clear();   
+        //        if(targettingSystem.IsInCone(tgt))
+        //        {
+        //            currentSPTargets.Add(tgt);
+        //            ind++;
+
+        //            if (ind >= specialWeaponSize) break;
+        //            UnityEngine.UI.Image img = tgt.gameObject.GetComponentInChildren<UnityEngine.UI.Image>();
+        //            img.color = Color.red;
+        //        }
+        //    }
+        //}
+        #endregion
     }
 
-    
+
 
     void FireGun()
     {
@@ -288,11 +312,44 @@ public class WeaponSystem : MonoBehaviour
 
     void FireSpecialWeapon()
     {
-        if(specialWeaponCount <= 0)
+        if (specialWeaponCount <= 0)
         {
-            return;
+            return; // ÀÜÅº 0.
         }
-        //targettingSystem.potentialTargetTransforms
+        if (spLeftCoolDown > 0 && spRightCoolDown > 0)
+        {
+            return; // ÀçÀåÀü ¾ÈµÊ.
+        }
+
+        Vector3 missilePosition;
+
+        if (specialWeaponCount % 2 == 1) // ³²Àº ¹Ì»çÀÏ ¼ö°¡ È¦¼ö
+        {
+            missilePosition = rightMissileTransform.position;
+            spRightCoolDown = spCoolDownTime;
+        }
+        else // Â¦¼ö
+        {
+            missilePosition = leftMissileTransform.position;
+            spLeftCoolDown = spCoolDownTime;
+        }
+
+        GameObject stdm = Instantiate(specialWeaponPrefab, missilePosition, playerTransform.rotation); //¹Ì»çÀÏ »ý¼º
+        STDM missileScript = stdm.GetComponent<STDM>();
+
+
+        currentTargetTransform = targettingSystem.currentTargetTransform;
+        if (targettingSystem.IsInCone(currentTargetTransform))
+        {
+            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController); ////////È®ÀÎ!!!!!
+        }
+        else
+        {
+            missileScript.Launch(null, infoGetter.getSpeed() / 5, tagController);
+        }
+
+        specialWeaponCount--;
+        specialWeaponCountUIUpdate();
     }
 
     #region weaponUI update funcs
@@ -325,7 +382,8 @@ public class WeaponSystem : MonoBehaviour
 
     void specialWeaponCountUIUpdate()
     {
-
+        string mslText = specialWeaponCount.ToString();
+        specialWeaponCountText.text = "<align=left>HPAA<line-height=0>" + "\n" + "<align=right>" + mslText + "<line-height=1em>";
     }
 
     void STDMFrameUpdate()

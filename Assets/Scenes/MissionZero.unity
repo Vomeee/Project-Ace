@@ -28164,7 +28164,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<align=left>MXAA<line-height=0>
+  m_text: '<align=left>HPMM<line-height=0>
 
     <align=right>0<line-height=1em>'
   m_isRightToLeft: 0
@@ -28882,7 +28882,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2500
+  m_Radius: 1500
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1693827035
 MonoBehaviour:
@@ -36492,9 +36492,10 @@ MonoBehaviour:
   infoGetter: {fileID: 8664474838250448221}
   gunCount: 0
   missileCount: 0
+  specialWeaponCount: 16
   bulletPrefab: {fileID: 1499266384541859513, guid: 69f7b23246ace7649b02212d22b27347, type: 3}
   missilePrefab: {fileID: 1765958663548051430, guid: 7ed9e1cb9fe7d914289cbfa93628aa96, type: 3}
-  specialWeaponPrefab: {fileID: 1765958663548051430, guid: 7ed9e1cb9fe7d914289cbfa93628aa96, type: 3}
+  specialWeaponPrefab: {fileID: 1765958663548051430, guid: 476aa3c1601025f4eb6ae2d707558e2e, type: 3}
   gunFireRate: 0.05
   isGunFiring: 0
   gunPointL: {fileID: 424733198}
@@ -36515,8 +36516,9 @@ MonoBehaviour:
   rightMissileCoolDown: 0
   leftMissileCoolDown: 0
   specialWeaponSize: 4
-  specialWeaponCount: 16
-  specialWeaponCooldown: 5
+  spCoolDownTime: 5
+  spRightCoolDown: 0
+  spLeftCoolDown: 0
   weaponPointer: {fileID: 108644272}
   gunCountText: {fileID: 1489677928}
   missileCountText: {fileID: 1073549100}
@@ -57027,7 +57029,7 @@ MonoBehaviour:
   rollKeyFactor: 1
   rollLeft: 97
   rollRight: 100
-  useMouse: 1
+  useMouse: 0
   brakeMouseButton: 2
   pitchMouseFactor: 1
   pitchMouse: Mouse Y
