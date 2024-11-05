@@ -74,36 +74,32 @@ public class STDM : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // 누적 시간을 더해줌
-        currentTime += Time.deltaTime;
+        currentTime += Time.fixedDeltaTime;
 
-        // 속도가 maxSpeed를 넘지 않도록 가속
         if (speed < maxSpeed)
         {
-            speed += accelAmount * Time.deltaTime;
+            speed += accelAmount * Time.fixedDeltaTime;
         }
 
-        // 타겟이 없으면 직진만 수행
         if (target == null)
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
         }
         else
         {
-            // 타겟이 있으면 추적
             LookAtTarget();
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * speed * Time.fixedDeltaTime);
         }
 
-        // 누적 시간이 lifetime을 넘으면 소멸
         if (currentTime >= lifetime - 1)
         {
             tagController.ShowMissedTag();
             Destroy(gameObject);
         }
     }
+
 
 
     void OnCollisionEnter(Collision collision) //땅이든, 적이든... 파괴.
@@ -114,7 +110,7 @@ public class STDM : MonoBehaviour
             // 적기에 부딪혔을 때 효과 생성
             Instantiate(enemyHitEffect, transform.position, Quaternion.identity);
 
-            //Debug.Log("missilehittoenemy");
+            Debug.Log("missilehittoenemy");
         }
         
         // 충돌한 오브젝트의 태그가 "Ground"일 경우
