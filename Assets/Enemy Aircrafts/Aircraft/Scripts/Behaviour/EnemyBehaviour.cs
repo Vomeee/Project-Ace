@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] List<Transform> initialWaypoints;
     Queue<Transform> waypointQueue;
 
-    Vector3 currentWaypoint;
+    [SerializeField] Vector3 currentWaypoint;
 
     float prevWaypointDistance;
     float waypointDistance;
@@ -80,6 +80,17 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     BoxCollider attackRangeBox;
     [SerializeField]
+    float movingRangeDistance;
+
+    //area set.
+    [SerializeField]
+    float minMovingRangeX;
+    [SerializeField]
+    float minMovingRangeZ;
+    [SerializeField]
+    float maxMovingRangeX;
+    [SerializeField]
+    float maxMovingRangeZ;
     
 
     void ChangeWaypoint()
@@ -132,6 +143,22 @@ public class EnemyAI : MonoBehaviour
             {
                 Physics.Raycast(waypointPosition, Vector3.up, out hit);
                 waypointPosition.y += height + hit.distance;
+            }
+            if(waypointPosition.x < minMovingRangeX)
+            {
+                waypointPosition.x = minMovingRangeX;
+            }
+            else if (waypointPosition.x > maxMovingRangeX)
+            {
+                waypointPosition.x = maxMovingRangeX;
+            }
+            if (waypointPosition.z < minMovingRangeZ)
+            {
+                waypointPosition.z = minMovingRangeZ;
+            }
+            else if (waypointPosition.z > maxMovingRangeX)
+            {
+                waypointPosition.z = maxMovingRangeZ;
             }
 
             Instantiate(waypointObject, waypointPosition, Quaternion.identity);
@@ -341,10 +368,19 @@ public class EnemyAI : MonoBehaviour
     { 
         mainCamera = Camera.main;   
 
+        //area set.
+        minMovingRangeX = transform.position.x - movingRangeDistance;
+        minMovingRangeZ = transform.position.z - movingRangeDistance;
+        maxMovingRangeX = transform.position.x + movingRangeDistance;
+        maxMovingRangeZ = transform.position.z + movingRangeDistance;
+
+        //ui set.
         distanceText.color = normalColor;
         aircraftNameText.text = aircraftName;
         aircraftNameText.color = normalColor;
 
+
+        //moving set.
         speed = defaultSpeed;
         turningTime = 1 / turningForce;
 
