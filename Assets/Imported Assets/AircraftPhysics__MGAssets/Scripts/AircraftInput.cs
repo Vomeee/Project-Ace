@@ -133,6 +133,13 @@ namespace MGAssets
             [Tooltip("GUI Elements visible only by FP Camera that are disabled on External Cameras")] public RectTransform[] disableExtGuis;
             [HideInInspector] public InputMobileFlight[] inputsMobile;
 
+            [SerializeField]
+            RectTransform smallMinimap;
+            [SerializeField]
+            RectTransform bigMinimap;
+            [SerializeField]
+            int currentMinimapState;
+
             [Space(30)]
             [Header("Current Input - Read Only!")]
             public Vector3 inputForce;
@@ -155,6 +162,11 @@ namespace MGAssets
                 if (cursorStartLocked) Cursor.lockState = CursorLockMode.Locked; else Cursor.lockState = CursorLockMode.None;
 
                 recoverAttitude();
+
+                currentMinimapState = 0;
+
+                smallMinimap.gameObject.SetActive(true);
+                bigMinimap.gameObject.SetActive(false);
             }
             void OnEnable()
             {
@@ -322,11 +334,35 @@ namespace MGAssets
                     flightScript.setInputForce(inputForce);
                 }
                 ////////
+                /// change minimap
+                if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    ChangeMinimap();
+                }
 
 
                 //print("keyThrottle = " + keyThrottle + " // inputFinal = " + (Mathf.Clamp(inputForce.z + keyThrottle, throttleClamp.x, throttleClamp.y)));
             }
             //
+
+            void ChangeMinimap()
+            {
+                if (currentMinimapState == 0)
+                {
+                    currentMinimapState = 1; //to big state.
+
+                    smallMinimap.gameObject.SetActive(true);
+                    bigMinimap.gameObject.SetActive(false);
+                }
+                else if (currentMinimapState == 1)
+                {
+                    currentMinimapState = 0;
+
+                    smallMinimap.gameObject.SetActive(false);
+                    bigMinimap.gameObject.SetActive(true);
+
+                }
+            }
 
 
             ////////////////////////////////////////////////// Update Mobile Inputs

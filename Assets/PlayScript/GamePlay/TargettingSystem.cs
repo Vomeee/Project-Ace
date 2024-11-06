@@ -24,6 +24,7 @@ public class TargettingSystem : MonoBehaviour
     private void Start()
     {
         currentTargetTransform = null;
+        
     }
 
     private void Update()
@@ -32,6 +33,8 @@ public class TargettingSystem : MonoBehaviour
         {
             SwitchTarget();
         }
+
+        
 
         if (currentTargetTransform != null)
         {
@@ -49,6 +52,8 @@ public class TargettingSystem : MonoBehaviour
             currentTargetTransform = transformBox;
         }
     }
+
+    
 
     public bool IsInCone(Transform target)
     {

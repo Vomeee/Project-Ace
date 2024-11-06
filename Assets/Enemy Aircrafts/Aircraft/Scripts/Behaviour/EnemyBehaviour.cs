@@ -481,6 +481,7 @@ public class EnemyAI : MonoBehaviour
         Rotate();
         ZAxisRotate();
         Move();
+
     }
 
     public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, 
