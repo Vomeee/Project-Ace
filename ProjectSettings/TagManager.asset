@@ -25,7 +25,7 @@ TagManager:
   - PlayerBullet
   - 
   - Minimap
-  - 
+  - MinimapGlobal
   - 1st Person HUD
   - 
   - EnemyAttack

@@ -25,10 +25,9 @@ public class EnemyPointer : MonoBehaviour
 
     void Update()
     {
-        Vector3 currentTargetPos = targettingSystem.currentTargetTransform.position;
-
-        if (currentTargetPos != null)
+        if (targettingSystem.currentTargetTransform != null)
         {
+            Vector3 currentTargetPos = targettingSystem.currentTargetTransform.position;
             // Å¸°ÙÀÇ ¿ùµå ÁÂÇ¥¸¦ ºäÆ÷Æ® ÁÂÇ¥·Î º¯È¯
             Vector3 targetViewportPos = Camera.main.WorldToViewportPoint(currentTargetPos);
 
