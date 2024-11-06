@@ -7,6 +7,7 @@ public class TargettingSystem : MonoBehaviour
     [Header("player-enemy References")]
     public Transform playerTransform;
     public Transform currentTargetTransform; //현재 타겟의 Transform.
+    public Transform targetTransformRightBefore; //직전프레임 적기 Transform;
     public EnemyAI currentEnemy; //현재 타겟의 script.
 
 
@@ -21,10 +22,11 @@ public class TargettingSystem : MonoBehaviour
     [SerializeField]
     public List<Transform> potentialTargetTransforms = new List<Transform>(); //일정 거리 안의 적들의 Transform을 담는 list.
 
+    [SerializeField] public float currentTargetLockingTime;
+
     private void Start()
     {
         currentTargetTransform = null;
-        
     }
 
     private void Update()
@@ -34,16 +36,24 @@ public class TargettingSystem : MonoBehaviour
             SwitchTarget();
         }
 
+        //if(currentTargetTransform != targetTransformRightBefore)
+        //{
+        //    currentTargetLockingOn = false;
+        //    currentTargetLockingTime = 0;
+        //}
+
         
 
         if (currentTargetTransform != null)
         {
             if (IsInCone(currentTargetTransform))
             {
+                currentTargetLockingTime += Time.deltaTime; //조준
                 LockOnTarget(currentTargetTransform);
             }
             else
             {
+                currentTargetLockingTime = 0;
                 UnlockTarget(currentTargetTransform);
             }
         }
@@ -51,6 +61,8 @@ public class TargettingSystem : MonoBehaviour
         {
             currentTargetTransform = transformBox;
         }
+
+        //targetTransformRightBefore = currentTargetTransform; //ㄱㅊ?
     }
 
     
@@ -75,7 +87,7 @@ public class TargettingSystem : MonoBehaviour
     {
         if (currentEnemy != null)
         {
-            currentEnemy.OnLockedOn();
+            currentEnemy.OnLockedOn(currentTargetLockingTime);
         }
     }
 

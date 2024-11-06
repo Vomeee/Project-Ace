@@ -227,7 +227,7 @@ public class WeaponSystem : MonoBehaviour
 
     void FireGun()
     {
-        Debug.Log("gunfireTriggered");
+        //ebug.Log("gunfireTriggered");
         if (bulletPrefab != null && gunPointL != null && gunCount > 0)
         {
             if(gunCount % 2 == 0)
@@ -287,11 +287,11 @@ public class WeaponSystem : MonoBehaviour
         currentTargetTransform = targettingSystem.currentTargetTransform;
         if(targettingSystem.IsInCone(currentTargetTransform))
         {
-            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController); ////////확인!!!!!
+            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController, targettingSystem.currentTargetLockingTime); ////////확인!!!!!
         }
         else
         {
-            missileScript.Launch(null, infoGetter.getSpeed() / 5, tagController);
+            missileScript.Launch(null, infoGetter.getSpeed() / 5, tagController, 0);
         }
         
         missileCount--;
@@ -341,11 +341,11 @@ public class WeaponSystem : MonoBehaviour
         currentTargetTransform = targettingSystem.currentTargetTransform;
         if (targettingSystem.IsInCone(currentTargetTransform))
         {
-            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController); ////////확인!!!!!
+            missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController, targettingSystem.currentTargetLockingTime); ////////확인!!!!!
         }
         else
         {
-            missileScript.Launch(null, infoGetter.getSpeed() / 5, tagController);
+            missileScript.Launch(null, infoGetter.getSpeed() / 5, tagController, 0);
         }
 
         specialWeaponCount--;

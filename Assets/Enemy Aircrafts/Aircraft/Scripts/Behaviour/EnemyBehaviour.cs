@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -91,7 +93,11 @@ public class EnemyAI : MonoBehaviour
     float maxMovingRangeX;
     [SerializeField]
     float maxMovingRangeZ;
-    
+
+    [SerializeField] float maxLockingTime = 3f;
+    [SerializeField] float minScale = 0.7f;
+    [SerializeField] float maxScale = 1.5f;
+
 
     void ChangeWaypoint()
     {
@@ -327,7 +333,7 @@ public class EnemyAI : MonoBehaviour
     #region reactive UI references and variables
     [SerializeField] Camera mainCamera;
     [SerializeField] RectTransform lockOnUIRectTransform;
-    [SerializeField] Image lockOnUIImage;
+    [SerializeField] UnityEngine.UI.Image lockOnUIImage;
 
     [SerializeField] Color lockedOnColor = Color.red;
     [SerializeField] Color normalColor = Color.green;
@@ -443,9 +449,6 @@ public class EnemyAI : MonoBehaviour
                             isFlickering = false;
                         
                     }
-
-
-
                         distanceText.text = ((int)(distanceToTarget * 5)).ToString();
                 }
                 else
@@ -458,12 +461,7 @@ public class EnemyAI : MonoBehaviour
                 // 거리 범위 밖이면 UI 숨기기
                 lockOnUIRectTransform.gameObject.SetActive(false);
             }
-
-            
         }
-
-
-
         #endregion
 
         //Missile cooldown update.
@@ -529,8 +527,18 @@ public class EnemyAI : MonoBehaviour
         isMinimapFlickering = false;
     }
 
-    public void OnLockedOn()
+    
+    public void OnLockedOn(float lockingOnTime)
     {
+        float scaleFactor = lockingOnTime > maxLockingTime? maxLockingTime : lockingOnTime; //max = maybe 3.
+        float normalizedScaleFactor = scaleFactor / maxLockingTime;
+
+        // localScale을 minScale에서 maxScale 사이 값으로 역방향 보간
+        float scale = Mathf.Lerp(maxScale, minScale, normalizedScaleFactor);
+
+        // 이미지의 localScale 조정
+        lockOnUIImage.transform.localScale = new Vector3(scale, scale, scale);
+
         lockOnUIImage.color = lockedOnColor; // 적기 UI 붉은색으로.
         if (isLockedOn) return;
         StopCoroutine(FlickerEffect());
@@ -568,8 +576,9 @@ public class EnemyAI : MonoBehaviour
         }
         //록 오프
         lockOnSquare.SetActive(false);
+        lockOnUIImage.transform.localScale = new Vector3(minScale, minScale, minScale);
 
-        
+
     }
 
     #endregion

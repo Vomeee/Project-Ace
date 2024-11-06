@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class STDM : MonoBehaviour
@@ -7,14 +8,16 @@ public class STDM : MonoBehaviour
 
     [Header("missile attributes")]
     public Transform target; // 추적할 타겟
-    public float turningForce; // 회전 속도
-    public float maxSpeed; // 최대 속도
-    public float accelAmount; // 가속량
-    public float lifetime; // 미사일의 수명
-    public float speed; // 현재 속도
+    [SerializeField] float turningForce; // 회전 속도
+    [SerializeField] float maxTurningForce; //최대 회전속도.
+    [SerializeField] float maxSpeed; // 최대 속도
+    [SerializeField] float accelAmount; // 가속량
+    [SerializeField] float lifetime; // 미사일의 수명
+    [SerializeField] float speed; // 현재 속도
 
-    public float startSpeed = 50;
-    public float boresightAngle;// 미사일의 추적한계 각도.
+    [SerializeField] float startSpeed = 50;
+    [SerializeField] float boresightAngle;// 미사일의 추적한계 각도.
+    [SerializeField] int precisionFactor;
 
     [Space]
     [Header("References")]
@@ -29,7 +32,7 @@ public class STDM : MonoBehaviour
 
     [SerializeField] float currentTime;
 
-    public void Launch(Transform target, float launchSpeed, TagController tagController)
+    public void Launch(Transform target, float launchSpeed, TagController tagController, float precision)
     {
         this.tagController = tagController;
 
@@ -38,8 +41,10 @@ public class STDM : MonoBehaviour
         {
             this.target = target;
         }
-        
 
+        float currentTurningForce = precisionFactor * precision;
+
+        turningForce = currentTurningForce > maxTurningForce? maxTurningForce : currentTurningForce;
         // 발사 속도를 설정
         speed = launchSpeed + startSpeed;
     }

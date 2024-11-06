@@ -105,13 +105,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  turningForce: 13
+  turningForce: 0
+  maxTurningForce: 15
   maxSpeed: 400
   accelAmount: 80
   lifetime: 10
   speed: 0
   startSpeed: 50
   boresightAngle: 90
+  precisionFactor: 5
   tagController: {fileID: 0}
   enemyHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}
   groundHitEffect: {fileID: 1121192042590650, guid: bcf166a1db4c7eb49922c1ed79009888, type: 3}
