@@ -10,6 +10,10 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject mainMenuScreen; //초기 메뉴화면
     [SerializeField] GameObject missionSelectScreen; // 미션
     [SerializeField] GameObject aircraftSelectScreen;
+    [SerializeField] GameObject controlScreen; //컨트롤방법을알려주는 화면.
+    [SerializeField] GameObject TipScreen1;
+    [SerializeField] GameObject TipScreen2;
+    [SerializeField] GameObject TipScreen3;
 
     public GameObject currentActiveScreen = null; //현재 활성화된 메뉴화면
     [SerializeField] GameManager gameManager;
@@ -45,6 +49,22 @@ public class MainMenuController : MonoBehaviour
     {
         SetCurrentActiveScreen(aircraftSelectScreen);
     }
+    public void ShowControlScreen()
+    {
+        SetCurrentActiveScreen(controlScreen);
+    }
+    public void ShowTipScreen1()
+    {
+        SetCurrentActiveScreen(TipScreen1);
+    }
+    public void ShowTipScreen2()
+    {
+        SetCurrentActiveScreen(TipScreen2);
+    }
+    public void ShowTipScreen3()
+    {
+        SetCurrentActiveScreen(TipScreen3);
+    }
 
     public void StartMission1() //추가 가능
     {
@@ -78,7 +98,7 @@ public class MainMenuController : MonoBehaviour
 
             if (!canInput) return; // 입력이 비활성화된 상태라면 Update를 무시
 
-            if (Input.GetKeyDown(KeyCode.Space)) //선택
+            if (Input.GetKeyDown(KeyCode.Return)) //선택
             {
                 StartCoroutine(ConfirmCoroutine());
             }

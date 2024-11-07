@@ -29,7 +29,7 @@ public class MainmenuScreen : MonoBehaviour, MenuScreen
         }
         else if(index == 1)
         {
-            //controller.sample1(); //πÃ¡§
+            controller.ShowControlScreen();
         }
         else if(index == 2)
         {

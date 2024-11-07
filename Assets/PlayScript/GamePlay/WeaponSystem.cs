@@ -383,7 +383,7 @@ public class WeaponSystem : MonoBehaviour
     void specialWeaponCountUIUpdate()
     {
         string mslText = specialWeaponCount.ToString();
-        specialWeaponCountText.text = "<align=left>HPAA<line-height=0>" + "\n" + "<align=right>" + mslText + "<line-height=1em>";
+        specialWeaponCountText.text = "<align=left>QAAM<line-height=0>" + "\n" + "<align=right>" + mslText + "<line-height=1em>";
     }
 
     void STDMFrameUpdate()

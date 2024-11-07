@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.971
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.20496035, g: 0.05645123, b: 0.034974433, a: 0.971}
+  m_IndirectSpecularColor: {r: 0.20499644, g: 0.05646331, b: 0.034981564, a: 0.971}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28799,7 +28799,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<align=left>HPAA<line-height=0>
+  m_text: '<align=left>QAAM<line-height=0>
 
     <align=right>0<line-height=1em>'
   m_isRightToLeft: 0
@@ -29533,12 +29533,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 1433611593651808499}
   currentTargetTransform: {fileID: 0}
+  targetTransformRightBefore: {fileID: 0}
   currentEnemy: {fileID: 0}
   coneAngle: 20
   coneRadius: 800
   transformBox: {fileID: 1969470906}
   currentTargetText: {fileID: 1637283460}
   potentialTargetTransforms: []
+  currentTargetLockingTime: 0
 --- !u!1 &1721009477
 GameObject:
   m_ObjectHideFlags: 0
