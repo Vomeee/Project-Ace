@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1.43
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d9dca9ae1786c394f9e79c637aa9a7bf, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e391f00234292cc4f935308c11cf0e54, type: 2}
   m_HaloStrength: 0.098
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.971
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.42332596, g: 0.5375271, b: 0.5272904, a: 0.971}
+  m_IndirectSpecularColor: {r: 0.12661853, g: 0.09323078, b: 0.06002223, a: 0.971}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -26110,7 +26110,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d6539c81310c52d49be8eacfeb6d4b9e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5dfc1f0c0ef31c443a5805dc406181b0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -38136,8 +38136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infoGetter: {fileID: 8664474838250448221}
-  gunCount: 300
-  missileCount: 30
+  gunCount: 1600
+  missileCount: 120
   specialWeaponCount: 16
   bulletPrefab: {fileID: 1499266384541859513, guid: 69f7b23246ace7649b02212d22b27347, type: 3}
   missilePrefab: {fileID: 1765958663548051430, guid: 7ed9e1cb9fe7d914289cbfa93628aa96, type: 3}
