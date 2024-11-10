@@ -262,10 +262,6 @@ public class WarningController : MonoBehaviour
     {
         aircraftWireframeColor = color;
 
-        foreach (RawImage image in aircraftWireframeImage)
-        {
-            image.color = aircraftWireframeColor;
-        }
     }
 
 

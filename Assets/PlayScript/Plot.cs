@@ -30,8 +30,12 @@ public class Plot : MonoBehaviour
     [Header("enemy spawn lists")]
     [SerializeField] GameObject[] enemyAircraftPrefabsPhase1;
     [SerializeField] GameObject[] enemyAircraftPrefabsPhase2;
+    [SerializeField] GameObject[] allyAircraftPrefabs;
+
     [SerializeField] Transform[] phase1SpawnTransforms;
     [SerializeField] Transform[] phase2SpawnTransforms;
+    [SerializeField] Transform[] phase1AllySpawnTransforms;
+    [SerializeField] Transform[] phase2AllySpawnTransforms;
 
     [Header("Subtitles")]
     [SerializeField] List<string> onPhase1StartScripts;
@@ -54,9 +58,11 @@ public class Plot : MonoBehaviour
 
     void Phase1Start()
     {
+        ///////enemy spawn for phase 1
         currentEnemyCount = phase1EnemyCount;
         for (int i = 0; i < phase1EnemyCount; i++)
         {
+            
             GameObject enemy1 = Instantiate(enemyAircraftPrefabsPhase1[i], phase1SpawnTransforms[i]);
             EnemyAI enemyAI1 = enemy1.GetComponent<EnemyAI>();
 
@@ -68,6 +74,17 @@ public class Plot : MonoBehaviour
             {
                 Debug.Log("enemyAi null!");
             }
+        }
+        //////Ally Spawn for phase 1.
+        for (int i = 0; i < phase1AllySpawnTransforms.Length; i++)
+        {
+            GameObject ally = Instantiate(allyAircraftPrefabs[i], phase1AllySpawnTransforms[i]);
+            ALLY allyScript = ally.GetComponent<ALLY>();
+            if (allyScript != null)
+            {
+                
+            }
+
         }
 
         scriptManager.AddScript(onPhase1StartScripts);
