@@ -396,7 +396,6 @@ namespace MGAssets
                 }
             }
 
-            [SerializeField] RawImage uiMask; //일반 UI가리는 이미지 mask.
             [SerializeField] RectTransform pauseMenu; //일시정지 ui세트.
             [SerializeField] Text pauseMenuPointer; // 일시정지 메뉴 포인터.
             [SerializeField] Text pauseMenuDescription; // 일시정지 메뉴 선택지 설명.
@@ -410,11 +409,6 @@ namespace MGAssets
                 Time.timeScale = 0; //time stop.
                 isPaused = true;
 
-                Color maskColor = uiMask.color;
-                maskColor.a = 0;
-                uiMask.color = maskColor;
-                //ui 투명화.
-
                 UpdatePauseMenuIndex(0);
                 AudioListener.pause = isPaused;
                 pauseMenu.gameObject.SetActive(true);
@@ -425,9 +419,7 @@ namespace MGAssets
                 Time.timeScale = 1;
                 isPaused = false;
 
-                Color maskColor = uiMask.color;
-                maskColor.a = 255;
-                uiMask.color = maskColor; // 원래 ui 재표출.
+               
 
                 pauseMenuCurrentIndex = 0;
                 AudioListener.pause = isPaused;
