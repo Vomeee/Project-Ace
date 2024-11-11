@@ -148,6 +148,8 @@ namespace MGAssets
 
             float lastInputZ;
 
+            bool isPaused = false;
+
 
             //////////////////////////////////////// Initialization
             void Awake()
@@ -216,129 +218,159 @@ namespace MGAssets
                 // Return if control is not activated
                 if (!isActive || flightScript == null) return;
 
-
-                // Cursor lock-unlock with Tab key
-                if (Input.GetKeyDown(toogleCursorKey))
+                if (isPaused == false)
                 {
-                    if (Cursor.lockState != CursorLockMode.Locked) { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
-                    else { Cursor.lockState = CursorLockMode.None; Cursor.visible = true; }
 
-                    AircraftSnd.PlayClick();
-                }
-                //
+                    // Cursor lock-unlock with Tab key
+                    if (Input.GetKeyDown(toogleCursorKey))
+                    {
+                        if (Cursor.lockState != CursorLockMode.Locked) { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
+                        else { Cursor.lockState = CursorLockMode.None; Cursor.visible = true; }
 
-                // Recover Aircraft Attitude
-                if (useKeyboard && Input.GetKeyDown(recoverKey)) recoverAttitude();
-                if (useJoystick && Input.GetKeyDown(recoverJoystick)) recoverAttitude();
-                //
+                        AircraftSnd.PlayClick();
+                    }
+                    //
 
-                // Switch from Manual/FlyByWire Mode
-                if (useKeyboard && Input.GetKeyDown(modeKey)) toogleArcade();
-                if (useJoystick && Input.GetKeyDown(modeJoystick)) toogleArcade();
-                //
+                    // Recover Aircraft Attitude
+                    if (useKeyboard && Input.GetKeyDown(recoverKey)) recoverAttitude();
+                    if (useJoystick && Input.GetKeyDown(recoverJoystick)) recoverAttitude();
+                    //
 
-                // Switch from FPV Camera and External
-                if (useKeyboard && Input.GetKeyDown(cameraKey)) changeCamera();
-                if (useJoystick && Input.GetKeyDown(cameraJoystick)) changeCamera();
-                //
+                    // Switch from Manual/FlyByWire Mode
+                    if (useKeyboard && Input.GetKeyDown(modeKey)) toogleArcade();
+                    if (useJoystick && Input.GetKeyDown(modeJoystick)) toogleArcade();
+                    //
 
-                // Flaps, Gear and Brake
-                if (useKeyboard && Input.GetKeyDown(gearKey)) toogleGear();
-                if (useKeyboard && Input.GetKeyDown(brakeKey)) toogleBrake();
-                if (useKeyboard && Input.GetKeyDown(flapsUpKey)) flapsUp();
-                if (useKeyboard && Input.GetKeyDown(flapsDownKey)) flapsDown();
+                    // Switch from FPV Camera and External
+                    if (useKeyboard && Input.GetKeyDown(cameraKey)) changeCamera();
+                    if (useJoystick && Input.GetKeyDown(cameraJoystick)) changeCamera();
+                    //
 
-                if (useMouse && Input.GetMouseButtonDown(brakeMouseButton)) toogleBrake();
+                    // Flaps, Gear and Brake
+                    if (useKeyboard && Input.GetKeyDown(gearKey)) toogleGear();
+                    if (useKeyboard && Input.GetKeyDown(brakeKey)) toogleBrake();
+                    if (useKeyboard && Input.GetKeyDown(flapsUpKey)) flapsUp();
+                    if (useKeyboard && Input.GetKeyDown(flapsDownKey)) flapsDown();
 
-                if (useJoystick && Input.GetKeyDown(gearJoystick)) toogleGear();
-                if (useJoystick && Input.GetKeyDown(brakeJoystick)) toogleBrake();
-                if (useJoystick && Input.GetKeyDown(flapsUpJoystick)) flapsUp();
-                if (useJoystick && Input.GetKeyDown(flapsDownKey)) flapsDown();
-                //
+                    if (useMouse && Input.GetMouseButtonDown(brakeMouseButton)) toogleBrake();
 
-
-                // GUI Recover Flashing Image
-                if (recoverFlashImgBut != null)
-                {
-                    if (flightScript.getIsDamaged() != recoverFlashImgBut.isFlashing) recoverFlashImgBut.flash(flightScript.getIsDamaged());
-                }
-                //if (recoverFlashImgBut != null && flightScript.getIsDamaged() && !recoverFlashImgBut.isFlashing) recoverFlashImgBut.flash();
-                //
+                    if (useJoystick && Input.GetKeyDown(gearJoystick)) toogleGear();
+                    if (useJoystick && Input.GetKeyDown(brakeJoystick)) toogleBrake();
+                    if (useJoystick && Input.GetKeyDown(flapsUpJoystick)) flapsUp();
+                    if (useJoystick && Input.GetKeyDown(flapsDownKey)) flapsDown();
+                    //
 
 
-                //////////////////////// Read all INPUTs
-                //
-                inputTorque = new Vector3
-                (
-                    (useKeyboard ? pitchKeyFactor * ((Input.GetKey(pitchDown) ? 1 : 0) - (Input.GetKey(pitchUp) ? 1 : 0)) : 0) +
-                    (useJoystick && pitchAxis != string.Empty ? pitchAxisFactor * Input.GetAxis(pitchAxis) : 0) +
-                    ((useMouse && Cursor.lockState == CursorLockMode.Locked && pitchMouse != string.Empty) ? pitchMouseFactor * Input.GetAxis(pitchMouse) : 0) +
-                    (useMobile ? pitchMobileFactor * InputMobileFlight.pitchInput : 0)
-                    ,
-                    (useKeyboard ? yawKeyFactor * ((Input.GetKey(yawRight) ? 1 : 0) - (Input.GetKey(yawLeft) ? 1 : 0)) : 0) +
-                    (useJoystick && yawAxis != string.Empty ? yawAxisFactor * Input.GetAxis(yawAxis) : 0) +
-                    ((useMouse && Cursor.lockState == CursorLockMode.Locked && yawMouse != string.Empty) ? yawMouseFactor * Input.GetAxis(yawMouse) : 0) +
-                    (useMobile ? yawMobileFactor * InputMobileFlight.yawInput : 0)
-                    ,
-                    (useKeyboard ? rollKeyFactor * ((Input.GetKey(rollLeft) ? 1 : 0) - (Input.GetKey(rollRight) ? 1 : 0)) : 0) +
-                    (useJoystick && rollAxis != string.Empty ? rollAxisFactor * -Input.GetAxis(rollAxis) : 0) +
-                    ((useMouse && Cursor.lockState == CursorLockMode.Locked && rollMouse != string.Empty) ? rollMouseFactor * -Input.GetAxis(rollMouse) : 0) +
-                    (useMobile ? rollMobileFactor * -InputMobileFlight.rollInput : 0)
-                );
-                //
-                inputForce = new Vector3
+                    // GUI Recover Flashing Image
+                    if (recoverFlashImgBut != null)
+                    {
+                        if (flightScript.getIsDamaged() != recoverFlashImgBut.isFlashing) recoverFlashImgBut.flash(flightScript.getIsDamaged());
+                    }
+                    //if (recoverFlashImgBut != null && flightScript.getIsDamaged() && !recoverFlashImgBut.isFlashing) recoverFlashImgBut.flash();
+                    //
+
+
+                    //////////////////////// Read all INPUTs
+                    //
+                    inputTorque = new Vector3
                     (
-                    0
-                    ,
-                    0
-                    ,
-                    (useJoystick && throttleAxis != string.Empty ? throttleAxisFactor * Input.GetAxis(throttleAxis) : 0) +
-                    (useMobile ? throttleMobileFactor * InputMobileFlight.throttleInput : 0)
+                        (useKeyboard ? pitchKeyFactor * ((Input.GetKey(pitchDown) ? 1 : 0) - (Input.GetKey(pitchUp) ? 1 : 0)) : 0) +
+                        (useJoystick && pitchAxis != string.Empty ? pitchAxisFactor * Input.GetAxis(pitchAxis) : 0) +
+                        ((useMouse && Cursor.lockState == CursorLockMode.Locked && pitchMouse != string.Empty) ? pitchMouseFactor * Input.GetAxis(pitchMouse) : 0) +
+                        (useMobile ? pitchMobileFactor * InputMobileFlight.pitchInput : 0)
+                        ,
+                        (useKeyboard ? yawKeyFactor * ((Input.GetKey(yawRight) ? 1 : 0) - (Input.GetKey(yawLeft) ? 1 : 0)) : 0) +
+                        (useJoystick && yawAxis != string.Empty ? yawAxisFactor * Input.GetAxis(yawAxis) : 0) +
+                        ((useMouse && Cursor.lockState == CursorLockMode.Locked && yawMouse != string.Empty) ? yawMouseFactor * Input.GetAxis(yawMouse) : 0) +
+                        (useMobile ? yawMobileFactor * InputMobileFlight.yawInput : 0)
+                        ,
+                        (useKeyboard ? rollKeyFactor * ((Input.GetKey(rollLeft) ? 1 : 0) - (Input.GetKey(rollRight) ? 1 : 0)) : 0) +
+                        (useJoystick && rollAxis != string.Empty ? rollAxisFactor * -Input.GetAxis(rollAxis) : 0) +
+                        ((useMouse && Cursor.lockState == CursorLockMode.Locked && rollMouse != string.Empty) ? rollMouseFactor * -Input.GetAxis(rollMouse) : 0) +
+                        (useMobile ? rollMobileFactor * -InputMobileFlight.rollInput : 0)
                     );
+                    //
+                    inputForce = new Vector3
+                        (
+                        0
+                        ,
+                        0
+                        ,
+                        (useJoystick && throttleAxis != string.Empty ? throttleAxisFactor * Input.GetAxis(throttleAxis) : 0) +
+                        (useMobile ? throttleMobileFactor * InputMobileFlight.throttleInput : 0)
+                        );
 
 
-                // Throttle Step - Keyboard and Mouse
-                if (useKeyboard)
-                {
-                    if (Input.GetKeyDown(throttleUp)) keyThrottle += throttleKeyStep;
-                    else if (Input.GetKeyDown(throttleDown)) keyThrottle -= throttleKeyStep;
+                    // Throttle Step - Keyboard and Mouse
+                    if (useKeyboard)
+                    {
+                        if (Input.GetKeyDown(throttleUp)) keyThrottle += throttleKeyStep;
+                        else if (Input.GetKeyDown(throttleDown)) keyThrottle -= throttleKeyStep;
+                    }
+
+                    if (useMouse && throttleMouse != string.Empty)
+                    {
+                        if (Input.GetAxis(throttleMouse) > 0) keyThrottle += throttleMouseStep;
+                        else if (Input.GetAxis(throttleMouse) < 0) keyThrottle -= throttleMouseStep;
+                    }
+
+                    if (lastInputZ != inputForce.z)
+                    {
+                        lastInputZ = inputForce.z;
+                        keyThrottle = 0;
+                    }
+                    else keyThrottle = Mathf.Clamp(keyThrottle, throttleClamp.x - Mathf.Abs(inputForce.z), throttleClamp.y - Mathf.Abs(inputForce.z));
+                    //else keyThrottle = Mathf.Clamp(keyThrottle , -1f - Mathf.Abs(inputForce.z), 1f + Mathf.Abs(inputForce.z) );
+
+                    //////////////////////// Read all INPUTs
+
+
+                    //////// Clamp Input to -1x1 at each direction and Throttle
+                    if (clampInput)
+                    {
+                        flightScript.setInputTorque(new Vector3(Mathf.Clamp(inputTorque.x, -1f, 1f), Mathf.Clamp(inputTorque.y, -1f, 1f), Mathf.Clamp(inputTorque.z, -1f, 1f)));
+                        flightScript.setInputForce(new Vector3(Mathf.Clamp(inputForce.x, -1f, 1f), Mathf.Clamp(inputForce.y, -1f, 1f), Mathf.Clamp(inputForce.z + keyThrottle, throttleClamp.x, throttleClamp.y)));
+                        //flightScript.setInputForce(new Vector3(Mathf.Clamp(inputForce.x, -1f, 1f), Mathf.Clamp(inputForce.y, -1f, 1f), Mathf.Clamp(inputForce.z + keyThrottle, -1f, 1f)));
+                    }
+                    else
+                    {
+                        flightScript.setInputTorque(inputTorque);
+                        flightScript.setInputForce(inputForce);
+                    }
+                    ////////
+                    /// change minimap
+                    if (Input.GetKeyDown(KeyCode.Z))
+                    {
+                        ChangeMinimap();
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        PauseGame();
+                    }
+
                 }
-
-                if (useMouse && throttleMouse != string.Empty)
+                else //ispaused = 1
                 {
-                    if (Input.GetAxis(throttleMouse) > 0) keyThrottle += throttleMouseStep;
-                    else if (Input.GetAxis(throttleMouse) < 0) keyThrottle -= throttleMouseStep;
+                    if(Input.GetKeyDown(KeyCode.Escape)) 
+                    {
+                        PauseEnd();
+                    }
+                    if(Input.GetKeyDown(KeyCode.S))
+                    {
+                        UpdatePauseMenuIndex(1);
+                    }
+                    if(Input.GetKeyDown(KeyCode.W)) 
+                    {
+                        UpdatePauseMenuIndex(-1);
+                    }
+                    if(Input.GetKeyDown(KeyCode.Return)) 
+                    {
+                        ExecutePauseMenuSelection();
+                    }
                 }
-
-                if (lastInputZ != inputForce.z)
-                {
-                    lastInputZ = inputForce.z;
-                    keyThrottle = 0;
-                }
-                else keyThrottle = Mathf.Clamp(keyThrottle, throttleClamp.x - Mathf.Abs(inputForce.z), throttleClamp.y - Mathf.Abs(inputForce.z));
-                //else keyThrottle = Mathf.Clamp(keyThrottle , -1f - Mathf.Abs(inputForce.z), 1f + Mathf.Abs(inputForce.z) );
-
-                //////////////////////// Read all INPUTs
-
-
-                //////// Clamp Input to -1x1 at each direction and Throttle
-                if (clampInput)
-                {
-                    flightScript.setInputTorque(new Vector3(Mathf.Clamp(inputTorque.x, -1f, 1f), Mathf.Clamp(inputTorque.y, -1f, 1f), Mathf.Clamp(inputTorque.z, -1f, 1f)));
-                    flightScript.setInputForce(new Vector3(Mathf.Clamp(inputForce.x, -1f, 1f), Mathf.Clamp(inputForce.y, -1f, 1f), Mathf.Clamp(inputForce.z + keyThrottle, throttleClamp.x, throttleClamp.y)));
-                    //flightScript.setInputForce(new Vector3(Mathf.Clamp(inputForce.x, -1f, 1f), Mathf.Clamp(inputForce.y, -1f, 1f), Mathf.Clamp(inputForce.z + keyThrottle, -1f, 1f)));
-                }
-                else
-                {
-                    flightScript.setInputTorque(inputTorque);
-                    flightScript.setInputForce(inputForce);
-                }
-                ////////
-                /// change minimap
-                if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    ChangeMinimap();
-                }
+                
+                
 
 
                 //print("keyThrottle = " + keyThrottle + " // inputFinal = " + (Mathf.Clamp(inputForce.z + keyThrottle, throttleClamp.x, throttleClamp.y)));
@@ -361,6 +393,86 @@ namespace MGAssets
                     smallMinimap.gameObject.SetActive(false);
                     bigMinimap.gameObject.SetActive(true);
 
+                }
+            }
+
+            [SerializeField] RawImage uiMask; //일반 UI가리는 이미지 mask.
+            [SerializeField] RectTransform pauseMenu; //일시정지 ui세트.
+            [SerializeField] Text pauseMenuPointer; // 일시정지 메뉴 포인터.
+            [SerializeField] Text pauseMenuDescription; // 일시정지 메뉴 선택지 설명.
+            [SerializeField] int pauseMenuCurrentIndex; //일시정지 현재 선택 인덱스.
+            [SerializeField] int pauseMenuMaxIndex = 3;
+            [SerializeField] float[] pauseMenuPointerYPos = {-140f, -180f, -220f, -260f }; //일시정지 메뉴 포인터 위치 배열.
+            [SerializeField] string[] pauseMenuDescriptions;
+            
+            void PauseGame()
+            {
+                Time.timeScale = 0; //time stop.
+                isPaused = true;
+
+                Color maskColor = uiMask.color;
+                maskColor.a = 0;
+                uiMask.color = maskColor;
+                //ui 투명화.
+
+                UpdatePauseMenuIndex(0);
+                AudioListener.pause = isPaused;
+                pauseMenu.gameObject.SetActive(true);
+            }
+
+            void PauseEnd()
+            {
+                Time.timeScale = 1;
+                isPaused = false;
+
+                Color maskColor = uiMask.color;
+                maskColor.a = 255;
+                uiMask.color = maskColor; // 원래 ui 재표출.
+
+                pauseMenuCurrentIndex = 0;
+                AudioListener.pause = isPaused;
+                pauseMenu.gameObject.SetActive(false);
+
+
+            }
+
+            void UpdatePauseMenuIndex(int change)
+            {
+                pauseMenuCurrentIndex += change;
+
+                if(pauseMenuCurrentIndex < 0) 
+                {
+                    pauseMenuCurrentIndex = 3; //underflow.
+                }
+                else if(pauseMenuCurrentIndex > pauseMenuMaxIndex) 
+                {
+                    pauseMenuCurrentIndex = 0; //overflow.
+                }
+
+                pauseMenuPointer.rectTransform.anchoredPosition = new Vector3(120f, pauseMenuPointerYPos[pauseMenuCurrentIndex], 0f);
+
+                pauseMenuDescription.text = pauseMenuDescriptions[pauseMenuCurrentIndex];
+            }
+
+            void ExecutePauseMenuSelection()
+            {
+                if (isPaused == false) return;
+                
+                if(pauseMenuCurrentIndex == 0)
+                {
+                    PauseEnd();
+                }
+                else if(pauseMenuCurrentIndex == 1) 
+                {
+                    //Checkpoint restart
+                }
+                else if(pauseMenuCurrentIndex == 2)
+                {
+                    //Mission restart.
+                }
+                else if(pauseMenuCurrentIndex == 3)
+                {
+                    //Quit.
                 }
             }
 
