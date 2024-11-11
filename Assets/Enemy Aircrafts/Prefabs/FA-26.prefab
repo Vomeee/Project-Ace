@@ -949,7 +949,7 @@ GameObject:
   - component: {fileID: 4829113777098674631}
   - component: {fileID: -7906054747624176083}
   m_Layer: 0
-  m_Name: FA_N26_LE
+  m_Name: FA-26
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -323,8 +323,10 @@ public class EnemyAI : MonoBehaviour
     [Header("EnemyInfo")]
     #region EnemyInfo
     public string aircraftName;
+    public string aceName = "";
     [SerializeField] int aircraftHP = 100;
     [SerializeField] public int aircraftScore = 240;
+    
     #endregion
     
     [Space]
@@ -342,6 +344,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] GameObject aircraftInfoUIobject; // 적기 정보 UI 세트
     [SerializeField] Text distanceText;
     [SerializeField] Text aircraftNameText;
+    [SerializeField] Text aceNameText;
 
     [SerializeField] float minDistance = 10f;
     [SerializeField] float maxDistance = 650f;
@@ -384,6 +387,8 @@ public class EnemyAI : MonoBehaviour
         distanceText.color = normalColor;
         aircraftNameText.text = aircraftName;
         aircraftNameText.color = normalColor;
+        aceNameText.text = aceName == null ? "" : aceName;
+        aceNameText.color = normalColor;
 
 
         //moving set.
@@ -549,6 +554,7 @@ public class EnemyAI : MonoBehaviour
         lockOnUIImage.color = lockedOnColor; // 적기 UI 붉은색으로.
         distanceText.color = lockedOnColor;
         aircraftNameText.color = lockedOnColor;
+        aceNameText.color = lockedOnColor;
 
         if (!aircraftInfoUIobject.activeSelf) // 적기 정보 UI 활성화.
         {
@@ -568,6 +574,7 @@ public class EnemyAI : MonoBehaviour
         lockOnUIImage.color = normalColor;
         distanceText.color = normalColor;
         aircraftNameText.color = normalColor;
+        aceNameText.color = normalColor;
 
 
         if (lockOnSound.isPlaying)

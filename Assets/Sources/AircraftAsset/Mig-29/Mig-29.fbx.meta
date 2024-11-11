@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3b5e4daa16087d3469f06a715824272a
+guid: dcd109ad77929e642acdd8b00c3c56bb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,22 +8,22 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Glass
-    second: {fileID: 2100000, guid: 3f574bc897a4e144baa123abf5af98d9, type: 2}
+    second: {fileID: 2100000, guid: b4b9ae154a304af4bb6f6e7fabc2ff94, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: SU-35-airframe
-    second: {fileID: 2100000, guid: 6d95b6b959a8dec43896a8757b67a822, type: 2}
+      name: MiG-29-airframe
+    second: {fileID: 2100000, guid: a0988f32683119c43aa825e7a4c48b9f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: SU-35-hud
-    second: {fileID: 2100000, guid: 772c8bdb6f608ad488813f0dec626888, type: 2}
+      name: MiG-29-hud
+    second: {fileID: 2100000, guid: 29438e89c8abdf24a875f54b909fdc6e, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: SU-35-landinglights
-    second: {fileID: 2100000, guid: c0bd68b370e3e664e8a4d8eae77b61ea, type: 2}
+      name: MiG-29-landingLights
+    second: {fileID: 2100000, guid: 02708e3f381e1574d906b062da0f2acf, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

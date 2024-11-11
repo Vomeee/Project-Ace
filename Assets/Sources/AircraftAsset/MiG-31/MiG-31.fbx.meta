@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3b5e4daa16087d3469f06a715824272a
+guid: 0f6b3537bf30e4644bf828ca875d20e8
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,23 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 328b28c76d503c04197eb67a80e31d83, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cockpit
+    second: {fileID: 2100000, guid: f2478e9213e35c243bda8cfbe5110f54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Compass
+    second: {fileID: 2100000, guid: 795cdb61ee9a9424f8d9e2074554c6e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Glass
-    second: {fileID: 2100000, guid: 3f574bc897a4e144baa123abf5af98d9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: SU-35-airframe
-    second: {fileID: 2100000, guid: 6d95b6b959a8dec43896a8757b67a822, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: SU-35-hud
-    second: {fileID: 2100000, guid: 772c8bdb6f608ad488813f0dec626888, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: SU-35-landinglights
-    second: {fileID: 2100000, guid: c0bd68b370e3e664e8a4d8eae77b61ea, type: 2}
+    second: {fileID: 2100000, guid: 85572ade9bec5ac489968227c1f0b385, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

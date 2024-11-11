@@ -29,13 +29,18 @@ public class Plot : MonoBehaviour
 
     [Header("enemy spawn lists")]
     [SerializeField] GameObject[] enemyAircraftPrefabsPhase1;
+    [SerializeField] GameObject[] enemyAcePrefabsPhase1;
     [SerializeField] GameObject[] enemyAircraftPrefabsPhase2;
+    [SerializeField] GameObject[] enemyAcePrefabsPhase2;
     [SerializeField] GameObject[] allyAircraftPrefabs;
 
     [SerializeField] Transform[] phase1SpawnTransforms;
     [SerializeField] Transform[] phase2SpawnTransforms;
     [SerializeField] Transform[] phase1AllySpawnTransforms;
     [SerializeField] Transform[] phase2AllySpawnTransforms;
+
+    [SerializeField] Transform[] phase1AceSpawnTransforms;
+    [SerializeField] Transform[] phase2AceSpawnTransforms;
 
     [Header("Subtitles")]
     [SerializeField] List<string> onPhase1StartScripts;
