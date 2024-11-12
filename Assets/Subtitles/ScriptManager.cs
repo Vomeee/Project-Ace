@@ -13,6 +13,7 @@ public class ScriptData
 public class ScriptManager : MonoBehaviour
 {
     ScriptData scriptData;
+    [SerializeField] Plot plot;
 
     [Header("Script Data")]
     [SerializeField]
@@ -172,7 +173,7 @@ public class ScriptManager : MonoBehaviour
 
         if (currentScript.invokeFunctionName != string.Empty)
         {
-            //GameManager.MissionManager.InvokeMethod(currentScript.invokeMethodName, currentScript.invokeMethodDelay);
+            plot.InvokeMethod(currentScript.invokeFunctionName);
         }
         Invoke("HideScript", subtitleAudioSource.clip.length);
     }

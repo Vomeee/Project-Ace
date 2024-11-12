@@ -28,8 +28,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] float turningForce;
     [SerializeField] float turningTime;
 
-    [SerializeField] List<Transform> initialWaypoints;
-    Queue<Transform> waypointQueue;
+    [SerializeField] public List<Transform> initialWaypoints;
+    public Queue<Transform> waypointQueue;
 
     [SerializeField] Vector3 currentWaypoint;
 

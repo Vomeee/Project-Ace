@@ -14,6 +14,7 @@ public class GameManagement : MonoBehaviour
     public float timeLimit;
     float remainTime;
     public int score;
+    [SerializeField] int objectiveScore = 12000;
     [SerializeField] TextMeshProUGUI systemTimeText; //시스템 시간 컴포넌트.
     [SerializeField] TextMeshProUGUI scoreText;
 
@@ -26,7 +27,7 @@ public class GameManagement : MonoBehaviour
     public void UpdateScore(int addedScore)
     {
         score += addedScore;
-        scoreText.text = "SCORE <mspace=30>" + score.ToString("D6") + "</mspace>";
+        scoreText.text = "SCORE <mspace=30>" + score.ToString("D6") + "</mspace>" + objectiveScore.ToString("D6");
         plot.EventControl(score);
     }
 

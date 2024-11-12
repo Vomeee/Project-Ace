@@ -123,6 +123,9 @@
             "isImportant": true,
             "subTitle" : "압도 당하고 있어, 어떻게 하나의 편대가 저럴 수가 있지!"
         },
+        
+        
+        
         {
             "subtitleKey": "AO_2",
             "name": "AWACS Eagle Eye",
@@ -131,11 +134,6 @@
             "isImportant": true,
             "subTitle" :"작전 공역의 모든 적을 격추했다. 임무 완료."
         },
-
-
-
-
-
         {
             "subtitleKey": "A2_1",
             "name": "AWACS Eagle Eye",
@@ -166,7 +164,7 @@
             "side": "A",
             "preDelay": 1,
             "isImportant": true,
-
+            "invokeFunctionName" : "Phase2Start",
             "subTitle" : "계속 교전한다. 공중 우세를 확보해!"
         },
         {
@@ -175,13 +173,13 @@
             "side": "A",
             "preDelay": 2,
             "isImportant": true,
-            "subTitle" : "알겠다."
+            "subTitle" : "알겠다!"
         },
         {
             "subtitleKey": "S2_1",
             "name": "Schwarze Leader",
             "side": "E",
-            "preDelay": 1,
+            "preDelay": 2,
             "isImportant": true,
             "subTitle" : "여기 있구만, 용병 드림 팀."
         },
