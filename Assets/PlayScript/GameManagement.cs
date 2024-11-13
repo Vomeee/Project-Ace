@@ -12,11 +12,13 @@ public class GameManagement : MonoBehaviour
     [Header("update system info instance")]
     [SerializeField]
     public float timeLimit;
-    float remainTime;
+    public float remainTime;
     public int score;
     [SerializeField] int objectiveScore = 12000;
     [SerializeField] TextMeshProUGUI systemTimeText; //시스템 시간 컴포넌트.
     [SerializeField] TextMeshProUGUI scoreText;
+
+    public bool isPhaseEnd = false;
 
 
     void Start()
@@ -27,14 +29,15 @@ public class GameManagement : MonoBehaviour
     public void UpdateScore(int addedScore)
     {
         score += addedScore;
-        scoreText.text = "SCORE <mspace=30>" + score.ToString("D6") + "</mspace>" + objectiveScore.ToString("D6");
-        plot.EventControl(score);
+        scoreText.text = "SCORE <mspace=30>" + score.ToString("D6") + "</mspace>" + "/" + objectiveScore.ToString("D6");
+        plot.EventControl(score, false);
     }
 
     void SetSystemTime()
     {
         if (remainTime <= 0)
         {
+
             remainTime = 0;
             return;
         }
@@ -51,6 +54,11 @@ public class GameManagement : MonoBehaviour
 
     void Update()
     {
+        if(timeLimit == 0 && !isPhaseEnd)
+        {
+            isPhaseEnd = true;
+            plot.EventControl(score, true);
+        }
         SetSystemTime();
     }
 }

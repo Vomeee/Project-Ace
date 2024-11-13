@@ -326,6 +326,7 @@ public class EnemyAI : MonoBehaviour
     public string aceName = "";
     [SerializeField] int aircraftHP = 100;
     [SerializeField] public int aircraftScore = 240;
+    [SerializeField] bool isTGT;
     
     #endregion
     
