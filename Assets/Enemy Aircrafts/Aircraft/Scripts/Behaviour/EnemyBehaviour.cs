@@ -406,12 +406,11 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    void Update() //자체 비행 로직.
+    private void FixedUpdate()
     {
-
         #region UI updates
 
-        if(lockOnUIImage != null)
+        if (lockOnUIImage != null)
         {
             // 적 기체의 월드 좌표를 화면 좌표로 변환
             Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position);
@@ -449,12 +448,12 @@ public class EnemyAI : MonoBehaviour
                     else
                     {
                         // 타겟팅되지 않은 상태
-                        
-                            StopCoroutine(FlickerEffect());
-                            isFlickering = false;
-                        
+
+                        StopCoroutine(FlickerEffect());
+                        isFlickering = false;
+
                     }
-                        distanceText.text = ((int)(distanceToTarget * 5)).ToString();
+                    distanceText.text = ((int)(distanceToTarget * 5)).ToString();
                 }
                 else
                 {
@@ -469,6 +468,17 @@ public class EnemyAI : MonoBehaviour
         }
         #endregion
 
+
+        CheckWaypoint();
+        Rotate();
+        ZAxisRotate();
+        Move();
+    }
+
+    void Update() //자체 비행 로직.
+    {
+
+        
         //Missile cooldown update.
         if (!canShoot)
         {
@@ -480,10 +490,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-        CheckWaypoint();
-        Rotate();
-        ZAxisRotate();
-        Move();
+        
 
     }
 

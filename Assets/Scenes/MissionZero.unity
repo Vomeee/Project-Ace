@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.971
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.12661922, g: 0.093231104, b: 0.060022347, a: 0.971}
+  m_IndirectSpecularColor: {r: 0.12661853, g: 0.09323078, b: 0.06002223, a: 0.971}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2490,8 +2490,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 176745517}
-  - component: {fileID: 176745518}
-  - component: {fileID: 176745519}
   m_Layer: 7
   m_Name: RightWingCloudStartTransform (1)
   m_TagString: Untagged
@@ -2514,133 +2512,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 754320600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!96 &176745518
-TrailRenderer:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176745516}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 0
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 1f1128c5338b80d4ebae2c3471203103, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Time: 20
-  m_PreviewTimeScale: 1
-  m_Parameters:
-    serializedVersion: 3
-    widthMultiplier: 1
-    widthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0.1341304
-        outSlope: 0.1341304
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.20388916
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    colorGradient:
-      serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 65535
-      ctime2: 0
-      ctime3: 0
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_ColorSpace: -1
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
-    alignment: 0
-    textureMode: 0
-    textureScale: {x: 1, y: 1}
-    shadowBias: 0.5
-    generateLightingData: 0
-  m_MinVertexDistance: 0.1
-  m_MaskInteraction: 0
-  m_Autodestruct: 0
-  m_Emitting: 1
-  m_ApplyActiveColorSpace: 1
---- !u!114 &176745519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176745516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fbc7e989912e464caf2d12ddc9905ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trailRenderer: {fileID: 176745518}
-  newWidth: 10
 --- !u!1 &178711708
 GameObject:
   m_ObjectHideFlags: 0
@@ -32781,8 +32652,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1681311387}
-  - component: {fileID: 1681311388}
-  - component: {fileID: 1681311389}
   m_Layer: 7
   m_Name: LeftWingCloudStartTransform
   m_TagString: Untagged
@@ -32805,133 +32674,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 754320600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!96 &1681311388
-TrailRenderer:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681311386}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 0
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 1f1128c5338b80d4ebae2c3471203103, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Time: 20
-  m_PreviewTimeScale: 1
-  m_Parameters:
-    serializedVersion: 3
-    widthMultiplier: 1
-    widthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -0.30840552
-        outSlope: -0.30840552
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.12337568
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    colorGradient:
-      serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 65535
-      ctime2: 0
-      ctime3: 0
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 65535
-      atime2: 0
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_ColorSpace: -1
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
-    alignment: 0
-    textureMode: 0
-    textureScale: {x: 1, y: 1}
-    shadowBias: 0.5
-    generateLightingData: 0
-  m_MinVertexDistance: 0.1
-  m_MaskInteraction: 0
-  m_Autodestruct: 0
-  m_Emitting: 1
-  m_ApplyActiveColorSpace: 1
---- !u!114 &1681311389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681311386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fbc7e989912e464caf2d12ddc9905ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trailRenderer: {fileID: 1681311388}
-  newWidth: 10
 --- !u!1 &1693315951
 GameObject:
   m_ObjectHideFlags: 0
@@ -36666,23 +36408,23 @@ MonoBehaviour:
   enemyMissilePrefab: {fileID: 1765958663548051430, guid: 7cf8732bbef4a504b9e424390bf57538, type: 3}
   warningController: {fileID: 8046267458772044280}
   scriptManager: {fileID: 2081105357}
-  phase1EnemyCount: 35
-  phase2EnemyCount: 10
+  phase1EnemyCount: 20
+  phase2EnemyCount: 8
   currentEnemyCount: 0
   enemyAircraftPrefabsPhase1:
   - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
-  - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
-  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
-  - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
-  - {fileID: 7055562899750191124, guid: b01a14c08e4ea1f44a6c7233a36ce56e, type: 3}
-  - {fileID: 7055562899750191124, guid: b01a14c08e4ea1f44a6c7233a36ce56e, type: 3}
-  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
   - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
   - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
   - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
-  - {fileID: 1322439810028275641, guid: 27e2812d1fd847b42b43c4a1524a59df, type: 3}
-  - {fileID: 1322439810028275641, guid: 27e2812d1fd847b42b43c4a1524a59df, type: 3}
-  - {fileID: 1322439810028275641, guid: 27e2812d1fd847b42b43c4a1524a59df, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
+  - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
+  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
   - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
   - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
   - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
@@ -36690,21 +36432,6 @@ MonoBehaviour:
   - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
   - {fileID: 5647500559005912826, guid: 0545bfb518bd397408677020cda70884, type: 3}
   - {fileID: 5647500559005912826, guid: 0545bfb518bd397408677020cda70884, type: 3}
-  - {fileID: 5647500559005912826, guid: 0545bfb518bd397408677020cda70884, type: 3}
-  - {fileID: 5647500559005912826, guid: 0545bfb518bd397408677020cda70884, type: 3}
-  - {fileID: 5647500559005912826, guid: 0545bfb518bd397408677020cda70884, type: 3}
-  - {fileID: 7055562899750191124, guid: b01a14c08e4ea1f44a6c7233a36ce56e, type: 3}
-  - {fileID: 7055562899750191124, guid: b01a14c08e4ea1f44a6c7233a36ce56e, type: 3}
-  - {fileID: 7055562899750191124, guid: b01a14c08e4ea1f44a6c7233a36ce56e, type: 3}
-  - {fileID: 7055562899750191124, guid: b01a14c08e4ea1f44a6c7233a36ce56e, type: 3}
-  - {fileID: 7055562899750191124, guid: b01a14c08e4ea1f44a6c7233a36ce56e, type: 3}
-  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
-  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
-  - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
-  - {fileID: 1322439810028275641, guid: 75175e0d5d5623449b36303bf4a167c7, type: 3}
-  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
-  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
-  - {fileID: 8711391797393005228, guid: d587094d52bcf3341be7cd2596d94469, type: 3}
   enemyAcePrefabsPhase1: []
   enemyAircraftPrefabsPhase2: []
   enemyAcePrefabsPhase2: []
@@ -36731,21 +36458,6 @@ MonoBehaviour:
   - {fileID: 277435329}
   - {fileID: 1082025673}
   - {fileID: 911690215}
-  - {fileID: 1660198557}
-  - {fileID: 1261662878}
-  - {fileID: 158332419}
-  - {fileID: 1259596937}
-  - {fileID: 582056957}
-  - {fileID: 2013741882}
-  - {fileID: 1721009478}
-  - {fileID: 763922555}
-  - {fileID: 2075405087}
-  - {fileID: 250744810}
-  - {fileID: 99211218}
-  - {fileID: 358118981}
-  - {fileID: 1724022320}
-  - {fileID: 982917326}
-  - {fileID: 397468221}
   phase2SpawnTransforms:
   - {fileID: 827840102}
   - {fileID: 1518165522}
@@ -38344,7 +38056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab64b9a8eff2e34fa2d4a1903cc170c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plot: {fileID: 0}
+  plot: {fileID: 1955003916}
   subtitleJsonFile: {fileID: 4900000, guid: 7177f043b1171304fa35f6b91eadd645, type: 3}
   subtitleAudioSource: {fileID: 2081105358}
   scriptUI: {fileID: 2122025060}
