@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class Plot : MonoBehaviour
@@ -22,6 +23,8 @@ public class Plot : MonoBehaviour
 
     [SerializeField]
     ScriptManager scriptManager;
+    [SerializeField] GameObject cutSceneCamera; //컷신을 재생한 카메라 오브젝트, enable true로 애니메이션과 함계 실행.
+    [SerializeField] Camera mainCamera; //플레이 카메라.
 
     [SerializeField]
     int phase1EnemyCount;
@@ -66,6 +69,7 @@ public class Plot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mainCamera = Camera.main;
         tagController.ShowStartMissionTag();
         phase = 1;
         currentEnemyCount = 20;
@@ -133,8 +137,29 @@ public class Plot : MonoBehaviour
         }
     }
 
+    void Phase1End() // 1페이즈 마무리 후 컷신 재생 시작.
+    {
+        //timescale = 0; //시간 멈추...면 안되는데.
+        //남은 적기 모두 비활성화?
+
+        //컷신 시작.
+        if(cutSceneCamera != null)
+        {
+            Time.timeScale = 0; //시간 정지.
+            Camera.main.gameObject.SetActive(false); //기본 카메라 비활성화.
+            cutSceneCamera.SetActive(true); //컷 신 카메라 활성화.
+        }
+    }
+
     void Phase2Start()
     {
+        //Cutscene -> playScene.
+        //플레이어 위치 옮기기. 그대로 둬도 될지도.
+        mainCamera.gameObject.SetActive(true); //메인 카메라 활성화.
+        cutSceneCamera.SetActive(false); //컷신 비활성화.
+        Time.timeScale = 1; //게임 재생 시작.
+        scriptManager.AddScript(onPhase2StartScripts);
+
         gameManagement.timeLimit = 900; //시간제한 변경
         gameManagement.isPhaseEnd = false;
         tagController.ShowMissionUpdatedTag(); //임무 변경 태그. 여기서 소리 내기.
@@ -148,10 +173,10 @@ public class Plot : MonoBehaviour
 
             if (enemyAI1 != null)
             {
-                enemyAI1.waypointQueue.Enqueue(phase2Waypoints[i]); //각자 일직선 주행 후 
-                enemyAI1.waypointQueue.Enqueue(playerFollowPoints[i]); //플레이어 추적 시작.
-                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
                 
+                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
+                //enemyAI1.waypointQueue.Enqueue(phase2Waypoints[i]); //각자 일직선 주행 후 
+                enemyAI1.waypointQueue.Enqueue(playerFollowPoints[i]); //플레이어 추적 시작.
             }
             else
             {

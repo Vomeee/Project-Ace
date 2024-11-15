@@ -159,6 +159,13 @@
             "subTitle" : "뭐, 지금?"
         },
         {
+            "subtitleKey" : "Blank",
+            "preDelay" : "1",
+            "invokeFunctionName" :"Phase1End"
+        },
+
+
+        {
             "subtitleKey": "A2_3",
             "name": "AWACS Eagle Eye",
             "side": "A",
