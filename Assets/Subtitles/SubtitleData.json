@@ -97,7 +97,7 @@
             "side": "A",
             "preDelay": 1,
             "isImportant": true,
-            "subTitle" : "벨카 병력을 절반으로 줄였다. 할 수 있다!"
+            "subTitle" : "적기의 실력이 좋아보이는군, 우세를 놓치지 마라."
         },
         {
             "subtitleKey": "VO_2",
@@ -171,7 +171,6 @@
             "side": "A",
             "preDelay": 1,
             "isImportant": true,
-            "invokeFunctionName" : "Phase2Start",
             "subTitle" : "계속 교전한다. 공중 우세를 확보해!"
         },
         {
@@ -199,7 +198,47 @@
             "subTitle" : "저 두 용병인가, 재미있겠는걸."
         },
 
-
+        {
+            "subtitleKey": "SO_1",
+            "name": "Schwarze Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "겁이 나나? 무서운가? 죽음이 주변을 맴돌고 있을 뿐이다."
+        },
+        {
+            "subtitleKey": "SO_2",
+            "name": "Schwarze Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "저 용병들은 돈 냄새와 죽음 냄새를 풍겨. 결국 시체를 뒤지는 독수리들일 뿐이지. 피를 대가로 이익을 탐하는 것 말고는 하는 게 없어."
+        },
+        {
+            "subtitleKey": "AO_3",
+            "name": "Schwarze Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "벨카 전투기 절반가량 격추. 해낼 수 있다!"
+        },        
+        {
+            "subtitleKey": "SO_3",
+            "name": "Schwarze Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "믿을 수가 없어, 몇번의 교전만으로 우수수 떨어뜨리고 있잖아."
+        },
+        {
+            "subtitleKey": "SO_4",
+            "name": "Schwarze Squadron",
+            "side": "E",
+            "preDelay": 1,
+            "isImportant": true,
+            "subTitle" : "인간의 비행이 아니야..!"
+        },
+        
 
 
 

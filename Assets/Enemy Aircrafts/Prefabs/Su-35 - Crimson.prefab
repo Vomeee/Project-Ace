@@ -1040,6 +1040,7 @@ MonoBehaviour:
   aceName: CRIMSON
   aircraftHP: 370
   aircraftScore: 2400
+  isTGT: 0
   mainCamera: {fileID: 0}
   lockOnUIRectTransform: {fileID: 8047928586875676537}
   lockOnUIImage: {fileID: 8126623200802888440}
@@ -1047,6 +1048,7 @@ MonoBehaviour:
   normalColor: {r: 0, g: 1, b: 0, a: 0.5882353}
   transparentColor: {r: 1, g: 0, b: 0, a: 0}
   aircraftInfoUIobject: {fileID: 4535718708144666407}
+  TGTText: {fileID: 8766446119027495111}
   distanceText: {fileID: 3632003558854293657}
   aircraftNameText: {fileID: 6661872857661393853}
   aceNameText: {fileID: 1198482744147689285}
@@ -1061,6 +1063,7 @@ MonoBehaviour:
   isTargeted: 0
   isLockedOn: 0
   lockOnSound: {fileID: 5423134582911461087}
+  plot: {fileID: 0}
   explodeEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!54 &8852066707045735795
 Rigidbody:

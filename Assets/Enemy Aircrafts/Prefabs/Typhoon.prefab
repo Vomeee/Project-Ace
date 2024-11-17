@@ -1329,6 +1329,7 @@ MonoBehaviour:
   aceName: 
   aircraftHP: 100
   aircraftScore: 900
+  isTGT: 0
   mainCamera: {fileID: 0}
   lockOnUIRectTransform: {fileID: 210641511735120520}
   lockOnUIImage: {fileID: 3864023917595306548}
@@ -1336,6 +1337,7 @@ MonoBehaviour:
   normalColor: {r: 0, g: 1, b: 0, a: 0.5882353}
   transparentColor: {r: 1, g: 0, b: 0, a: 0}
   aircraftInfoUIobject: {fileID: 7545406091273809043}
+  TGTText: {fileID: 6431487602256363327}
   distanceText: {fileID: 30968863476603203}
   aircraftNameText: {fileID: 2627377606391596565}
   aceNameText: {fileID: 2874288809908951764}
@@ -1350,6 +1352,7 @@ MonoBehaviour:
   isTargeted: 0
   isLockedOn: 0
   lockOnSound: {fileID: 1221310442650476793}
+  plot: {fileID: 0}
   explodeEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!54 &8448740297188119629
 Rigidbody:

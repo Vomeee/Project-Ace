@@ -1052,8 +1052,10 @@ MonoBehaviour:
   minScale: 0.7
   maxScale: 1.5
   aircraftName: F/A-26
+  aceName: 
   aircraftHP: 100
   aircraftScore: 800
+  isTGT: 0
   mainCamera: {fileID: 0}
   lockOnUIRectTransform: {fileID: 9215551606717425521}
   lockOnUIImage: {fileID: 8238641114968574295}
@@ -1061,8 +1063,10 @@ MonoBehaviour:
   normalColor: {r: 0, g: 1, b: 0, a: 0.5882353}
   transparentColor: {r: 1, g: 0, b: 0, a: 0}
   aircraftInfoUIobject: {fileID: 6926376766307440893}
+  TGTText: {fileID: 7011473994235664227}
   distanceText: {fileID: 4563761655280617725}
   aircraftNameText: {fileID: 8562796627557307585}
+  aceNameText: {fileID: 0}
   minDistance: 10
   maxDistance: 3000
   isFlickering: 0
@@ -1074,6 +1078,7 @@ MonoBehaviour:
   isTargeted: 0
   isLockedOn: 0
   lockOnSound: {fileID: 2880194212463469048}
+  plot: {fileID: 0}
   explodeEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!54 &632983217856541080
 Rigidbody:

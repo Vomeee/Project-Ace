@@ -1330,7 +1330,7 @@ Canvas:
   m_GameObject: {fileID: 6070986784824124771}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -2104,6 +2104,7 @@ MonoBehaviour:
   aceName: 
   aircraftHP: 100
   aircraftScore: 600
+  isTGT: 0
   mainCamera: {fileID: 0}
   lockOnUIRectTransform: {fileID: 2632545122894004475}
   lockOnUIImage: {fileID: 5302714288851835711}
@@ -2111,9 +2112,10 @@ MonoBehaviour:
   normalColor: {r: 0, g: 1, b: 0, a: 0.5882353}
   transparentColor: {r: 1, g: 0, b: 0, a: 0}
   aircraftInfoUIobject: {fileID: 5958322392089976709}
+  TGTText: {fileID: 3253048850762832184}
   distanceText: {fileID: 7898843398267035112}
   aircraftNameText: {fileID: 4067970549985627740}
-  aceNameText: {fileID: 2839763363180193280}
+  aceNameText: {fileID: 0}
   minDistance: 10
   maxDistance: 3000
   isFlickering: 0
@@ -2125,6 +2127,7 @@ MonoBehaviour:
   isTargeted: 0
   isLockedOn: 0
   lockOnSound: {fileID: 4295964067909133436}
+  plot: {fileID: 0}
   explodeEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!54 &3342901316027387632
 Rigidbody:

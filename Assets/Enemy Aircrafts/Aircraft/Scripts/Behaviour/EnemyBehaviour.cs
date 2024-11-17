@@ -343,6 +343,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] Color transparentColor = new Color(1f,0f,0f,0f); // 타게팅 상태일 때의 색상
 
     [SerializeField] GameObject aircraftInfoUIobject; // 적기 정보 UI 세트
+    [SerializeField] Text TGTText;
     [SerializeField] Text distanceText;
     [SerializeField] Text aircraftNameText;
     [SerializeField] Text aceNameText;
@@ -376,13 +377,22 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     { 
-        mainCamera = Camera.main;   
+        mainCamera = Camera.main;
 
         //area set.
         minMovingRangeX = transform.position.x - movingRangeDistance;
         minMovingRangeZ = transform.position.z - movingRangeDistance;
         maxMovingRangeX = transform.position.x + movingRangeDistance;
         maxMovingRangeZ = transform.position.z + movingRangeDistance;
+
+        if(!isTGT)
+        {
+            TGTText.text = "";
+        }
+        else
+        {
+            TGTText.text = "TGT";
+        }
 
         //ui set.
         distanceText.color = normalColor;
@@ -496,7 +506,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     public void initializeInstance(Transform playerTransform, TargettingSystem targettingSystem, 
-        TagController tagController, GameManagement gm, GameObject waypointObj, GameObject enemyMissile, WarningController warningController)
+        TagController tagController, GameManagement gm, GameObject waypointObj, GameObject enemyMissile, WarningController warningController, Plot plot)
     {
         player = playerTransform; //필수, 만약 동료 추가시 initalize 다원화 필요,
         this.targetingSystem = targettingSystem; //반드시 필요함.
@@ -675,6 +685,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    [SerializeField] Plot plot;
     [SerializeField] GameObject explodeEffect;
     void AircraftDestroyed()
     {
@@ -682,6 +693,11 @@ public class EnemyAI : MonoBehaviour
         targetingSystem.RemoveTarget(gameObject.transform); //현재 타겟 리스트에서 제거
         tagController.ShowDestroyedTag(); //destroyed 태그 표출
         gameManagement.UpdateScore(aircraftScore);
+        if(isTGT)
+        {
+            plot.TGTReduced();
+        }
+        
         Destroy(gameObject);
     }
 

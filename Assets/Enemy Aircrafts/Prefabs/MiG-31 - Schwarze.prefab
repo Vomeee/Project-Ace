@@ -283,7 +283,8 @@ MonoBehaviour:
   aircraftName: MiG-31
   aceName: Schwarze
   aircraftHP: 450
-  aircraftScore: 2650
+  aircraftScore: 1800
+  isTGT: 1
   mainCamera: {fileID: 0}
   lockOnUIRectTransform: {fileID: 4035658234879705467}
   lockOnUIImage: {fileID: 4154771347753856849}
@@ -291,6 +292,7 @@ MonoBehaviour:
   normalColor: {r: 0, g: 1, b: 0, a: 0.5882353}
   transparentColor: {r: 1, g: 0, b: 0, a: 0}
   aircraftInfoUIobject: {fileID: 4879303018843128744}
+  TGTText: {fileID: 6175941609061381749}
   distanceText: {fileID: 1232007618802811246}
   aircraftNameText: {fileID: 8703085445103357472}
   aceNameText: {fileID: 2970860109925585889}
@@ -305,6 +307,7 @@ MonoBehaviour:
   isTargeted: 0
   isLockedOn: 0
   lockOnSound: {fileID: 38479045677919302}
+  plot: {fileID: 0}
   explodeEffect: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!54 &3014604683689544861
 Rigidbody:

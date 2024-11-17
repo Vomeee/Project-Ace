@@ -241,30 +241,32 @@ public class ALLY : MonoBehaviour
 
     void UIUpdate() //friend -> 위치만 옮기면 될듯.
     {
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position); //기체 위치를 화면(메인카메라) 좌표로.
-
-        distanceToPlayer = Vector3.Distance(Camera.main.transform.position, transform.position);
-
-        if (screenPos.z > 0 && screenPos.x > 0 && screenPos.x < Screen.width && screenPos.y > 0 && screenPos.y < Screen.height)
+        if (Camera.main != null)
         {
-            if (distanceToPlayer < maxUiShowingDistance) //UI가 표출되는 거리 이내.
-            {
-                lockOnUIRectTransform.gameObject.SetActive(true);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position); //기체 위치를 화면(메인카메라) 좌표로.
 
-                // 화면 좌표를 UI 캔버스 좌표로 변환
-                lockOnUIRectTransform.position = new Vector3(screenPos.x, screenPos.y, 0);
+            distanceToPlayer = Vector3.Distance(Camera.main.transform.position, transform.position);
+
+            if (screenPos.z > 0 && screenPos.x > 0 && screenPos.x < Screen.width && screenPos.y > 0 && screenPos.y < Screen.height)
+            {
+                if (distanceToPlayer < maxUiShowingDistance) //UI가 표출되는 거리 이내.
+                {
+                    lockOnUIRectTransform.gameObject.SetActive(true);
+
+                    // 화면 좌표를 UI 캔버스 좌표로 변환
+                    lockOnUIRectTransform.position = new Vector3(screenPos.x, screenPos.y, 0);
+                }
+                else
+                {
+                    lockOnUIRectTransform.gameObject.SetActive(false);
+                }
             }
             else
             {
                 lockOnUIRectTransform.gameObject.SetActive(false);
             }
-        }
-        else
-        {
-            lockOnUIRectTransform.gameObject.SetActive(false);
+
         }
 
     }
-
-
 }

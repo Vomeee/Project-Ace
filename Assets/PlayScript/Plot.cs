@@ -1,11 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.UI;
 
 public class Plot : MonoBehaviour
 {
@@ -62,10 +58,18 @@ public class Plot : MonoBehaviour
     [SerializeField] List<string> missionAccomplishedScripts;
 
     [SerializeField] int phase;
+    [SerializeField] int phaseStartScore;
 
     [SerializeField] RectTransform aceDeployedUI;
     [SerializeField] TextMeshProUGUI deployedAceText;
 
+    [SerializeField] RectTransform CutSceneUI;
+    [SerializeField] Canvas cutSceneUICanvas;
+    [SerializeField] AudioSource OstPlayer;
+    [SerializeField] AudioClip phase1Ost; //showdown
+    [SerializeField] AudioClip phase2Ost; //kings
+
+     
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +78,7 @@ public class Plot : MonoBehaviour
         phase = 1;
         currentEnemyCount = 20;
         currentTGTCount = 0;
+        
 
         Invoke("Phase1Start", 2.0f);
     }
@@ -95,7 +100,7 @@ public class Plot : MonoBehaviour
 
             if (enemyAI1 != null)
             {
-                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
+                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController, this);
             }
             else
             {
@@ -128,7 +133,7 @@ public class Plot : MonoBehaviour
 
             if (enemyAI1 != null)
             {
-                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
+                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController, this);
             }
             else
             {
@@ -140,43 +145,69 @@ public class Plot : MonoBehaviour
     void Phase1End() // 1페이즈 마무리 후 컷신 재생 시작.
     {
         //timescale = 0; //시간 멈추...면 안되는데.
+        //노래 멈추기
+        OstPlayer.Stop();
+        OstPlayer.clip = phase2Ost; //kings.
         //남은 적기 모두 비활성화?
 
         //컷신 시작.
         if(cutSceneCamera != null)
         {
+            Canvas[] canvases = FindObjectsOfType<Canvas>();
+
+            // 각 Canvas의 enabled 속성 비활성화
+            foreach (Canvas canvas in canvases)
+            {
+                canvas.enabled = false;
+            }
+
+            cutSceneUICanvas.enabled = true;
+
             Time.timeScale = 0; //시간 정지.
-            Camera.main.gameObject.SetActive(false); //기본 카메라 비활성화.
             cutSceneCamera.SetActive(true); //컷 신 카메라 활성화.
+            Camera.main.gameObject.SetActive(false); //기본 카메라 비활성화.
         }
     }
 
-    void Phase2Start()
+    public void Phase2Start()
     {
-        //Cutscene -> playScene.
-        //플레이어 위치 옮기기. 그대로 둬도 될지도.
-        mainCamera.gameObject.SetActive(true); //메인 카메라 활성화.
-        cutSceneCamera.SetActive(false); //컷신 비활성화.
-        Time.timeScale = 1; //게임 재생 시작.
-        scriptManager.AddScript(onPhase2StartScripts);
+        Debug.Log("Phase 2 start ");
+     
 
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+        foreach (Canvas canvas in canvases)
+        {
+            canvas.enabled = true;
+        }
+        cutSceneUICanvas.enabled = false;
+        mainCamera.gameObject.SetActive(true);
+        cutSceneCamera.SetActive(false); //컷 신 카메라 비활성화.
+        OstPlayer.Play(); //음악 시작.
         gameManagement.timeLimit = 900; //시간제한 변경
         gameManagement.isPhaseEnd = false;
+        scriptManager.AddScript(onPhase2StartScripts);
+        Time.timeScale = 1; //게임 재생 시작.
+        
+
+        
         tagController.ShowMissionUpdatedTag(); //임무 변경 태그. 여기서 소리 내기.
         
 
         currentEnemyCount += phase2EnemyCount; //2페이즈 적기 추가.
+
+        currentTGTCount = phase2EnemyCount;
+
         for (int i = 0; i < phase2EnemyCount; i++)
         {
-            GameObject enemy1 = Instantiate(enemyAircraftPrefabsPhase2[i], phase2SpawnTransforms[i]);
+            GameObject enemy1 = Instantiate(enemyAircraftPrefabsPhase2[i], playerFollowPoints[i].position, playerFollowPoints[i].rotation);
             EnemyAI enemyAI1 = enemy1.GetComponent<EnemyAI>();
 
             if (enemyAI1 != null)
             {
                 
-                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController);
+                enemyAI1.initializeInstance(playerTransform, targettingSystem, tagController, gameManagement, waypointObject, enemyMissilePrefab, warningController, this);
                 //enemyAI1.waypointQueue.Enqueue(phase2Waypoints[i]); //각자 일직선 주행 후 
-                enemyAI1.waypointQueue.Enqueue(playerFollowPoints[i]); //플레이어 추적 시작.
+                //enemyAI1.waypointQueue.Enqueue(playerFollowPoints[i]); //플레이어 추적 시작.
             }
             else
             {
@@ -205,8 +236,20 @@ public class Plot : MonoBehaviour
     bool p1_6 = false;
     bool phase1End = false;
 
+    bool p2_1 = false;
+    bool p2_2 = false;
+    bool p2_3 = false;
+    bool p2_4 = false;
+    bool p2_5 = false;
+    bool p2_6 = false;
+    bool phase2End = false;
+
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.U))
+            {
+            Phase1End();
+        }
         if(gameManagement.remainTime == 0)
         {
             if(!phase1End)
@@ -226,11 +269,13 @@ public class Plot : MonoBehaviour
 
     public void TGTReduced()
     {
-        currentEnemyCount--;
+        currentTGTCount--;
     }
 
     public void EventControl(int score, bool phaseEnd)
     {
+        #region Phase1 Event
+
         if ((phase == 1))
         {
             if (score > 3000 && !p1_1)
@@ -273,7 +318,10 @@ public class Plot : MonoBehaviour
             if (currentEnemyCount == 0) //적 전멸
             {
                 phase1End = true;
+                scriptManager.ClearScriptQueue();
+                phaseStartScore = score;
                 scriptManager.AddScript(onPhase1EndScripts);
+
             }
 
             if(phaseEnd) //시간 종료
@@ -282,6 +330,7 @@ public class Plot : MonoBehaviour
                 {
                     Debug.Log("phase 1 succsss!");
                     phase1End = true; // 한 번만 발동
+                    phaseStartScore = score;
                     scriptManager.AddScript(onPhase1EndScripts); //2페이즈 시작 스크립트 포함.
                 }
                 else
@@ -291,5 +340,63 @@ public class Plot : MonoBehaviour
                 }
             }
         }
+        #endregion
+
+        #region Phase 2 Event.
+        else if (phase == 2)
+        {
+            if (currentTGTCount == 7 && !p2_1)
+            {
+                scriptManager.AddScript("SO_1");
+                p2_1 = true;
+            }
+            else if (currentTGTCount == 6 && !p2_2)
+            {
+                scriptManager.AddScript("SO_2");
+                p2_2 = true;
+            }
+            else if (currentTGTCount == 4 && !p2_3)
+            {
+                scriptManager.AddScript("AO_3");
+                p2_3 = true;
+            }
+            else if (currentTGTCount == 3 && !p2_4)
+            {
+                scriptManager.AddScript("SO_3");
+                p2_4 = true;
+            }
+            else if (currentTGTCount == 2 && !p2_5)
+            {
+                scriptManager.AddScript("SO_4");
+                p2_5 = true;
+            }
+            //ace for phase 2?
+            //else if (score > 1000 && !p1_6)
+            //{
+            //    p1_6 = true;
+
+            //    if (gameManagement.timeLimit >= 30) //남은시간 5분 이상.
+            //    {
+            //        Phase1AceSpawn();
+            //        aceDeployedUI.gameObject.SetActive(true);
+            //        deployedAceText.text = "CRIMSON";
+            //    }
+            //}
+
+            if (currentTGTCount == 0) //적 전멸 -> 성공.
+            {
+                phase2End = true;
+                scriptManager.ClearScriptQueue();
+                scriptManager.AddScript(missionAccomplishedScripts);
+
+            }
+
+            if (phaseEnd) //시간 종료
+            {
+                //임무 실패.
+            }
+        }
+
+    #endregion
     }
 }
