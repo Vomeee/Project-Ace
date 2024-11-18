@@ -187,7 +187,7 @@
             "side": "E",
             "preDelay": 2,
             "isImportant": true,
-            "subTitle" : "여기 있구만, 용병 드림 팀."
+            "subTitle" : "여기 있구만, 용병 드림 팀 나으리들."
         },
         {
             "subtitleKey": "S2_2",
@@ -200,7 +200,7 @@
 
         {
             "subtitleKey": "SO_1",
-            "name": "Schwarze Squadron",
+            "name": "Schwarze Leader",
             "side": "E",
             "preDelay": 1,
             "isImportant": true,
@@ -212,12 +212,12 @@
             "side": "E",
             "preDelay": 1,
             "isImportant": true,
-            "subTitle" : "저 용병들은 돈 냄새와 죽음 냄새를 풍겨. 결국 시체를 뒤지는 독수리들일 뿐이지. 피를 대가로 이익을 탐하는 것 말고는 하는 게 없어."
+            "subTitle" : "용병이란 작자들은 돈과 피 냄새를 맡으며 살아. 남들의 피 속을 헤집으며 이익을 찾아내는 짓거리나 하고 앉아있지⋯. 시체나 먹는 새하고 다를 게 뭐냐?"
         },
         {
             "subtitleKey": "AO_3",
-            "name": "Schwarze Squadron",
-            "side": "E",
+            "name": "AWACS Eagle Eye",
+            "side": "A",
             "preDelay": 1,
             "isImportant": true,
             "subTitle" : "벨카 전투기 절반가량 격추. 해낼 수 있다!"

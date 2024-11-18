@@ -39,7 +39,7 @@ public class ShowAceUI : MonoBehaviour
         canvasGroup.alpha = endAlpha;
 
         // Alpha가 0이면 상호작용 비활성화
-        canvasGroup.interactable = endAlpha > 0;
-        canvasGroup.blocksRaycasts = endAlpha > 0;
+        //canvasGroup.interactable = endAlpha > 0;
+        //canvasGroup.blocksRaycasts = endAlpha > 0;
     }
 }

@@ -2079,7 +2079,7 @@ MonoBehaviour:
   zRotateAmount: 90
   newWaypointDistance: 200
   waypointMinHeight: 100
-  waypointMaxHeight: 300
+  waypointMaxHeight: 1000
   waypointObject: {fileID: 6206487450123874273, guid: 82d9c450415cd0849a601e9a3a956998, type: 3}
   playerTrackingRate: 0.6
   trackingStartDistance: 700
@@ -2115,7 +2115,7 @@ MonoBehaviour:
   TGTText: {fileID: 3253048850762832184}
   distanceText: {fileID: 7898843398267035112}
   aircraftNameText: {fileID: 4067970549985627740}
-  aceNameText: {fileID: 0}
+  aceNameText: {fileID: 2839763363180193280}
   minDistance: 10
   maxDistance: 3000
   isFlickering: 0

@@ -170,6 +170,8 @@ public class EnemyAI : MonoBehaviour
             Instantiate(waypointObject, waypointPosition, Quaternion.identity);
 
             currentWaypoint = waypointPosition;
+
+            Debug.Log(currentWaypoint); //여기로 못오네 ㅋㅋ.
         }
         else if (enemyState == 1) // enemy tracking player.
         {
@@ -385,7 +387,22 @@ public class EnemyAI : MonoBehaviour
         maxMovingRangeX = transform.position.x + movingRangeDistance;
         maxMovingRangeZ = transform.position.z + movingRangeDistance;
 
-        if(!isTGT)
+        waypointQueue = new Queue<Transform>();
+        foreach (Transform t in initialWaypoints)
+        {
+            waypointQueue.Enqueue(t);
+        }
+        if(waypointQueue.Count == 0) //no initial
+        {
+            CreateWaypoint();
+        }
+        else
+        {
+            ChangeWaypoint();
+        }
+        
+
+        if (!isTGT)
         {
             TGTText.text = "";
         }
@@ -406,12 +423,8 @@ public class EnemyAI : MonoBehaviour
         speed = defaultSpeed;
         turningTime = 1 / turningForce;
 
-        waypointQueue = new Queue<Transform>();
-        foreach (Transform t in initialWaypoints)
-        {
-            waypointQueue.Enqueue(t);
-        }
-        ChangeWaypoint();
+        
+        
 
         currentMissileCoolDown = 0;
 
@@ -481,9 +494,11 @@ public class EnemyAI : MonoBehaviour
 
 
         CheckWaypoint();
+
         Rotate();
         ZAxisRotate();
         Move();
+
     }
 
     void Update() //자체 비행 로직.
