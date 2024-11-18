@@ -14,7 +14,7 @@
             "side": "A",
             "preDelay": 1,
             "isImportant": true,
-            "subTitle" : "현장의 연합군 전력이 이미 40% 감소했다."
+            "subTitle" : "현장의 연합군 전력이 이미 40% 감소한 상태다."
         },
         {
             "subtitleKey": "A1_3",
@@ -22,7 +22,7 @@
             "side": "A",
             "preDelay": 1,
             "isImportant": true,
-            "subTitle" : "너희들이 마지막 희망이다."
+            "subTitle" : "너희 두명이 마지막 희망이다."
         },
         {
             "subtitleKey": "AL1_1",
@@ -124,16 +124,6 @@
             "subTitle" : "압도 당하고 있어, 어떻게 하나의 편대가 저럴 수가 있지!"
         },
         
-        
-        
-        {
-            "subtitleKey": "AO_2",
-            "name": "AWACS Eagle Eye",
-            "side": "A",
-            "preDelay": 3,
-            "isImportant": true,
-            "subTitle" :"작전 공역의 모든 적을 격추했다. 임무 완료."
-        },
         {
             "subtitleKey": "A2_1",
             "name": "AWACS Eagle Eye",

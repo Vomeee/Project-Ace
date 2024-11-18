@@ -60,69 +60,72 @@ public class MissileIndicator : MonoBehaviour
 
         if (enemyMissile != null)
         {
-            Vector3 missileLocationVector = enemyMissile.transform.position - Camera.main.transform.position;
-
-            //////////////Angle control
-            Vector3 missileDirFromCamera = missileLocationVector.normalized;
-            Vector3 indicatorDirection = Camera.main.transform.InverseTransformDirection(missileDirFromCamera);
-
-            float angle = Mathf.Atan2(indicatorDirection.x, indicatorDirection.y) * Mathf.Rad2Deg;
-            indicatorImage.transform.rotation = Quaternion.Euler(50, 0, -angle);
-
-            ///////////////Scale Control
-            float currentDistance = missileLocationVector.magnitude;
-            float distanceFactor = Mathf.Clamp01(currentDistance / 1000f);  // 0~1 사이 값으로 변환
-            scaleFactor = Mathf.Lerp(minimumScaleFactor, maximumScaleFactor, distanceFactor);  // 최소-최대 범위에서 스케일 값 보간
-
-            rectTransform.localScale = Vector3.one * scaleFactor;
-
-            ///////////////Audio Control
-            if (currentDistance <= superEmergencyDistance)
+            if (Camera.main != null)
             {
-                // Super emergency: Closest proximity
-                if (!isSuperEmergency)
+                Vector3 missileLocationVector = enemyMissile.transform.position - Camera.main.transform.position;
+
+                //////////////Angle control
+                Vector3 missileDirFromCamera = missileLocationVector.normalized;
+                Vector3 indicatorDirection = Camera.main.transform.InverseTransformDirection(missileDirFromCamera);
+
+                float angle = Mathf.Atan2(indicatorDirection.x, indicatorDirection.y) * Mathf.Rad2Deg;
+                indicatorImage.transform.rotation = Quaternion.Euler(50, 0, -angle);
+
+                ///////////////Scale Control
+                float currentDistance = missileLocationVector.magnitude;
+                float distanceFactor = Mathf.Clamp01(currentDistance / 1000f);  // 0~1 사이 값으로 변환
+                scaleFactor = Mathf.Lerp(minimumScaleFactor, maximumScaleFactor, distanceFactor);  // 최소-최대 범위에서 스케일 값 보간
+
+                rectTransform.localScale = Vector3.one * scaleFactor;
+
+                ///////////////Audio Control
+                if (currentDistance <= superEmergencyDistance)
                 {
-                    isSuperEmergency = true;
+                    // Super emergency: Closest proximity
+                    if (!isSuperEmergency)
+                    {
+                        isSuperEmergency = true;
+                        isEmergency = false;
+
+                        missileAlertNormal.Stop();
+                        missileAlertEmergency.Stop();
+                        missileAlertSuperEmergency.Play();
+
+                        StartBlinking(superEmergencyInterval);
+                    }
+                }
+                else if (currentDistance <= emergencyDistance)
+                {
+                    // Emergency: Mid-range proximity
+                    if (!isEmergency)
+                    {
+                        isSuperEmergency = false;
+                        isEmergency = true;
+
+                        missileAlertNormal.Stop();
+                        missileAlertSuperEmergency.Stop();
+                        missileAlertEmergency.Play();
+
+                        StartBlinking(emergencyInterval);
+                    }
+                }
+                else
+                {
+                    // Normal alert: Far distance
+                    if (!missileAlertNormal.isPlaying && !isEmergency && !isSuperEmergency &&
+                        !missileAlertEmergency.isPlaying && !missileAlertSuperEmergency.isPlaying)
+                    {
+                        missileAlertNormal.Play();
+                        StartBlinking(normalInterval);
+                    }
+                }
+
+                ///////////////Warning bool Control
+                if (currentDistance > emergencyDistance)
+                {
                     isEmergency = false;
-
-                    missileAlertNormal.Stop();
-                    missileAlertEmergency.Stop();
-                    missileAlertSuperEmergency.Play();
-
-                    StartBlinking(superEmergencyInterval);
-                }
-            }
-            else if (currentDistance <= emergencyDistance)
-            {
-                // Emergency: Mid-range proximity
-                if (!isEmergency)
-                {
                     isSuperEmergency = false;
-                    isEmergency = true;
-
-                    missileAlertNormal.Stop();
-                    missileAlertSuperEmergency.Stop();
-                    missileAlertEmergency.Play();
-
-                    StartBlinking(emergencyInterval);
                 }
-            }
-            else
-            {
-                // Normal alert: Far distance
-                if (!missileAlertNormal.isPlaying && !isEmergency && !isSuperEmergency &&
-                    !missileAlertEmergency.isPlaying && !missileAlertSuperEmergency.isPlaying)
-                {
-                    missileAlertNormal.Play();
-                    StartBlinking(normalInterval);
-                }
-            }
-
-            ///////////////Warning bool Control
-            if (currentDistance > emergencyDistance)
-            {
-                isEmergency = false;
-                isSuperEmergency = false;
             }
 
         }

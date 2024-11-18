@@ -530,6 +530,7 @@ public class EnemyAI : MonoBehaviour
         waypointObject = waypointObj;
         enemyMissilePrefab = enemyMissile;
         this.warningController = warningController;
+        this.plot = plot;
     }
 
     #region target, lock controls
