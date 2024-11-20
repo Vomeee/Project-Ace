@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEditor.SearchService;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MGAssets
@@ -149,6 +152,8 @@ namespace MGAssets
             float lastInputZ;
 
             bool isPaused = false;
+
+            [SerializeField]Plot plot;
 
 
             //////////////////////////////////////// Initialization
@@ -461,10 +466,11 @@ namespace MGAssets
                 else if(pauseMenuCurrentIndex == 2)
                 {
                     //Mission restart.
+                    SceneManager.LoadScene("MissionZero");
                 }
                 else if(pauseMenuCurrentIndex == 3)
                 {
-                    //Quit.
+                    plot.ReturnToMainMenu();
                 }
             }
 

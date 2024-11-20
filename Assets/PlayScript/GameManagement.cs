@@ -11,7 +11,8 @@ public class GameManagement : MonoBehaviour
     [Space]
     [Header("update system info instance")]
     [SerializeField]
-    public float timeLimit;
+    public float phase1TimeLimit;
+    public float phase2TimeLimit;
     public float remainTime;
     public int score;
     [SerializeField] int objectiveScore = 12000;
@@ -23,7 +24,7 @@ public class GameManagement : MonoBehaviour
 
     void Start()
     {
-        remainTime = timeLimit;
+        remainTime = phase1TimeLimit;
     }
     
     public void UpdateScore(int addedScore)
@@ -54,7 +55,7 @@ public class GameManagement : MonoBehaviour
 
     void Update()
     {
-        if(timeLimit == 0 && !isPhaseEnd)
+        if(phase1TimeLimit == 0 && !isPhaseEnd)
         {
             isPhaseEnd = true;
             plot.EventControl(score, true);

@@ -283,7 +283,7 @@ MonoBehaviour:
   maxScale: 1.5
   aircraftName: MiG-31
   aceName: Schwarze
-  aircraftHP: 450
+  aircraftHP: 240
   aircraftScore: 1800
   isTGT: 1
   mainCamera: {fileID: 0}

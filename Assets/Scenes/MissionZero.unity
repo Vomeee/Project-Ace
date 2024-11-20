@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.971
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.12661853, g: 0.09323078, b: 0.06002223, a: 0.971}
+  m_IndirectSpecularColor: {r: 0.12661922, g: 0.093231104, b: 0.060022347, a: 0.971}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12629,7 +12629,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plot: {fileID: 1955003916}
-  timeLimit: 100
+  phase1TimeLimit: 0
+  phase2TimeLimit: 0
   remainTime: 0
   score: 0
   objectiveScore: 1500
@@ -77281,6 +77282,7 @@ MonoBehaviour:
   inputForce: {x: 0, y: 0, z: 0}
   inputTorque: {x: 0, y: 0, z: 0}
   keyThrottle: 0
+  plot: {fileID: 1955003916}
   pauseMenu: {fileID: 532556914}
   pauseMenuPointer: {fileID: 284500690}
   pauseMenuDescription: {fileID: 447338110}

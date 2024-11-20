@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class Plot : MonoBehaviour
 {
@@ -183,7 +184,7 @@ public class Plot : MonoBehaviour
         mainCamera.gameObject.SetActive(true);
         cutSceneCamera.SetActive(false); //컷 신 카메라 비활성화.
         OstPlayer.Play(); //음악 시작.
-        gameManagement.timeLimit = 900; //시간제한 변경
+        gameManagement.remainTime = gameManagement.phase2TimeLimit;
         gameManagement.isPhaseEnd = false;
         scriptManager.AddScript(onPhase2StartScripts);
         Time.timeScale = 1; //게임 재생 시작.
@@ -219,12 +220,31 @@ public class Plot : MonoBehaviour
     void MissionAccomplished()
     {
         tagController.ShowMissionAccomplishedTag();// 임무 완료 태그
+        scriptManager.ClearScriptQueue();
         scriptManager.AddScript(missionAccomplishedScripts); //임무 완료 후 실행할 대사들. 이 중에 메뉴 복귀 스크립트 있음.
     }
 
-    void ReturnToMainMenu()
+    void missionFailed()
+    {
+        //화면끄고 
+        
+        //다시 켜서
+
+        //ui띄우기.
+    }
+
+    public void ReturnToMainMenu()
     {
         //메인메뉴 복귀.
+        //fade out?
+
+        //Scene 변경
+        SceneManager.LoadScene("HomeScene");
+    }
+
+    void ReTurnToMissionAccomplishedMenu()
+    {
+        //임무 완료 후 
     }
 
     [Header("optional bool")]
@@ -307,7 +327,7 @@ public class Plot : MonoBehaviour
             {                
                 p1_6 = true;
 
-                if(gameManagement.timeLimit >= 30) //남은시간 5분 이상.
+                if(gameManagement.phase1TimeLimit >= 30) //남은시간 5분 이상.
                 {
                     Phase1AceSpawn();
                     aceDeployedUI.gameObject.SetActive(true);
@@ -387,7 +407,8 @@ public class Plot : MonoBehaviour
             {
                 phase2End = true;
                 scriptManager.ClearScriptQueue();
-                scriptManager.AddScript(missionAccomplishedScripts);
+                MissionAccomplished(); //종료 로직까지 여기에.
+                
 
             }
 
