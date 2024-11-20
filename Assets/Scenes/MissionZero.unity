@@ -25125,7 +25125,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 1958734012948108954}
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60.000004
@@ -25161,7 +25161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915666856}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.019935725, y: 0.029403169, z: -0.00058654376, w: 0.99936867}
   m_LocalPosition: {x: 9995.176, y: 103.69, z: 9986.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -43404,7 +43404,8 @@ MonoBehaviour:
   cutSceneUICanvas: {fileID: 1870163618}
   OstPlayer: {fileID: 1405555620}
   phase1Ost: {fileID: 8300000, guid: 5dfc1f0c0ef31c443a5805dc406181b0, type: 3}
-  phase2Ost: {fileID: 8300000, guid: 37730e156f5106544b50c6740e927f8b, type: 3}
+  phase2Ost: {fileID: 8300000, guid: bee911f43d8c25e498a2b50d72b4f197, type: 3}
+  weaponSystem: {fileID: 544847042867002032}
 --- !u!114 &1955003917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53854,6 +53855,8 @@ MonoBehaviour:
   - ALN_3
   spLaunchScripts:
   - ALN_3
+  scriptCoolDown: 0
+  scriptCoolValue: 0
 --- !u!114 &545174803377959755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62295,7 +62298,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181353330749672480}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.1061519, w: 0.99434996}
   m_LocalPosition: {x: 10000, y: 100, z: 10000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62305,7 +62308,7 @@ Transform:
   - {fileID: 7828391577427226151}
   - {fileID: 5245931816491482934}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -12.187}
 --- !u!95 &1958734012948108955
 Animator:
   serializedVersion: 5
