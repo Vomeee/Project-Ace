@@ -12546,8 +12546,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plot: {fileID: 1955003916}
-  phase1TimeLimit: 0
-  phase2TimeLimit: 0
+  phase1TimeLimit: 600
+  phase2TimeLimit: 900
   remainTime: 0
   score: 0
   objectiveScore: 1500
@@ -18632,7 +18632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &822035910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43392,7 +43392,10 @@ MonoBehaviour:
   - P2_2
   - S2_1
   - S2_2
-  missionAccomplishedScripts: []
+  missionAccomplishedScripts:
+  - A2_4
+  - P2_3
+  - Blank2
   phase: 0
   phaseStartScore: 0
   aceDeployedUI: {fileID: 1950586975}
@@ -43401,7 +43404,7 @@ MonoBehaviour:
   cutSceneUICanvas: {fileID: 1870163618}
   OstPlayer: {fileID: 1405555620}
   phase1Ost: {fileID: 8300000, guid: 5dfc1f0c0ef31c443a5805dc406181b0, type: 3}
-  phase2Ost: {fileID: 8300000, guid: 88c397bc2df5cb74795a85e6ddbf5e4f, type: 3}
+  phase2Ost: {fileID: 8300000, guid: 37730e156f5106544b50c6740e927f8b, type: 3}
 --- !u!114 &1955003917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53833,17 +53836,24 @@ MonoBehaviour:
   rightSTDMReady: {fileID: 1947597154}
   leftSPReady: {fileID: 1472741233}
   rightSPReady: {fileID: 205504809}
-  missileCoolDownTime: 1
+  missileCoolDownTime: 2.5
   rightMissileCoolDown: 0
   leftMissileCoolDown: 0
   specialWeaponSize: 4
-  spCoolDownTime: 1
+  spCoolDownTime: 7
   spRightCoolDown: 0
   spLeftCoolDown: 0
   weaponPointer: {fileID: 108644272}
   gunCountText: {fileID: 1489677928}
   missileCountText: {fileID: 1073549100}
   specialWeaponCountText: {fileID: 1665533804}
+  scriptManager: {fileID: 2081105357}
+  stdmLaunchScripts:
+  - ALN_1
+  - ALN_2
+  - ALN_3
+  spLaunchScripts:
+  - ALN_3
 --- !u!114 &545174803377959755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56787,9 +56797,9 @@ MonoBehaviour:
   wingLiftFactor: 0.35
   maxG: 10
   minG: -2
-  maxSpeed: 160
-  stallSpeed: 35
-  maxAltitude: 3000
+  maxSpeed: 170
+  stallSpeed: 30
+  maxAltitude: 4000
   zeroAltitude: 0
   groundHeight: 1.44
   useAOA: 1

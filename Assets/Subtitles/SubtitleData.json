@@ -236,7 +236,7 @@
             "subtitleKey": "A2_4",
             "name": "AWACS Eagle Eye",
             "side": "A",
-            "preDelay": 2,
+            "preDelay": 1,
             "isImportant": true,
             "subTitle" : "모든 목표를 제거했다. 임무 완료. 훌륭했다, 사이퍼."
         },
@@ -247,6 +247,15 @@
             "preDelay": 3,
             "isImportant": true,
             "subTitle" : "...친구, 아직 살아있어?"
+        },
+        {
+            "subtitleKey": "Blank2",
+            "name": "",
+            "side": "A",
+            "preDelay": 2,
+            "isImportant": true,
+            "invokeFunctionName" : "ReturnToMainMenu",
+            "subTitle" : "!"
         },
 
 

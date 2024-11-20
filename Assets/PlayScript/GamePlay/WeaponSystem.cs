@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
@@ -205,24 +206,54 @@ public class WeaponSystem : MonoBehaviour
         STDMCoolDown(ref spRightCoolDown);
         STDMCoolDown(ref spLeftCoolDown);
 
+        //right stdm
         if(rightMissileCoolDown == 0 && missileCount > 0)
         {
             rightSTDMReady.text = "[RIGHT STDM READY]";
         }
+        else
+        {
+            rightSTDMReady.text = missileCount == 1 ? "[RIGHT STDM N/A]" : "[RIGHT STDM " + rightMissileCoolDown.ToString("F1") + "s]";
+        }
+        //left stdm
         if (leftMissileCoolDown == 0 && missileCount > 1)
         {
             leftSTDMReady.text = "[LEFT STDM READY]";
         }
+        else
+        {
+            leftSTDMReady.text = missileCount <= 2 ? "[LEFT STDM N/A]" : "[LEFT STDM " + leftMissileCoolDown.ToString("F1") + "s]";
+        }
+        //right special weapon
         if (spRightCoolDown == 0 && specialWeaponCount > 0)
         {
             rightSPReady.text = "[RIGHT QAAM READY]";
         }
+        else
+        {
+            rightSPReady.text = specialWeaponCount == 1 ? "[RIGHT QAAM N/A]" : "[RIGHT QAAM " + spRightCoolDown.ToString("F1") + "s]";
+        }
+        //left special weapon
         if (spLeftCoolDown == 0 && specialWeaponCount > 1)
         {
             leftSPReady.text = "[LEFT QAAM READY]";
         }
+        else
+        {
+            leftSPReady.text = specialWeaponCount <= 2 ? "[LEFT QAAM N/A]" : "[LEFT QAAM " + spLeftCoolDown.ToString("F1") + "s]";
+        }
 
         aircraftSpeed = infoGetter.getSpeed();
+
+        #endregion
+
+        #region script update.
+
+        if (scriptCoolDown > 0)
+        {
+            scriptCoolDown -= Time.deltaTime;
+            if (scriptCoolDown < 0) scriptCoolDown = 0;
+        }
 
         #endregion
 
@@ -288,8 +319,11 @@ public class WeaponSystem : MonoBehaviour
         }
     }
 
-
-    
+    [SerializeField] ScriptManager scriptManager;
+    [SerializeField] string[] stdmLaunchScripts;
+    [SerializeField] string[] spLaunchScripts;
+    [SerializeField] public float scriptCoolDown; //미사일 발사 말하기 쿨타임.
+    [SerializeField] float scriptCoolValue;
 
     #region stdmCodes
     void FireMissile()
@@ -309,19 +343,27 @@ public class WeaponSystem : MonoBehaviour
         {
             missilePosition = rightMissileTransform.position;
             rightMissileCoolDown = missileCoolDownTime;
-            rightSTDMReady.text = missileCount == 1 ? "[RIGHT STDM N/A]" : "[RIGHT STDM RELOADING]";
+            
         }
         else // 짝수
         {
             missilePosition = leftMissileTransform.position;
             leftMissileCoolDown = missileCoolDownTime;
-            leftSTDMReady.text = missileCount <= 2 ? "[LEFT STDM N/A]" : "[LEFT STDM RELOADING]";
+            
         }
 
         GameObject stdm = Instantiate(missilePrefab, missilePosition, playerTransform.rotation); //미사일 생성
         STDM missileScript = stdm.GetComponent<STDM>();
 
-       
+        //missile launch voice lines.
+        if (scriptCoolDown == 0)
+        {
+            string launchScript = stdmLaunchScripts[Random.Range(0, stdmLaunchScripts.Length)];
+            scriptManager.AddScript(launchScript);
+            scriptCoolDown = scriptCoolValue;
+        }
+
+
         currentTargetTransform = targettingSystem.currentTargetTransform;
         if(targettingSystem.IsInCone(currentTargetTransform))
         {
@@ -364,21 +406,28 @@ public class WeaponSystem : MonoBehaviour
         if (specialWeaponCount % 2 == 1) // 남은 미사일 수가 홀수
         {
             missilePosition = rightMissileTransform.position;
-            rightSPReady.text = specialWeaponCount == 1 ? "[RIGHT QAAM N/A]" : "[RIGHT QAAM RELOADING]";
+            
             spRightCoolDown = spCoolDownTime;
         }
         else // 짝수
         {
             missilePosition = leftMissileTransform.position;
-            leftSPReady.text = specialWeaponCount <= 2 ? "[LEFT QAAM N/A]" : "[LEFT QAAM RELOADING]";
+            
             spLeftCoolDown = spCoolDownTime;
         }
 
         GameObject stdm = Instantiate(specialWeaponPrefab, missilePosition, playerTransform.rotation); //미사일 생성
         STDM missileScript = stdm.GetComponent<STDM>();
 
+        //missile launch voice lines.
+        if (scriptCoolDown == 0)
+        {
+            string launchScript = spLaunchScripts[Random.Range(0, spLaunchScripts.Length)];
+            scriptManager.AddScript(launchScript);
+        }
 
-        currentTargetTransform = targettingSystem.currentTargetTransform;
+
+            currentTargetTransform = targettingSystem.currentTargetTransform;
         if (targettingSystem.IsInCone(currentTargetTransform))
         {
             missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController, targettingSystem.currentTargetLockingTime); ////////확인!!!!!

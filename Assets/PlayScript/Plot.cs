@@ -70,6 +70,7 @@ public class Plot : MonoBehaviour
     [SerializeField] AudioClip phase1Ost; //showdown
     [SerializeField] AudioClip phase2Ost; //kings
 
+    [SerializeField] WeaponSystem weaponSystem;
      
     // Start is called before the first frame update
     void Start()
@@ -121,6 +122,9 @@ public class Plot : MonoBehaviour
         }
 
         scriptManager.AddScript(onPhase1StartScripts);
+
+        //////////missile script block.
+        weaponSystem.scriptCoolDown = 60f;
     }
 
     void Phase1AceSpawn()
@@ -186,7 +190,14 @@ public class Plot : MonoBehaviour
         OstPlayer.Play(); //음악 시작.
         gameManagement.remainTime = gameManagement.phase2TimeLimit;
         gameManagement.isPhaseEnd = false;
+        scriptManager.ClearScriptQueue();
         scriptManager.AddScript(onPhase2StartScripts);
+        phase = 2;
+
+        ////missile script block.
+        weaponSystem.scriptCoolDown = 60f;
+        ////
+
         Time.timeScale = 1; //게임 재생 시작.
         
 
@@ -290,6 +301,11 @@ public class Plot : MonoBehaviour
     public void TGTReduced()
     {
         currentTGTCount--;
+
+        if (currentTGTCount == 0)
+        {
+            EventControl(gameManagement.score, false);
+        }
     }
 
     public void EventControl(int score, bool phaseEnd)
@@ -403,10 +419,10 @@ public class Plot : MonoBehaviour
             //    }
             //}
 
-            if (currentTGTCount == 0) //적 전멸 -> 성공.
+            else if (currentTGTCount == 0 && !phase2End) //적 전멸 -> 성공.
             {
                 phase2End = true;
-                scriptManager.ClearScriptQueue();
+                //scriptManager.ClearScriptQueue();
                 MissionAccomplished(); //종료 로직까지 여기에.
                 
 
