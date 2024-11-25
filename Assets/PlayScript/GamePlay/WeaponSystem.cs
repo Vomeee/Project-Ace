@@ -370,7 +370,7 @@ public class WeaponSystem : MonoBehaviour
 
 
         currentTargetTransform = targettingSystem.currentTargetTransform;
-        if(targettingSystem.IsInCone(currentTargetTransform))
+        if(currentTargetTransform != null && targettingSystem.IsInCone(currentTargetTransform))
         {
             missileScript.Launch(currentTargetTransform, infoGetter.getSpeed() / 10 + 20, tagController, targettingSystem.currentTargetLockingTime); ////////»Æ¿Œ!!!!!
         }

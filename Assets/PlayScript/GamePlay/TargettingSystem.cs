@@ -14,7 +14,7 @@ public class TargettingSystem : MonoBehaviour
     public float coneAngle = 25f;
     public float coneRadius = 400f;
 
-    public Transform transformBox;
+    //public Transform transformBox;
 
     [SerializeField]
     TextMeshProUGUI currentTargetText; //현재 타겟의 이름과 점수를 담는 좌상단 UI 컴포넌트.
@@ -59,7 +59,7 @@ public class TargettingSystem : MonoBehaviour
         }
         else
         {
-            currentTargetTransform = transformBox;
+            //currentTargetTransform = transformBox;
         }
 
         //targetTransformRightBefore = currentTargetTransform; //ㄱㅊ?
