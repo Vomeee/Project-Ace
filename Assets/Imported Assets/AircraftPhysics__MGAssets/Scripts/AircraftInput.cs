@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+#if UNITY_EDITOR
 using UnityEditor.SearchService;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -237,8 +239,8 @@ namespace MGAssets
                     //
 
                     // Recover Aircraft Attitude
-                    if (useKeyboard && Input.GetKeyDown(recoverKey)) recoverAttitude();
-                    if (useJoystick && Input.GetKeyDown(recoverJoystick)) recoverAttitude();
+                    if (useKeyboard && Input.GetKeyDown(recoverKey)) //recoverAttitude();
+                    if (useJoystick && Input.GetKeyDown(recoverJoystick)) //recoverAttitude();
                     //
 
                     // Switch from Manual/FlyByWire Mode
@@ -357,21 +359,39 @@ namespace MGAssets
                 }
                 else //ispaused = 1
                 {
-                    if(Input.GetKeyDown(KeyCode.Escape)) 
+                    if (!isGameOver)
                     {
-                        PauseEnd();
+                        if (Input.GetKeyDown(KeyCode.Escape))
+                        {
+                            PauseEnd();
+                        }
+                        if (Input.GetKeyDown(KeyCode.S))
+                        {
+                            UpdatePauseMenuIndex(1);
+                        }
+                        if (Input.GetKeyDown(KeyCode.W))
+                        {
+                            UpdatePauseMenuIndex(-1);
+                        }
+                        if (Input.GetKeyDown(KeyCode.Return))
+                        {
+                            ExecutePauseMenuSelection();
+                        }
                     }
-                    if(Input.GetKeyDown(KeyCode.S))
+                    else
                     {
-                        UpdatePauseMenuIndex(1);
-                    }
-                    if(Input.GetKeyDown(KeyCode.W)) 
-                    {
-                        UpdatePauseMenuIndex(-1);
-                    }
-                    if(Input.GetKeyDown(KeyCode.Return)) 
-                    {
-                        ExecutePauseMenuSelection();
+                        if (Input.GetKeyDown(KeyCode.S))
+                        {
+                            UpdateGameOverPanelIndex(1);
+                        }
+                        if (Input.GetKeyDown(KeyCode.W))
+                        {
+                            UpdateGameOverPanelIndex(-1);
+                        }
+                        if (Input.GetKeyDown(KeyCode.Return))
+                        {
+                            ExecuteGameOverPanelSelection();
+                        }
                     }
                 }
                 
@@ -408,11 +428,22 @@ namespace MGAssets
             [SerializeField] int pauseMenuMaxIndex = 3;
             [SerializeField] float[] pauseMenuPointerYPos = {-140f, -180f, -220f, -260f }; //일시정지 메뉴 포인터 위치 배열.
             [SerializeField] string[] pauseMenuDescriptions;
-            
+            // 
+            [SerializeField] bool isGameOver = false;
+            [SerializeField] RectTransform gameOverPanel;
+            [SerializeField] Text gameOverPanelDescription;
+            [SerializeField] Text gameOverPanelPointer;
+            [SerializeField] int gameOverPanelCurrentIndex;
+            [SerializeField] int gameOverPanelMaxIndex = 2;
+            [SerializeField] float[] gameOverPanelPointerYPos = { -100f, -140f, -180f }; //게임오버 메뉴 포인터 위치 배열.
+            [SerializeField] string[] gameOverPanelDescriptions;
+
+
             void PauseGame()
             {
                 Time.timeScale = 0; //time stop.
                 isPaused = true;
+                isGameOver = false;
 
                 UpdatePauseMenuIndex(0);
                 AudioListener.pause = isPaused;
@@ -432,6 +463,7 @@ namespace MGAssets
 
 
             }
+
 
             void UpdatePauseMenuIndex(int change)
             {
@@ -466,12 +498,66 @@ namespace MGAssets
                 else if(pauseMenuCurrentIndex == 2)
                 {
                     //Mission restart.
+                    Time.timeScale = 1;
                     SceneManager.LoadScene("MissionZero");
                 }
                 else if(pauseMenuCurrentIndex == 3)
                 {
                     plot.ReturnToMainMenu();
                 }
+            }
+
+
+            public void ShowGameOverPanel()
+            {
+                Time.timeScale = 0; //time stop.
+                isPaused = true;
+                isGameOver = true;
+
+                
+                AudioListener.pause = isPaused;
+                gameOverPanel.gameObject.SetActive(true);
+                UpdatePauseMenuIndex(0);
+            }
+
+            void UpdateGameOverPanelIndex(int change)
+            {
+                gameOverPanelCurrentIndex += change;
+
+                if (gameOverPanelCurrentIndex < 0)
+                {
+                    gameOverPanelCurrentIndex = gameOverPanelMaxIndex; //underflow.
+                }
+                else if (gameOverPanelCurrentIndex > gameOverPanelMaxIndex)
+                {
+                    gameOverPanelCurrentIndex = 0; //overflow.
+                }
+
+                gameOverPanelPointer.rectTransform.anchoredPosition = new Vector3(120f, gameOverPanelPointerYPos[gameOverPanelCurrentIndex], 0f);
+
+                gameOverPanelDescription.text = gameOverPanelDescriptions[gameOverPanelCurrentIndex];
+            }
+
+            void ExecuteGameOverPanelSelection()
+            {
+                if (gameOverPanelCurrentIndex == 0)
+                {
+                    //Checkpoint restart
+                }
+                else if (gameOverPanelCurrentIndex == 1)
+                {
+                    //Mission restart.
+                    
+                    SceneManager.LoadScene("MissionZero");
+                    isPaused = false;
+                    isGameOver = false;
+                }
+                else if (gameOverPanelCurrentIndex == 2)
+                {
+                    plot.ReturnToMainMenu();
+                }
+
+               
             }
 
 

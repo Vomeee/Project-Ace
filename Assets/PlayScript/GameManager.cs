@@ -6,6 +6,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    void Start()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 144;
+    }
     
     private void Awake()
     {

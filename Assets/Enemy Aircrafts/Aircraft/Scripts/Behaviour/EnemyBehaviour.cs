@@ -171,7 +171,7 @@ public class EnemyAI : MonoBehaviour
 
             currentWaypoint = waypointPosition;
 
-            Debug.Log(currentWaypoint); //여기로 못오네 ㅋㅋ.
+            
         }
         else if (enemyState == 1) // enemy tracking player.
         {
@@ -703,17 +703,28 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] Plot plot;
     [SerializeField] GameObject explodeEffect;
+    [SerializeField] bool isDestroyed = false;
     void AircraftDestroyed()
     {
         if (explodeEffect) Instantiate(explodeEffect, transform.position, Quaternion.identity, null);
         targetingSystem.RemoveTarget(gameObject.transform); //현재 타겟 리스트에서 제거
         tagController.ShowDestroyedTag(); //destroyed 태그 표출
         gameManagement.UpdateScore(aircraftScore);
-        if(isTGT)
+        if(!isDestroyed)
         {
-            plot.TGTReduced();
+            if (isTGT)
+            {
+                plot.TGTReduced();
+                isDestroyed = true;
+            }
+            else
+            {
+                plot.AircraftReduced();
+                isDestroyed = true;
+            }
         }
         
+
         Destroy(gameObject);
     }
 

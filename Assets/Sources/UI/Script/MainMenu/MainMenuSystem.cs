@@ -11,6 +11,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject missionSelectScreen; // 미션
     [SerializeField] GameObject aircraftSelectScreen;
     [SerializeField] GameObject controlScreen; //컨트롤방법을알려주는 화면.
+    [SerializeField] GameObject MissionEndScreen; //미션 종료시 결과창.
     [SerializeField] GameObject TipScreen1;
     [SerializeField] GameObject TipScreen2;
     [SerializeField] GameObject TipScreen3;
@@ -85,7 +86,18 @@ public class MainMenuController : MonoBehaviour
 
     void Start() //오직 게임 실행시 시작
     {
-        SetCurrentActiveScreen(mainMenuScreen); //메인메뉴 화면 활성화
+        Debug.Log(PlayerPrefs.GetInt("isMissionEnd"));
+        /////If Mission End -> Set Screen mission end screen.
+        if (PlayerPrefs.GetInt("isMissionEnd") == 1)
+        {
+            SetCurrentActiveScreen(MissionEndScreen);
+        }
+        else
+        {
+            SetCurrentActiveScreen(mainMenuScreen); //메인메뉴 화면 활성화
+            
+        }
+        PlayerPrefs.SetInt("isMissionEnd", 0);
     }
 
     

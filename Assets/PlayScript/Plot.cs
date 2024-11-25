@@ -1,11 +1,16 @@
+using MGAssets.AircraftPhysics;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class Plot : MonoBehaviour
 {
+    [SerializeField] string missionTitle;
+    [SerializeField] float finalTime;
+    
     [Header("enemies' instances")]
     #region gameplayInstances for enemies
 
@@ -64,23 +69,31 @@ public class Plot : MonoBehaviour
     [SerializeField] RectTransform aceDeployedUI;
     [SerializeField] TextMeshProUGUI deployedAceText;
 
+    //[SerializeField] Canvas screenAlphaCanvas;
+    [SerializeField] ScreenFade screenFade;
+
     [SerializeField] RectTransform CutSceneUI;
     [SerializeField] Canvas cutSceneUICanvas;
     [SerializeField] AudioSource OstPlayer;
     [SerializeField] AudioClip phase1Ost; //showdown
     [SerializeField] AudioClip phase2Ost; //kings
+    [SerializeField] AudioClip gameOverOst; //game over song.
 
     [SerializeField] WeaponSystem weaponSystem;
      
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.SetString("mission name", missionTitle);
+        finalTime = 0;
+
         mainCamera = Camera.main;
         tagController.ShowStartMissionTag();
         phase = 1;
         currentEnemyCount = 20;
         currentTGTCount = 0;
-        
+
+        Time.timeScale = 1;
 
         Invoke("Phase1Start", 2.0f);
     }
@@ -149,12 +162,15 @@ public class Plot : MonoBehaviour
 
     void Phase1End() // 1페이즈 마무리 후 컷신 재생 시작.
     {
+        phase = 2; //refactor.
+        finalTime += gameManagement.remainTime;
         //timescale = 0; //시간 멈추...면 안되는데.
         //노래 멈추기
         OstPlayer.Stop();
         OstPlayer.clip = phase2Ost; //kings.
         //남은 적기 모두 비활성화?
-
+        //screenFade.FadeOut();
+        //screenFade.FadeIn();
         //컷신 시작.
         if(cutSceneCamera != null)
         {
@@ -177,13 +193,16 @@ public class Plot : MonoBehaviour
     public void Phase2Start()
     {
         Debug.Log("Phase 2 start ");
-     
+
+        
 
         Canvas[] canvases = FindObjectsOfType<Canvas>();
         foreach (Canvas canvas in canvases)
         {
             canvas.enabled = true;
         }
+        //screenFade.FadeOut();
+
         cutSceneUICanvas.enabled = false;
         mainCamera.gameObject.SetActive(true);
         cutSceneCamera.SetActive(false); //컷 신 카메라 비활성화.
@@ -228,29 +247,86 @@ public class Plot : MonoBehaviour
         }
     }
 
+    // Mission accomplished failed tag play sound effects.
+    
     void MissionAccomplished()
     {
+        DisableEnemyUI(); //적들에 한해서 UI OFF.
         tagController.ShowMissionAccomplishedTag();// 임무 완료 태그
         scriptManager.ClearScriptQueue();
         scriptManager.AddScript(missionAccomplishedScripts); //임무 완료 후 실행할 대사들. 이 중에 메뉴 복귀 스크립트 있음.
+
+        finalTime += gameManagement.remainTime;
+        /////////////MAINMENU RETURN, variables////////////
+        PlayerPrefs.SetInt("Mission Number", 1); //it must be extended to universal, 
+        PlayerPrefs.SetInt("Score", gameManagement.score);
+        PlayerPrefs.SetInt("Final Time", (int)finalTime);
+        PlayerPrefs.SetInt("isMissionEnd", 1);
     }
 
-    void missionFailed()
+    [SerializeField] AircraftInput ai;
+    [SerializeField] Canvas tagCanvas;
+    [SerializeField] Canvas gameOverPanelCanvas;
+    public void MissionFailed()
     {
-        //화면끄고 
+        //tag.
+        tagController.ShowMissionFailedTag();
+
+        //song stop.
+        OstPlayer.Stop();
+        OstPlayer.clip = gameOverOst;
+        OstPlayer.Play();
+        //camera change.
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+
+        foreach (Canvas canvas in canvases)
+        {
+            canvas.enabled = false;
+        }
+
+        tagCanvas.enabled = true;
         
+
+        gameOverPanelCanvas.enabled = true;
+       
+
+
+        //화면끄고 
+        Invoke("ShowGameOverPanel", 10f);
         //다시 켜서
 
         //ui띄우기.
     }
 
+    void ShowGameOverPanel()
+    {
+        ai.ShowGameOverPanel();
+    }
+
     public void ReturnToMainMenu()
     {
-        //메인메뉴 복귀.
-        //fade out?
 
+
+        //fade out?
+        Time.timeScale = 1;
         //Scene 변경
+        //screenFade.FadeOut();
         SceneManager.LoadScene("HomeScene");
+    }
+
+    public void ScreenFadeOut()
+    {
+        
+    }
+
+    public void DisableEnemyUI()
+    {
+        Canvas[] canvases = FindObjectsOfType<Canvas>();
+        foreach (Canvas canvas in canvases)
+        {
+            if(canvas.tag == "Enemy")
+            canvas.enabled = false;
+        }
     }
 
     void ReTurnToMissionAccomplishedMenu()
@@ -308,6 +384,16 @@ public class Plot : MonoBehaviour
         }
     }
 
+    public void AircraftReduced()
+    {
+        currentEnemyCount--;
+
+        if (currentEnemyCount == 0)
+        {
+            EventControl(gameManagement.score, false);
+        }
+    }
+
     public void EventControl(int score, bool phaseEnd)
     {
         #region Phase1 Event
@@ -339,7 +425,7 @@ public class Plot : MonoBehaviour
                 scriptManager.AddScript("VO_3");
                 p1_5 = true;
             }
-            else if (score > 1000 && !p1_6)
+            else if (score > 10000 && !p1_6)
             {                
                 p1_6 = true;
 
@@ -362,7 +448,7 @@ public class Plot : MonoBehaviour
 
             if(phaseEnd) //시간 종료
             {
-                if(score >= 1500)
+                if(score >= 12000)
                 {
                     Debug.Log("phase 1 succsss!");
                     phase1End = true; // 한 번만 발동
@@ -372,7 +458,7 @@ public class Plot : MonoBehaviour
                 else
                 {
                     phase1End = true;
-                    //mission Failed
+                    MissionFailed();
                 }
             }
         }
@@ -430,7 +516,8 @@ public class Plot : MonoBehaviour
 
             if (phaseEnd) //시간 종료
             {
-                //임무 실패.
+                phase2End = true;
+                MissionFailed();
             }
         }
 

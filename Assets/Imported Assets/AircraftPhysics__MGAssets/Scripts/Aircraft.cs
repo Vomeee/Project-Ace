@@ -618,7 +618,7 @@ namespace MGAssets
 
 
 
-
+            [SerializeField] Plot plot;
 
             //////////////////////////////////////// Collision Sounds, Msgs, Damage and Recovery-StartState
             public void damage()
@@ -635,6 +635,8 @@ namespace MGAssets
 
                 rigidBody.gameObject.SetActive(false);
                 gameObject.SetActive(false);
+
+                plot.MissionFailed();
             }
             //
             public override void recoverAttitude()

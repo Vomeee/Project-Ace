@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using Unity.VisualScripting;
+#if UNITY_EDITOR
 using UnityEditor.VersionControl;
+#endif
+#if UNITY_EDITOR
 using UnityEditorInternal;
+#endif
+
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;

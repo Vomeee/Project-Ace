@@ -12,6 +12,11 @@ public class TagController : MonoBehaviour
     [SerializeField] GameObject MissionFailedTag;
     [SerializeField] GameObject MissionAccomplishedTag;
 
+    [SerializeField] AudioSource missionTagAudioSource;
+    [SerializeField] AudioClip missionAccomplishedSound;
+    [SerializeField] AudioClip missionUpdatedSound;
+    [SerializeField] AudioClip missionFailedSound;
+
 
 
     // 모든 태그들을 리스트로 관리
@@ -81,16 +86,19 @@ public class TagController : MonoBehaviour
 
     public void ShowMissionUpdatedTag()
     {
+        missionTagAudioSource.PlayOneShot(missionUpdatedSound);
         ActivateTag(MissionUpdatedTag);
     }
 
     public void ShowMissionFailedTag()
     {
+        missionTagAudioSource.PlayOneShot(missionFailedSound);
         ActivateTag(MissionFailedTag);
     }
 
     public void ShowMissionAccomplishedTag()
     {
+        missionTagAudioSource.PlayOneShot(missionAccomplishedSound);
         ActivateTag(MissionAccomplishedTag);
     }
 }
