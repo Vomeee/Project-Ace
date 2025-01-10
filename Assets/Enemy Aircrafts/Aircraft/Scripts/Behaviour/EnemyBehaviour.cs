@@ -494,9 +494,8 @@ public class EnemyAI : MonoBehaviour
 
 
         CheckWaypoint();
-
-        Rotate();
         ZAxisRotate();
+        Rotate();
         Move();
 
     }
